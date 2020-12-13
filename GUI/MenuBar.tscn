@@ -1,0 +1,146 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 6.0
+content_margin_right = 6.0
+bg_color = Color( 0.145098, 0.145098, 0.164706, 1 )
+
+[node name="MenuBar" type="Control"]
+anchor_right = 1.0
+margin_bottom = 25.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Background" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ToolBar" type="HBoxContainer" parent="."]
+anchor_bottom = 1.0
+margin_right = 337.0
+size_flags_horizontal = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hidder" type="Button" parent="ToolBar"]
+margin_right = 25.0
+margin_bottom = 25.0
+hint_tooltip = "Toggle Side Menu"
+custom_styles/normal = SubResource( 1 )
+text = " - "
+__meta__ = {
+"_editor_description_": "Menu Hidder  (+, -)"
+}
+
+[node name="File" type="MenuButton" parent="ToolBar"]
+margin_left = 29.0
+margin_right = 64.0
+margin_bottom = 25.0
+hint_tooltip = "Menu Hidder (+, -)"
+text = "File"
+switch_on_hover = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Project" type="MenuButton" parent="ToolBar"]
+margin_left = 68.0
+margin_right = 125.0
+margin_bottom = 25.0
+hint_tooltip = "Menu Hidder (+, -)"
+text = "Project"
+switch_on_hover = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Editor" type="MenuButton" parent="ToolBar"]
+margin_left = 129.0
+margin_right = 178.0
+margin_bottom = 25.0
+hint_tooltip = "Menu Hidder (+, -)"
+text = "Editor"
+switch_on_hover = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="View" type="MenuButton" parent="ToolBar"]
+margin_left = 182.0
+margin_right = 224.0
+margin_bottom = 25.0
+hint_tooltip = "Menu Hidder (+, -)"
+text = "View"
+switch_on_hover = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Settings" type="MenuButton" parent="ToolBar"]
+margin_left = 228.0
+margin_right = 291.0
+margin_bottom = 25.0
+hint_tooltip = "Menu Hidder (+, -)"
+text = "Settings"
+switch_on_hover = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Help" type="MenuButton" parent="ToolBar"]
+margin_left = 295.0
+margin_right = 337.0
+margin_bottom = 25.0
+hint_tooltip = "Menu Hidder (+, -)"
+text = "Help"
+switch_on_hover = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleBar" type="HBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -44.0
+margin_right = 44.0
+size_flags_horizontal = 0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="TitleBar"]
+margin_left = 2.0
+margin_top = 5.0
+margin_right = 85.0
+margin_bottom = 19.0
+text = "ProjectName"
+
+[node name="FlowBar" type="HBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -260.0
+margin_right = -25.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 0
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Flows" type="Label" parent="FlowBar"]
+margin_left = 134.0
+margin_top = 5.0
+margin_right = 235.0
+margin_bottom = 19.0
+text = "Flows/Flow/flow"
+align = 2
+valign = 1
