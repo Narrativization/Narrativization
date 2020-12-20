@@ -1,9 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[sub_resource type="StyleBoxFlat" id=1]
-content_margin_left = 6.0
-content_margin_right = 6.0
-bg_color = Color( 0.145098, 0.145098, 0.164706, 1 )
+[ext_resource path="res://GUI/MenuBar/FileMenu.cs" type="Script" id=1]
 
 [node name="MenuBar" type="Control"]
 anchor_right = 1.0
@@ -16,131 +13,144 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="EditBar" type="HBoxContainer" parent="."]
+anchor_bottom = 1.0
+margin_left = 10.0
+size_flags_horizontal = 0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="File" type="MenuButton" parent="EditBar"]
+margin_right = 35.0
+margin_bottom = 25.0
+text = "File"
+items = [ "New", null, 0, false, false, 0, 0, null, "", false, "Save", null, 0, false, false, 1, 0, null, "", false, "Load", null, 0, false, false, 2, 0, null, "", false, "Settings", null, 0, false, false, 3, 0, null, "", false, "Help", null, 0, false, false, 4, 0, null, "", false, "Quit", null, 0, false, false, 5, 0, null, "", false ]
+switch_on_hover = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false,
+"_editor_description_": "New, Save, Load, Settings, Help, Quit 
+
+~Project, View, ~Undo/Redo,"
+}
+
+[node name="Take" type="MenuButton" parent="EditBar"]
+margin_left = 39.0
+margin_right = 80.0
+margin_bottom = 25.0
+text = "Take"
+items = [ "Journeys", null, 0, false, false, 0, 0, null, "", false, "Decisions", null, 0, false, false, 1, 0, null, "", false, "Annotations", null, 0, false, false, 2, 0, null, "", false ]
+switch_on_hover = true
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false,
+"_editor_description_": "Fastly adding:  
+Journey(Run Flow)
+Decisions(Global Variables), 
+Annotations(Notes)"
+}
+
+[node name="FlowBar" type="HBoxContainer" parent="."]
+anchor_left = 0.25
+anchor_right = 0.75
+anchor_bottom = 1.0
+margin_left = -62.5
+margin_right = 62.5
+grow_horizontal = 2
+rect_clip_content = true
+alignment = 1
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="FlowBar" type="VBoxContainer" parent="FlowBar"]
+margin_right = 637.0
+margin_bottom = 25.0
+grow_horizontal = 2
+rect_clip_content = true
+size_flags_horizontal = 3
+alignment = 1
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="FlowTitle" type="RichTextLabel" parent="FlowBar/FlowBar"]
+margin_top = 5.0
+margin_right = 637.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 125, 15 )
+size_flags_vertical = 0
+bbcode_enabled = true
+bbcode_text = "[center] [url]Story[/url]  / [url]Flow[/url] / [url]Current[/url] [/center]"
+text = " Story  / Flow / Current "
+scroll_following = true
+__meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="ToolBar" type="HBoxContainer" parent="."]
-anchor_bottom = 1.0
-margin_right = 337.0
-size_flags_horizontal = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Hidder" type="Button" parent="ToolBar"]
-margin_right = 25.0
-margin_bottom = 25.0
-hint_tooltip = "Toggle Side Menu"
-custom_styles/normal = SubResource( 1 )
-text = " - "
-__meta__ = {
-"_editor_description_": "Menu Hidder  (+, -)"
-}
-
-[node name="File" type="MenuButton" parent="ToolBar"]
-margin_left = 29.0
-margin_right = 64.0
-margin_bottom = 25.0
-hint_tooltip = "Menu Hidder (+, -)"
-text = "File"
-switch_on_hover = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Project" type="MenuButton" parent="ToolBar"]
-margin_left = 68.0
-margin_right = 125.0
-margin_bottom = 25.0
-hint_tooltip = "Menu Hidder (+, -)"
-text = "Project"
-switch_on_hover = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Editor" type="MenuButton" parent="ToolBar"]
-margin_left = 129.0
-margin_right = 178.0
-margin_bottom = 25.0
-hint_tooltip = "Menu Hidder (+, -)"
-text = "Editor"
-switch_on_hover = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="View" type="MenuButton" parent="ToolBar"]
-margin_left = 182.0
-margin_right = 224.0
-margin_bottom = 25.0
-hint_tooltip = "Menu Hidder (+, -)"
-text = "View"
-switch_on_hover = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Settings" type="MenuButton" parent="ToolBar"]
-margin_left = 228.0
-margin_right = 291.0
-margin_bottom = 25.0
-hint_tooltip = "Menu Hidder (+, -)"
-text = "Settings"
-switch_on_hover = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Help" type="MenuButton" parent="ToolBar"]
-margin_left = 295.0
-margin_right = 337.0
-margin_bottom = 25.0
-hint_tooltip = "Menu Hidder (+, -)"
-text = "Help"
-switch_on_hover = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TitleBar" type="HBoxContainer" parent="."]
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -44.0
-margin_right = 44.0
-size_flags_horizontal = 0
-alignment = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Title" type="Label" parent="TitleBar"]
-margin_left = 2.0
-margin_top = 5.0
-margin_right = 85.0
-margin_bottom = 19.0
-text = "ProjectName"
-
-[node name="FlowBar" type="HBoxContainer" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -260.0
-margin_right = -25.0
+margin_right = -10.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 0
 alignment = 2
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
-[node name="Flows" type="Label" parent="FlowBar"]
-margin_left = 134.0
-margin_top = 5.0
-margin_right = 235.0
-margin_bottom = 19.0
-text = "Flows/Flow/flow"
-align = 2
-valign = 1
+[node name="Editor" type="MenuButton" parent="ToolBar"]
+margin_right = 49.0
+margin_bottom = 25.0
+hint_tooltip = "Editors"
+text = "Editor"
+items = [ "Flow", null, 0, false, false, 0, 0, null, "", false, "Property", null, 0, false, false, 1, 0, null, "", false, "Data", null, 0, false, false, 2, 0, null, "", false, "Document", null, 0, false, false, 3, 0, null, "", false ]
+switch_on_hover = true
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false,
+"_editor_description_": "Main Panel
+- Flow Editor (Node Editor (json))
+- Property Editor (Entity Editor (json+ img))
+- Data Editor (Sheet Editor (csv))
+- Document Editor (Text Editor (txt))"
+}
+
+[node name="Navigator" type="Button" parent="ToolBar"]
+margin_left = 53.0
+margin_right = 125.0
+margin_bottom = 25.0
+text = "Navigator"
+flat = true
+__meta__ = {
+"_edit_lock_": true,
+"_editor_description_": "Modals
+- Navigator(Tree)
+- List & Tile "
+}
+
+[node name="NavigatorMenu" type="MenuButton" parent="ToolBar"]
+visible = false
+margin_left = 102.0
+margin_right = 174.0
+margin_bottom = 25.0
+hint_tooltip = "Natigations"
+text = "Navigator"
+switch_on_hover = true
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false,
+"_editor_description_": "Hided"
+}

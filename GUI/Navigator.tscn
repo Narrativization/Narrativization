@@ -1,0 +1,26 @@
+[gd_scene format=2]
+
+[node name="Navigator" type="WindowDialog"]
+margin_right = 260.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 260, 300 )
+window_title = "Navigator"
+resizable = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tree" type="Tree" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

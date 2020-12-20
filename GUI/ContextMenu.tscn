@@ -1,0 +1,10 @@
+[gd_scene format=2]
+
+[node name="Context" type="PopupMenu"]
+visible = true
+margin_right = 60.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 60, 80 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
