@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://GUI/MenuBar/FileMenu.cs" type="Script" id=1]
+[ext_resource path="res://GUI/MenuBar/MenuEditBar.cs" type="Script" id=1]
 
 [node name="MenuBar" type="Control"]
 anchor_right = 1.0
@@ -21,18 +21,18 @@ __meta__ = {
 anchor_bottom = 1.0
 margin_left = 10.0
 size_flags_horizontal = 0
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
-[node name="File" type="MenuButton" parent="EditBar"]
-margin_right = 35.0
+[node name="Story" type="MenuButton" parent="EditBar"]
+margin_right = 44.0
 margin_bottom = 25.0
-text = "File"
+text = "Story"
 items = [ "New", null, 0, false, false, 0, 0, null, "", false, "Save", null, 0, false, false, 1, 0, null, "", false, "Load", null, 0, false, false, 2, 0, null, "", false, "Settings", null, 0, false, false, 3, 0, null, "", false, "Help", null, 0, false, false, 4, 0, null, "", false, "Quit", null, 0, false, false, 5, 0, null, "", false ]
 switch_on_hover = true
-script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false,
@@ -41,11 +41,11 @@ __meta__ = {
 ~Project, View, ~Undo/Redo,"
 }
 
-[node name="Take" type="MenuButton" parent="EditBar"]
-margin_left = 39.0
-margin_right = 80.0
+[node name="Edit" type="MenuButton" parent="EditBar"]
+margin_left = 48.0
+margin_right = 84.0
 margin_bottom = 25.0
-text = "Take"
+text = "Edit"
 items = [ "Journeys", null, 0, false, false, 0, 0, null, "", false, "Decisions", null, 0, false, false, 1, 0, null, "", false, "Annotations", null, 0, false, false, 2, 0, null, "", false ]
 switch_on_hover = true
 __meta__ = {
@@ -111,8 +111,39 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Editor" type="MenuButton" parent="ToolBar"]
-margin_right = 49.0
+[node name="Editor" type="Button" parent="ToolBar"]
+margin_right = 41.0
+margin_bottom = 25.0
+text = "Flow"
+flat = true
+__meta__ = {
+"_edit_lock_": true,
+"_editor_description_": "Editors
+Every Click changing editor. Default Editor: Flow
+- Flow Editor (Node Editor (json))
+- Data Editor (Sheet Editor (csv))
+- Document Editor (Text Editor (txt))
+
+- ~Property Editor (Entity Editor (json+ img))"
+}
+
+[node name="Navigator" type="Button" parent="ToolBar"]
+margin_left = 45.0
+margin_right = 117.0
+margin_bottom = 25.0
+text = "Navigator"
+flat = true
+__meta__ = {
+"_edit_lock_": true,
+"_editor_description_": "Modals
+- Navigator(Tree)
+- List & Tile "
+}
+
+[node name="EditorMenu" type="MenuButton" parent="ToolBar"]
+visible = false
+margin_left = 152.0
+margin_right = 201.0
 margin_bottom = 25.0
 hint_tooltip = "Editors"
 text = "Editor"
@@ -126,19 +157,6 @@ __meta__ = {
 - Property Editor (Entity Editor (json+ img))
 - Data Editor (Sheet Editor (csv))
 - Document Editor (Text Editor (txt))"
-}
-
-[node name="Navigator" type="Button" parent="ToolBar"]
-margin_left = 53.0
-margin_right = 125.0
-margin_bottom = 25.0
-text = "Navigator"
-flat = true
-__meta__ = {
-"_edit_lock_": true,
-"_editor_description_": "Modals
-- Navigator(Tree)
-- List & Tile "
 }
 
 [node name="NavigatorMenu" type="MenuButton" parent="ToolBar"]

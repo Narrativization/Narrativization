@@ -1,0 +1,40 @@
+# Roadmap
+
+Roadmap include, [Future Versions](#Future-Versions) and [Released Versions](#Released-Versions).
+
+
+### v0.2
+Basic software abilities, file management and asset creation.
+- [ ] UI management
+- [ ] File System Creation and management(Default-Templated Folder Structure)
+- [ ] Modal and Folder Tree
+
+
+## Future Versions
+Go Back [Roadmap](#Roadmap).
+
+### v0.4
+Basic Flow management. Linear Act, Chapter or Quest flow creation. 
+
+### v0.6
+Advanced Flow management. Non-linear, conditional flows(dilaogues).
+
+### v0.8
+UI/UX improvements, Better Modals and Tabs.
+
+### v1.0
+New Featured Software
+
+### v2.0
+Split Screen or Multi Window Viewport 
+
+
+
+## Released Versions
+Go Back [Roadmap](#Roadmap).
+
+### v0.1
+Basic UI and Runnable Project
+### v0.0
+Create Storier Design
+ 
