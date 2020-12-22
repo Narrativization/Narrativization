@@ -26,7 +26,7 @@ UI/UX improvements, Better Modals and Tabs.
 New Featured Software
 
 ### v2.0
-Split Screen or Multi Window Viewport, Full Featured Journey(Like a visual novel which includes map and etc.), Stat manager(Game Design Combat side)
+Split Screen or Multi Window Viewport, Full Featured Journey(Like a visual novel which includes map and etc.), Stat manager(Game Design Combat side), Create from Template(Editable)
 
 ### Unversioned
 Multi-User editing

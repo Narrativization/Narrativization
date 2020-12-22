@@ -1,5 +1,5 @@
 # Design
-[General Design](#General)
+[General Design](#General), [Technical Design](#Technical)
 
 ## General
 [Design](#Design), [Folder Structure and Flows](#Folder-Structure-and-Flows), [User Interface](#User-Interfaces), 
@@ -86,10 +86,10 @@ Flows can be deepened as desired.
 
 ### Editors
 Main Panel
-- Flow Editor (Node Editor (json))
-- Data Editor (Sheet Editor (csv))
-- Document Editor (Text Editor (txt))
-- ~Property Editor (Entity Editor (json+ img))
+- Flow Editor (Node Editor)
+- Data Editor (Sheet Editor)
+- Document Editor (Text Editor)
+- ~Property Editor (Entity Editor)
 
 ### Views
 Modals
@@ -108,4 +108,25 @@ Be UX focused!
 Multi and Single File Save(or Export)
 Game Engine integrated import/exports
 
+
+## Technical
+[Design](#Design), 
+
+### Hierarchy Formats
+- Story(.storier) -> json
+    - Flows(.flow) -> config
+    - Entities(.entity) -> json
+    - Assets -> png, jpg, txt, csv... 
+    - Journeys() -> config
+    - Templates(.template) -> config, json, ~xml
+    - References(.reference) -> config
+
+Story
+    - Partitions(Flow, Entity, Assets, ...)
+        - Properties(Datas)
+        - SubPartitations(SubFolders)
+
+Default project folder: ***".../Documents/Storier"***
+
+User Settings and User Datas etc. ***"user://'Settings'.'ConfigFile'(.ini or .cfg)"*** 
 

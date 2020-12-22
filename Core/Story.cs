@@ -116,6 +116,7 @@ namespace Storier
             };
 
             FileManager.SaveFile(storyData.directory + storyData.name + ".storier", JSON.Print(saveData, "\t"));
+            CreateHierarchy();
         }
 
         public void LoadStory(string fileName)
@@ -147,8 +148,32 @@ namespace Storier
             }
         }
 
+        // Create Folder/File Structure of project
+        public void CreateHierarchy()
+        {
+            Godot.Collections.Array<string> defaultDirs = new Godot.Collections.Array<string>()
+            {
+                storyData.directory + "Flows/",
+                storyData.directory + "Entities/",
+                storyData.directory + "Entities/Characters/",
+                storyData.directory + "Entities/Locations/",
+                // storyData.directory + "Entities/Items/",
+                storyData.directory + "Assets/",
+                // storyData.directory + "Journeys/"
+                // storyData.directory + "Templates/"
+                storyData.directory + "References/"
+            };
+            Directory dir = new Directory();
+            for (int i = 0; i < defaultDirs.Count; i++)
+            {
+                dir.MakeDirRecursive(defaultDirs[i]);
+            }
+        }
 
-
+        public Dictionary LookHierarchy()
+        {
+            return FileManager.DirectoryContents(storyData.directory);
+        }
 
     }
 }
@@ -169,9 +194,23 @@ namespace Storier
 */
 
 /*
+File Hierarchy
+- Story(.storier) -> json
+    - Flows(.flow) -> config
+    - Entities(.entity) -> json
+        - Characters
+        - Locations
+        - ~Items
+    - Assets -> png, jpg, txt, csv... 
+    - Journeys() -> config
+    - Templates(.template) -> config, json, ~xml
+    - References(.reference) -> config
+*/
+
+
+/*
     > Story <
     Story Informations +
-    Create Basic Hierarchy | Folder Structure
-    Create Advanced Hierarchy
+    Create Basic Hierarchy | Folder Structure + 
     Get Hierarchy | Folder Structure
 */

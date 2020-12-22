@@ -1,6 +1,9 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://GUI/Modals/NavigationTree.cs" type="Script" id=1]
 
 [node name="Navigator" type="WindowDialog"]
+visible = true
 margin_right = 260.0
 margin_bottom = 300.0
 rect_min_size = Vector2( 260, 300 )
@@ -21,6 +24,9 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 20.0
+allow_rmb_select = true
+select_mode = 2
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

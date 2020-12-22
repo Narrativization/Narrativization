@@ -99,7 +99,7 @@ namespace Storier
             Directory dir = new Directory();
             if (dir.Open(fileName) == Error.Ok)
             {
-                dir.ListDirBegin(true, false);
+                dir.ListDirBegin(true, true);
                 string fName = dir.GetNext();
                 while (fName != "")
                 {
