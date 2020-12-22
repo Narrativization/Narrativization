@@ -17,7 +17,7 @@ Go Back [Roadmap](#Roadmap).
 Basic Flow management. Linear Act, Chapter or Quest flow creation. 
 
 ### v0.6
-Advanced Flow management. Non-linear, conditional flows(dilaogues).
+Advanced Flow management. Non-linear, conditional flows(dialogues).
 
 ### v0.8
 UI/UX improvements, Better Modals and Tabs.
@@ -26,8 +26,10 @@ UI/UX improvements, Better Modals and Tabs.
 New Featured Software
 
 ### v2.0
-Split Screen or Multi Window Viewport 
+Split Screen or Multi Window Viewport, Full Featured Journey(Like a visual novel which includes map and etc.), Stat manager(Game Design Combat side)
 
+### Unversioned
+Multi-User editing
 
 
 ## Released Versions

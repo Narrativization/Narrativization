@@ -4,12 +4,23 @@ using Godot.Collections;
 
 namespace Storier
 {
+    // File system managing like Save/Load, Search, Directory Structure etc.
     public static class FileManager
     {
         public static bool SaveFile(string fileName, string content = "", File.ModeFlags fmode = File.ModeFlags.WriteRead)
         {
             if (fileName != null)
             {
+                Directory dir = new Directory(); 
+                if (!dir.DirExists(fileName.GetBaseDir())) // Check Directory ~Folder can't found!
+                {
+                    Error dirErr = dir.MakeDirRecursive(fileName.GetBaseDir());
+                    if (dirErr != Error.Ok)
+                    {
+                        GD.PushError("Save File Directory Error Code: " + dirErr);
+                    }
+                }
+
                 File saveFile = new File(); 
                 Error err = saveFile.Open(fileName, fmode);
                 if (err == Error.Ok)
@@ -30,7 +41,7 @@ namespace Storier
             return false;
         }     
 
-        public static string ReadFile(string fileName, File.ModeFlags fmode = File.ModeFlags.Read)
+        public static string LoadFile(string fileName, File.ModeFlags fmode = File.ModeFlags.Read)
         {
             string content = ""; 
             if (fileName != null)
@@ -54,7 +65,7 @@ namespace Storier
             return content;
         }
 
-        public static bool DeleteFile(string fileName, File.ModeFlags fmode = File.ModeFlags.Read)
+        public static bool DeleteFile(string fileName, File.ModeFlags fmode = File.ModeFlags.WriteRead)
         {
             if (fileName != null)
             {
@@ -83,9 +94,7 @@ namespace Storier
             return dictionary;
         }
 
-
-
-        public static Dictionary DirectoryContents(string fileName, Dictionary dictionary)
+        private static Dictionary DirectoryContents(string fileName, Dictionary dictionary)
         {
             Directory dir = new Directory();
             if (dir.Open(fileName) == Error.Ok)

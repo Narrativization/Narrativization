@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Storier;
 
 public class MenuEditBar : HBoxContainer
 {
@@ -32,13 +33,16 @@ public class MenuEditBar : HBoxContainer
         switch (_id)
         {
             case 0: // New
-                GD.Print("New");
+                GD.Print("New Story");
+                StoryManager.CreateStory();
                 break;
             case 1: // Save
-                GD.Print("Save");
+                GD.Print("Save Story");
+                StoryManager.SaveStory();
                 break;
             case 2: // Load
-                GD.Print("Load");
+                GD.Print("Load Story");
+                StoryManager.LoadStory();
                 break;
             case 3: // Settings
                 GD.Print("Settings");

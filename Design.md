@@ -9,8 +9,10 @@
 
 Storier uses "Flow in Flow" Logic: Each Flow consists of another flow.
 
-Flow consists of flows and contains Entity & Assets. Entity consist of assets. 
-Every node(Story) templatable with changing their details.
+Story(Project) 
+Flow consists of flows and contains Entity & Assets. 
+While Entities are derived informations from assets and user defines, Assets are pure informations.
+Every Flow and Entity templatable with changing their details.
 
 ### Basic
 

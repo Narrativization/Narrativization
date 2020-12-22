@@ -106,6 +106,10 @@ Forward={
  ]
 }
 
+[logging]
+
+file_logging/log_path="user://logs/Storier.log"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
