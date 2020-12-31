@@ -6,9 +6,9 @@ public class MenuEditBar : HBoxContainer
 {
     // Exports
     [Export]
-    public NodePath StoryNode = new NodePath("./Story");
+    private NodePath storyNodePath = new NodePath("./Story");
     [Export]
-    public NodePath EditNode = new NodePath("./Edit");
+    private NodePath editNodePath = new NodePath("./Edit");
 
     // Publics
     public MenuButton storyMenu;
@@ -16,8 +16,8 @@ public class MenuEditBar : HBoxContainer
     
     public override void _Ready()
     {
-        storyMenu = GetNode<MenuButton>(StoryNode);
-        editMenu = GetNode<MenuButton>(EditNode);
+        storyMenu = GetNode<MenuButton>(storyNodePath);
+        editMenu = GetNode<MenuButton>(editNodePath);
         if (IsInstanceValid(storyMenu))
         {
             storyMenu.GetPopup().Connect("id_pressed", this, "_OnStoryMenuItemPressed");

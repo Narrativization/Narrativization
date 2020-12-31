@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://GUI/MenuBar/MenuEditBar.cs" type="Script" id=1]
+[ext_resource path="res://GUI/MenuBar/MenuToolBar.cs" type="Script" id=2]
 
 [node name="MenuBar" type="Control"]
 anchor_right = 1.0
@@ -106,6 +107,7 @@ grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 0
 alignment = 2
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -172,3 +174,4 @@ __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "Hided"
 }
+[connection signal="button_down" from="ToolBar/Navigator" to="ToolBar" method="_OnNavigatorButtonDown"]

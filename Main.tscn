@@ -55,5 +55,5 @@ __meta__ = {
 
 [node name="FlowEditor" parent="View/EditorViewport/TabContainer/Tabs" instance=ExtResource( 3 )]
 
-[node name="Modals" parent="." instance=ExtResource( 2 )]
+[node name="ModalWindows" parent="." instance=ExtResource( 2 )]
 mouse_filter = 2

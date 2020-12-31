@@ -52,12 +52,12 @@ namespace Storier
         {
             // return base.ToString();
             FieldInfo[] fi = typeof(StoryData).GetFields(BindingFlags.Public | BindingFlags.Instance);
-            string tString = "---StoryData.ToString()---\n";
+            string tString = "\n[" + base.ToString() + "]\n";
             foreach (FieldInfo info in fi)
             {
                 tString += info.Name + ":\t" + (string)info.GetValue(this).ToString() + "\n";
             }
-            tString += "-------------------";
+            tString += "\n";
             return tString;
         }
     }
@@ -194,7 +194,7 @@ namespace Storier
 */
 
 /*
-File Hierarchy
+Story Hierarchy - File/Folder Structure
 - Story(.storier) -> json
     - Flows(.flow) -> config
     - Entities(.entity) -> json
@@ -205,12 +205,4 @@ File Hierarchy
     - Journeys() -> config
     - Templates(.template) -> config, json, ~xml
     - References(.reference) -> config
-*/
-
-
-/*
-    > Story <
-    Story Informations +
-    Create Basic Hierarchy | Folder Structure + 
-    Get Hierarchy | Folder Structure
 */

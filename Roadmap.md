@@ -29,7 +29,7 @@ New Featured Software
 Split Screen or Multi Window Viewport, Full Featured Journey(Like a visual novel which includes map and etc.), Stat manager(Game Design Combat side), Create from Template(Editable)
 
 ### Unversioned
-Multi-User editing
+Multi-User editing, ~Dockable ModalWindows
 
 
 ## Released Versions

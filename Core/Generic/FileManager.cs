@@ -150,5 +150,17 @@ namespace Storier
             dir.ListDirEnd();
             return files;
         }
+
+        public static ImageTexture ResizeImage(Texture texture, int width = 0, int height = 0)
+        {
+            Image img = texture.GetData();
+            ImageTexture imgTex = new ImageTexture();
+            if (width > 0 && height > 0)
+            {
+                img.Resize(width, height);
+            }
+            imgTex.CreateFromImage(img);
+            return imgTex;
+        }
     }
 }

@@ -14,6 +14,8 @@ Flow consists of flows and contains Entity & Assets.
 While Entities are derived informations from assets and user defines, Assets are pure informations.
 Every Flow and Entity templatable with changing their details.
 
+Some points(nodes or subflow) in the flow can be marked as keypoints([Plot](https://en.wikipedia.org/wiki/Plot_(narrative))). Good for creating causation; also ***Hero's Journey***, ***Three Act Structure*** etc. [Narrative Structures](https://en.wikipedia.org/wiki/Narrative_structure)
+
 ### Basic
 
 Basic Folder Structure
@@ -122,9 +124,11 @@ Game Engine integrated import/exports
     - References(.reference) -> config
 
 Story
-    - Partitions(Flow, Entity, Assets, ...)
-        - Properties(Datas)
-        - SubPartitations(SubFolders)
+    - Partitions(Flow, Entity, Assets, ...) 
+        - Files
+        - SubFolders
+            - Files
+
 
 Default project folder: ***".../Documents/Storier"***
 
