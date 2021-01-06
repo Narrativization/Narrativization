@@ -1,0 +1,86 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://GUI/Modals/CreateDialog.cs" type="Script" id=1]
+
+[node name="CreateDialog" type="ConfirmationDialog"]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -183.0
+margin_top = -140.0
+margin_right = 183.0
+margin_bottom = 140.0
+window_title = "Create Story"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Content" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -36.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Content"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Story" type="LineEdit" parent="Content/VBoxContainer"]
+margin_right = 350.0
+margin_bottom = 24.0
+placeholder_text = "Story Name"
+caret_blink = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Author" type="LineEdit" parent="Content/VBoxContainer"]
+margin_top = 28.0
+margin_right = 350.0
+margin_bottom = 52.0
+placeholder_text = "Author"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Copyright" type="LineEdit" parent="Content/VBoxContainer"]
+margin_top = 56.0
+margin_right = 350.0
+margin_bottom = 80.0
+placeholder_text = "Copyright"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DefaultDir" type="CheckBox" parent="Content/VBoxContainer"]
+margin_top = 84.0
+margin_right = 350.0
+margin_bottom = 108.0
+disabled = true
+pressed = true
+text = "Use Default Directory(~/Documents/Storier/)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Override" type="CheckBox" parent="Content/VBoxContainer"]
+margin_top = 112.0
+margin_right = 350.0
+margin_bottom = 136.0
+disabled = true
+pressed = true
+text = "Replace the existing project"
+__meta__ = {
+"_edit_use_anchors_": false
+}

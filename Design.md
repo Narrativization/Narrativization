@@ -14,7 +14,7 @@ Flow consists of flows and contains Entity & Assets.
 While Entities are derived informations from assets and user defines, Assets are pure informations.
 Every Flow and Entity templatable with changing their details.
 
-Some points(nodes or subflow) in the flow can be marked as keypoints([Plot](https://en.wikipedia.org/wiki/Plot_(narrative))). Good for creating causation; also ***Hero's Journey***, ***Three Act Structure*** etc. [Narrative Structures](https://en.wikipedia.org/wiki/Narrative_structure)
+Some points(nodes or subflow) in the flow can be marked as keypoints([Plot](https://en.wikipedia.org/wiki/Plot_(narrative))). [Narrative Structures](#Narrative-Structure)
 
 ### Basic
 
@@ -43,6 +43,8 @@ Customized or enhanced file structure
                 - Files
         - Items
         - Locations
+        - ~Information 
+        - ~Abstraction
     - Assets
         - Documents(~Notes)
         - Images
@@ -110,6 +112,16 @@ Be UX focused!
 Multi and Single File Save(or Export)
 Game Engine integrated import/exports
 
+### Story Elements
+- Story
+    - Plot[Flow]
+    - Character[Entity]
+    - Settings[Entity]
+    - ~Theme[StoryInfo], Conflict[?], ~~Point of View, Tone, Style
+
+### Narrative Structure
+Good for creating causation; also ***Hero's Journey***, ***Three Act Structure*** etc. 
+[Narrative Structures](https://en.wikipedia.org/wiki/Narrative_structure)
 
 ## Technical
 [Design](#Design), 
@@ -124,13 +136,13 @@ Game Engine integrated import/exports
     - References(.reference) -> config
 
 Story
-    - Partitions(Flow, Entity, Assets, ...) 
+    - Story Elements (Flow, Entity, Assets, ...)
         - Files
         - SubFolders
             - Files
 
 
-Default project folder: ***".../Documents/Storier"***
+Default project folder: ***"~/Documents/Storier"***
 
 User Settings and User Datas etc. ***"user://'Settings'.'ConfigFile'(.ini or .cfg)"*** 
 

@@ -34,7 +34,7 @@ public class MenuEditBar : HBoxContainer
         {
             case 0: // New
                 GD.Print("New Story");
-                StoryManager.CreateStory();
+                ModalWindow.modals.ShowCreateModal();
                 break;
             case 1: // Save
                 GD.Print("Save Story");
@@ -42,7 +42,7 @@ public class MenuEditBar : HBoxContainer
                 break;
             case 2: // Load
                 GD.Print("Load Story");
-                StoryManager.LoadStory();
+                ModalWindow.modals.ShowLoadModal();
                 break;
             case 3: // Settings
                 GD.Print("Settings");

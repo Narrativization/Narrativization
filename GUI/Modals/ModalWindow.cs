@@ -8,6 +8,8 @@ public class ModalWindow : Control
     [Export]
     private NodePath overlayNodePath = new NodePath("./BackgroundOverlay");
     [Export]
+    private NodePath createDialogNodePath = new NodePath("./CreateDialog");
+    [Export]
     private NodePath fileDialogNodePath = new NodePath("./FileDialog");
     [Export]
     private NodePath navigatorNodePath = new NodePath("./Navigator");
@@ -26,6 +28,7 @@ public class ModalWindow : Control
     }  
 
     public Panel overlay;
+    public CreateDialog createDialog;
     public FileDialog fileDialog;
     public WindowDialog navigator;
     
@@ -33,6 +36,7 @@ public class ModalWindow : Control
     {
         _modals = this;
         overlay = GetNode<Panel>(overlayNodePath);
+        createDialog = GetNode<CreateDialog>(createDialogNodePath);
         fileDialog = GetNode<FileDialog>(fileDialogNodePath);
         navigator = GetNode<WindowDialog>(navigatorNodePath);
     }
@@ -43,25 +47,38 @@ public class ModalWindow : Control
 //      
 //  }
 
-
-    //  Type Modal Name and display as named modal window.
-    public void ShowModalWindow(string modalName)
+    
+    public void ShowFileModal()
     {
         overlay.Hide();
-        switch (modalName)
-        {
-            case "File":
-                overlay.Show();
-                break;
-            case "Navigator":
-                navigator.ShowModal();
-                navigator.GetNode<NavigationTree>("./Tree").Refresh();
-                break;
-            default:
-                GD.PushWarning("Unexpected ShowModalWindow name: " + modalName);
-                break;
-        }
+        fileDialog.ShowModal();
     }
+    
+    public void ShowCreateModal()
+    {
+        overlay.Hide();
+        createDialog.ShowModal();
+    }
+
+    public void ShowLoadModal()
+    {
+        overlay.Hide();
+        fileDialog.Mode = FileDialog.ModeEnum.OpenFile;
+        fileDialog.Access = FileDialog.AccessEnum.Filesystem;
+        fileDialog.CurrentDir = OS.GetSystemDir(OS.SystemDir.Documents) + "/Storier/";
+        fileDialog.Filters = new string[] {"*.storier"};
+        fileDialog.ShowModal(); // ~Popup Centered
+        fileDialog.Invalidate();
+    }
+
+    public void ShowNavigatorModal()
+    {
+        overlay.Hide();
+        navigator.ShowModal();
+        navigator.GetNode<NavigationTree>("./Tree").Refresh();
+    }
+
+
     
     // Some actions displaying an overlay so after that hide the overlay
     public void _OnHideOverlay()
@@ -69,4 +86,20 @@ public class ModalWindow : Control
         overlay.Hide();
     }
 
+    public void _OnFileDialogDirSelected(string dir)
+    {
+
+    }
+
+    public void _OnFileDialogFileSelected(string path)
+    {
+        StoryManager.LoadStory(path);
+    }
+
+    public void _OnCreateDialogConfirmed()
+    {
+        StoryManager.CreateStory(createDialog.GetInfos());
+    }
+
+    
 }

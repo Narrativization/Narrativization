@@ -10,10 +10,10 @@ namespace Storier
         public static Story story = new Story("Untitled");
 
         // Create New Story 
-        public static bool CreateStory()
+        public static bool CreateStory(StoryData _storyData)
         {
-            // CreatePopUpMenu
-            story = new Story("StoryManager");
+            story = new Story(_storyData);
+            PushRecentStory(story.storyData.directory);
             // Story Configurations
             return true;
         }
@@ -22,15 +22,14 @@ namespace Storier
         public static bool SaveStory()
         {
             story.SaveStory();
-            // Add Recently
+            PushRecentStory(story.storyData.directory);
             return true;
         }
 
         // Load Story
-        public static bool LoadStory()
+        public static bool LoadStory(string fileName)
         {
-            // CreatePopUpMenu
-            story.LoadStory("");
+            story.LoadStory(fileName);
             // Add Recently
             return true;
         }
@@ -49,7 +48,7 @@ namespace Storier
         }
         
         // Gettings All Recently Story as String
-        public static Array<string> PeekRecentStory(string fileName)
+        public static Array<string> PeekRecentStory()
         {
             // CreatePopUpMenu
             // Select Recently

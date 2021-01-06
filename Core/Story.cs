@@ -130,7 +130,7 @@ namespace Storier
             } 
             else
             {
-                GD.Print(JSON.Print(jsonObject.Result)); // Print
+                // GD.Print(JSON.Print(jsonObject.Result)); // Print
                 Dictionary storyJson = jsonObject.Result as Dictionary; // Godot.Collections.Array  <-  [] 
                 storyData = new StoryData(fileName.BaseName(), fileName.GetBaseDir());
 
@@ -182,7 +182,8 @@ namespace Storier
     Create a project file structure | .storier
     {
         Story: {
-            Name: "Storier",
+            Name: "Storier",  // Title
+            // Description: "Story Managing Software for Game Creators.",
             Author: "Atakan Ateş",
             Copyright: "Copyright © 2020 Atakan Ateş, All Rights Reserved!"
         },
