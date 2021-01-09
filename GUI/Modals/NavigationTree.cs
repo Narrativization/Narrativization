@@ -41,7 +41,7 @@ public class NavigationTree : Tree
 
     public void Refresh()
     {
-        CreateTree(StoryManager.story.LookHierarchy(), StoryManager.story.storyData.name);
+        CreateTree(Story.story.LookHierarchy(), Story.story.storyData.name);
     }
 
     public void CreateTree(Dictionary _dictionary, string rootName)

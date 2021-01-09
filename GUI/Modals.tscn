@@ -27,7 +27,6 @@ __meta__ = {
 }
 
 [node name="CreateDialog" parent="." instance=ExtResource( 3 )]
-visible = false
 
 [node name="FileDialog" type="FileDialog" parent="."]
 anchor_left = 0.5

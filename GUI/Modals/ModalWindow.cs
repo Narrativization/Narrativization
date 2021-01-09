@@ -93,12 +93,15 @@ public class ModalWindow : Control
 
     public void _OnFileDialogFileSelected(string path)
     {
-        StoryManager.LoadStory(path);
+        Story story = new Story();
+        GetTree().Root.AddChild(story);
+        Story.story.LoadStory(path);
     }
 
     public void _OnCreateDialogConfirmed()
     {
-        StoryManager.CreateStory(createDialog.GetInfos());
+        Story story = new Story(createDialog.GetInfos());
+        GetTree().Root.AddChild(story);
     }
 
     

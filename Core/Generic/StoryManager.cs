@@ -4,95 +4,72 @@ using Godot.Collections;
 
 namespace Storier
 {
-    // Creating, Storing and Managing Stories
+    // Managing Settings and recents of Stories
     public static class StoryManager
     {
-        public static Story story = new Story("Untitled");
+        public static string workspace = OS.GetSystemDir(OS.SystemDir.Documents) + "/Storier/";
 
-        // Create New Story 
-        public static bool CreateStory(StoryData _storyData)
-        {
-            story = new Story(_storyData);
-            PushRecentStory(story.storyData.directory);
-            // Story Configurations
-            return true;
-        }
-        
-        // Save Story
-        public static bool SaveStory()
-        {
-            story.SaveStory();
-            PushRecentStory(story.storyData.directory);
-            return true;
-        }
-
-        // Load Story
-        public static bool LoadStory(string fileName)
-        {
-            story.LoadStory(fileName);
-            // Add Recently
-            return true;
-        }
-        
         // Record Recently Story
-        public static void PushRecentStory(string fileName)
+        public static void PushRecentStory()
         {
-            // Record Recently
-        }
-        
-        // Picking Recently(Last) Story
-        public static bool PopRecentStory(string fileName)
-        {
-            // LoadStory();
-            return true;
-        }
-        
-        // Gettings All Recently Story as String
-        public static Array<string> PeekRecentStory()
-        {
-            // CreatePopUpMenu
-            // Select Recently
-            // LoadStory();
-            return new Array<string>();
-        }
-
-        private static void SaveConfigFile(string fileName = "UserConfiguration") // Save Config file to "user://", use as Storier(editor) settings
-        {
-            string configFileName =  fileName + ".ini";
+            string configFileName = "user://UserStories.ini";
             ConfigFile configFile = new ConfigFile();
             Directory dir = new Directory();
-            dir.MakeDirRecursive(fileName.GetBaseDir());
-            // configFile.SetValue("Stories", "RecentStories", /*Load.Add*/"Load then add");
+            dir.MakeDirRecursive(configFileName.GetBaseDir());
+            configFile.SetValue("Stories", "RecentStory", Story.story.storyData.directory);
             Error err = configFile.Save(configFileName);
-            if (err != Error.Ok)
-            {
-                GD.Print(err);
-            }
+            if (err != Error.Ok) { GD.Print(err); }
         }
-
-        public static void LoadConfigFile(string fileName = "UserConfiguration")
+        
+        // Picking Recently Story
+        public static string PopRecentStory()
         {
-            string configFileName = fileName + ".ini";
+            string configFileName = "user://UserStories.ini";
             ConfigFile configFile = new ConfigFile();
-            configFile.Load(configFileName);
-            // story.storyName = configFile.GetValue("Stories", "RecentStories").ToString();
+            Error err = configFile.Load(configFileName);
+            if (err != Error.Ok) { GD.Print(err); return ""; }
+            return configFile.GetValue("Stories", "RecentStory").ToString(); // RecentStory
+        }
+        
+        // // Return All Recently Story as String
+        // public static Array<string> PeekRecentStory()
+        // {
+        //     return new Array<string>();
+        // }
+
+        // !WARNING: Change Workspace isn't in use!
+
+        // Save Config file to "user://", use as UserStories settings
+        public static void SaveUserConfig(string fileName = "UserStories")
+        {
+            string configFileName = "user://" + fileName + ".ini";
+            ConfigFile configFile = new ConfigFile();
+            Directory dir = new Directory();
+            dir.MakeDirRecursive(configFileName.GetBaseDir());
+            configFile.SetValue("Workspace", "Directory", workspace);
+            Error err = configFile.Save(configFileName);
+            if (err != Error.Ok) { GD.Print(err); }
         }
 
+        // Load Config file from "user://"
+        public static void LoadUserConfig(string fileName = "UserStories")
+        {
+            string configFileName = "user://" + fileName + ".ini";
+            ConfigFile configFile = new ConfigFile();
+            Error err = configFile.Load(configFileName);
+            if (err != Error.Ok) { GD.Print(err); }
+            workspace = configFile.GetValue("Workspace", "Directory").ToString(); // Workscape
+        }
     }
 }
 
 /*
-    UserStories.ini ~.cfg
+    UserStories.ini
 
     [Workspace]
-    Directory [] ;Empty is Documents ~UserPersist
+    Directory "" ; Empty is Documents
 
     [Stories]
-    RecentStories [Story1, Story2, Story3]
-
-    [StoryDirectories]
-    Story1 Directory
-    Story2 Directory1
-    Story3 Directory2
+    RecentStory Directory
 
 */
