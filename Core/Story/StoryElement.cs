@@ -1,0 +1,68 @@
+using Godot;
+using System;
+
+
+namespace Storier
+{
+    public class StoryElement : Resource
+    {
+        public string defaultTemplate = "res://Templates/Entity/DefaultCharacterTemplate.tscn";
+
+        private StoryElement() {}
+        public StoryElement(string _name, string _path, bool _localToScene = false)
+        {
+            ResourceName = _name;
+            TakeOverPath(_path);
+            ResourceLocalToScene = _localToScene;
+        }
+
+        // Creating Story Element from anywhere
+        public static StoryElement CreateStoryElement(string _name, string _relativePath = "/Entities/Characters/")
+        {
+            string sePath = Story.story.storyData.directory + "" + _relativePath + _name + ".story";
+            StoryElement storyElement = new StoryElement(_name, sePath, true);
+            return storyElement;
+        }
+
+        // Saving Story Element | ~Maybe create Resource Format Saver/Loader
+        public void Save()
+        {
+            if (!FileManager.SaveFile(ResourcePath, ResourceName))
+            {
+                GD.Print(ResourceName + " save Failed!");
+                return; 
+            }
+            GD.Print(ResourceName + " saved!");
+        }
+
+        public void Load()
+        {
+            // PackedScene packedScene = ResourceLoader.Load("res://PackedScene.tscn") as PackedScene;
+            // Story customSprite = packedScene.Instance() as Story;
+            // AddChild(customSprite);
+        }
+
+        public void Reload()
+        {
+            
+        }
+
+        
+
+    }
+}
+
+
+/*
+Story Elements(Hierarchy) - File/Folder Structure
+- Story(.storier) -> json
+    - Flows(.flow) -> config
+    - Entities(.entity) -> json
+        - Characters
+        - Locations
+        - ~Items
+    - Assets -> png, jpg, txt, csv... 
+    - Journeys() -> config
+    - Templates(.template) -> config, json, ~xml, tscn
+    - References(.reference) -> config
+*/

@@ -41,7 +41,16 @@ public class NavigationTree : Tree
 
     public void Refresh()
     {
-        CreateTree(Story.story.LookHierarchy(), Story.story.storyData.name);
+        if(IsInstanceValid(Story.story))
+        {
+            CreateTree(Story.story.LookHierarchy(), Story.story.storyData.name);
+        }
+        else
+        {
+            Clear();
+            root = CreateItem();
+            root.SetText(0,"Open Project!");
+        }
     }
 
     public void CreateTree(Dictionary _dictionary, string rootName)

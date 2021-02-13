@@ -60,6 +60,22 @@ namespace Storier
             if (err != Error.Ok) { GD.Print(err); }
             workspace = configFile.GetValue("Workspace", "Directory").ToString(); // Workscape
         }
+
+        public static Story GetNamedStory(string name, SceneTree sceneTree)
+        {
+            if (Godot.Object.IsInstanceValid(sceneTree))
+            {
+                for (int i = 0; i < sceneTree.GetNodesInGroup("Story").Count; i++)
+                {
+                    Story s = sceneTree.GetNodesInGroup("Story")[i] as Story;
+                    if (s.Name == name)
+                    {
+                        return s;
+                    }
+                }
+            }
+            return null;
+        }
     }
 }
 

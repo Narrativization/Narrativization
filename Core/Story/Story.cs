@@ -13,11 +13,8 @@ namespace Storier
         // Story Data
         public StoryData storyData = new StoryData();
 
-        public Story() 
-        {
-            story = this;
-        }
-
+        
+        public Story() { story = this; } // Create New Empty Story 
         // Create New Story 
         public Story(StoryData _storyData)
         {
@@ -32,7 +29,7 @@ namespace Storier
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
-            
+            AddToGroup("Story");
         }
 
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -126,18 +123,4 @@ namespace Storier
     }
     Additional Story Informations
     + Directory
-*/
-
-/*
-Story Elements(Hierarchy) - File/Folder Structure
-- Story(.storier) -> json
-    - Flows(.flow) -> config
-    - Entities(.entity) -> json
-        - Characters
-        - Locations
-        - ~Items
-    - Assets -> png, jpg, txt, csv... 
-    - Journeys() -> config
-    - Templates(.template) -> config, json, ~xml
-    - References(.reference) -> config
 */

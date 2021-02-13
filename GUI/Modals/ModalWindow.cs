@@ -13,6 +13,8 @@ public class ModalWindow : Control
     private NodePath fileDialogNodePath = new NodePath("./FileDialog");
     [Export]
     private NodePath navigatorNodePath = new NodePath("./Navigator");
+    [Export]
+    private NodePath detailsDialogNodePath = new NodePath("./DetailsDialogue");
 
     private static ModalWindow _modals = null;  
     public static ModalWindow modals  
@@ -31,6 +33,7 @@ public class ModalWindow : Control
     public CreateDialog createDialog;
     public FileDialog fileDialog;
     public WindowDialog navigator;
+    public DetailsDialogue detailsDialog;
     
     public override void _Ready()
     {
@@ -39,6 +42,7 @@ public class ModalWindow : Control
         createDialog = GetNode<CreateDialog>(createDialogNodePath);
         fileDialog = GetNode<FileDialog>(fileDialogNodePath);
         navigator = GetNode<WindowDialog>(navigatorNodePath);
+        detailsDialog = GetNode<DetailsDialogue>(detailsDialogNodePath);
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -58,6 +62,13 @@ public class ModalWindow : Control
     {
         overlay.Hide();
         createDialog.ShowModal();
+    }
+    
+    public void ShowDetailsModal()
+    {
+        overlay.Hide();
+        detailsDialog.ShowModal();
+        detailsDialog.InitDialogue(StoryElement.CreateStoryElement("Character"));
     }
 
     public void ShowLoadModal()

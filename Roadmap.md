@@ -7,7 +7,7 @@ Roadmap include, [Future Versions](#Future-Versions) and [Released Versions](#Re
 Basic software abilities, file management and asset creation.
 - [ ] UI management
 - [ ] File System Creation and management(Default-Templated Folder Structure)
-- [ ] Modal and Folder Tree
+- [x] Modal and Folder Tree
 
 
 ## Future Versions
