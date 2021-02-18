@@ -14,10 +14,10 @@ public class FlowContextMenu : PopupMenu
         switch (Id)
         {
             case 0:
-                ModalWindow.modals.ShowCreateModal();
+                ModalManager.modals.ShowCreateModal();
                 break;
             case 1:
-                ModalWindow.modals.ShowDetailsModal();
+                ModalManager.modals.ShowDetailsModal();
                 break;
             default:
                 GD.Print("Flow Context Menu: " + Id);

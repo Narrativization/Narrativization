@@ -2,7 +2,7 @@ using Godot;
 using System;
 using Storier;
 
-public class ModalWindow : Control
+public class ModalManager : Control
 {
     // Exports
     [Export]
@@ -16,8 +16,8 @@ public class ModalWindow : Control
     [Export]
     private NodePath detailsDialogNodePath = new NodePath("./DetailsDialogue");
 
-    private static ModalWindow _modals = null;  
-    public static ModalWindow modals  
+    private static ModalManager _modals = null;  
+    public static ModalManager modals  
     {  
         get  
         {  
@@ -30,19 +30,19 @@ public class ModalWindow : Control
     }  
 
     public Panel overlay;
-    public CreateDialog createDialog;
+    public CreateStoryModal createDialog;
     public FileDialog fileDialog;
     public WindowDialog navigator;
-    public DetailsDialogue detailsDialog;
+    public DetailsModal detailsDialog;
     
     public override void _Ready()
     {
         _modals = this;
         overlay = GetNode<Panel>(overlayNodePath);
-        createDialog = GetNode<CreateDialog>(createDialogNodePath);
+        createDialog = GetNode<CreateStoryModal>(createDialogNodePath);
         fileDialog = GetNode<FileDialog>(fileDialogNodePath);
         navigator = GetNode<WindowDialog>(navigatorNodePath);
-        detailsDialog = GetNode<DetailsDialogue>(detailsDialogNodePath);
+        detailsDialog = GetNode<DetailsModal>(detailsDialogNodePath);
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.

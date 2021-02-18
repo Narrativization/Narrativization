@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class CreateDialog : ConfirmationDialog
+public class CreateStoryModal : ConfirmationDialog
 {
     // Exports
     [Export]

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class NodeEditor : GraphEdit
+public class FlowGraphEditor : GraphEdit
 {
     [Export]
     public float zoomSpeed = 1.0f;

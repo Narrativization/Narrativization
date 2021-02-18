@@ -30,6 +30,6 @@ public class MenuToolBar : HBoxContainer
     {
         // var node = navigatorModalRes.Instance();
         // AddChild(node);
-        ModalWindow.modals.ShowNavigatorModal();
+        ModalManager.modals.ShowNavigatorModal();
     }
 }

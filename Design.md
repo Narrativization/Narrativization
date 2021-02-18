@@ -90,7 +90,7 @@ Flows can be deepened as desired.
 
 ### Editors
 Main Panel
-- Flow Editor (Node Editor)
+- Flow Editor (Node-Graph Editor)
 - Data Editor (Sheet Editor)
 - Document Editor (Text Editor)
 - ~Property Editor (Entity Editor)

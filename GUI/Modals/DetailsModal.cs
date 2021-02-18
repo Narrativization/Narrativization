@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class DetailsDialogue : WindowDialog
+public class DetailsModal : WindowDialog
 {
     // Exports
     [Export]
