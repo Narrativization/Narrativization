@@ -1,10 +1,12 @@
-using Godot;
 using System;
+using Godot;
 using Godot.Collections;
 
-public class StoryElementTemplate : Node
+public class StoryElementTemplate : Control
 {
-    
+    [Export] // Prof of Concept - Template Creation
+    private Dictionary<Godot.Object, Godot.Object> assets; // Create Enum Asset Types (include variables, Texture etc.)
+
     public override void _Ready()
     {
         
@@ -13,10 +15,15 @@ public class StoryElementTemplate : Node
     public Dictionary<string, object> GetSaveData()
     {
         Dictionary<string, object> saveData = new Dictionary<string, object>(); 
-        var saveNodes = GetTree().GetNodesInGroup("Persist");
-        foreach (Node saveNode in saveNodes)
+        Godot.Collections.Array saveNodes = GetTree().GetNodesInGroup("Persist");
+
+        for (int i = 0; i < saveNodes.Count; i++)
         {
-            saveData.Add(saveNode.Name, saveNode.Get("text"));
+            if (saveNodes[i] is LineEdit || saveNodes[i] is TextEdit)
+            {
+                Node saveNode = saveNodes[i] as Node;
+                saveData.Add(saveNode.Name, saveNode.Get("text"));
+            }
         }
         return saveData;
     }

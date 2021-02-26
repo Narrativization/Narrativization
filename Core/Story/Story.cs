@@ -89,7 +89,7 @@ namespace Storier
                 // storyData.directory + "Entities/Items/",
                 storyData.directory + "Assets/",
                 // storyData.directory + "Journeys/"
-                // storyData.directory + "Templates/"
+                storyData.directory + "Templates/",
                 storyData.directory + "References/"
             };
             Directory dir = new Directory();

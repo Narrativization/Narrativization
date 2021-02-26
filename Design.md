@@ -126,9 +126,10 @@ Good for creating causation; also ***Hero's Journey***, ***Three Act Structure**
 ## Technical
 [Design](#Design), 
 
-Default project folder: ***"~/Documents/Storier"***
-User(Recent) Stories: ***"user://UserStories.ini"*** 
-User Settings(Data): ***"user://UserSettings.cfg"*** 
+Workspace & Settings Folder
+- Default project folder: ***"~/Documents/Storier"***
+- User(Recent) Stories: ***"user://UserStories.ini"*** 
+- User Settings(Data): ***"user://UserSettings.cfg"*** 
 
 ### Hierarchy Formats
 - Story(.storier) -> json

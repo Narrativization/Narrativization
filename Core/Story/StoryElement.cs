@@ -6,7 +6,7 @@ namespace Storier
 {
     public class StoryElement : Resource
     {
-        public string defaultTemplate = "res://Templates/Entity/DefaultCharacterTemplate.tscn";
+        public string defaultTemplate = "res://Templates/DefaultTemplate.tscn";
 
         private StoryElement() {}
         public StoryElement(string _name, string _path, bool _localToScene = false)
@@ -17,17 +17,17 @@ namespace Storier
         }
 
         // Creating Story Element from anywhere
-        public static StoryElement CreateStoryElement(string _name, string _relativePath = "/Entities/Characters/")
+        public static StoryElement CreateStoryElement(string _name = "NewStoryElement", string _relativePath = "/Entities/Characters/")
         {
-            string sePath = Story.story.storyData.directory + "" + _relativePath + _name + ".story";
+            string sePath = Story.story.storyData.directory + "" + _relativePath;
             StoryElement storyElement = new StoryElement(_name, sePath, true);
             return storyElement;
         }
 
         // Saving Story Element | ~Maybe create Resource Format Saver/Loader
-        public void Save()
+        public void Save(string _data)
         {
-            if (!FileManager.SaveFile(ResourcePath, ResourceName))
+            if (!FileManager.SaveFile(ResourcePath + ResourceName + ".story", _data))
             {
                 GD.Print(ResourceName + " save Failed!");
                 return; 

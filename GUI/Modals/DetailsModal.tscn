@@ -2,7 +2,6 @@
 
 [ext_resource path="res://GUI/Modals/DetailsModal.cs" type="Script" id=1]
 
-
 [node name="DetailsModal" type="WindowDialog"]
 margin_right = 451.0
 margin_bottom = 350.0
@@ -15,7 +14,7 @@ __meta__ = {
 [node name="Tabs" type="TabContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 15.0
+margin_top = 43.0
 tab_align = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -41,7 +40,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextEdit" type="TextEdit" parent="Tabs/Pure Data"]
+[node name="PureData" type="TextEdit" parent="Tabs/Pure Data"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 text = "{
@@ -59,3 +58,16 @@ text = "ReadOnly"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ResourceName" type="LineEdit" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -286.0
+margin_top = 8.0
+margin_bottom = 24.0
+placeholder_text = "Resource Name"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="tab_changed" from="Tabs" to="." method="_OnTabsTabChanged"]
+[connection signal="toggled" from="ReadOnly" to="." method="_OnReadOnlyToggled"]
