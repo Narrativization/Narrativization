@@ -114,7 +114,7 @@ namespace Storier
             Name: "Storier",  // Title
             Description: "Story Managing Software for Game Creators.",
             Author: "Atakan Ateş",
-            Copyright: "Copyright © 2020 Atakan Ateş, All Rights Reserved!"
+            Copyright: "Copyright © Atakan Ateş, All Rights Reserved!"
         },
         Storier: {
             // 
