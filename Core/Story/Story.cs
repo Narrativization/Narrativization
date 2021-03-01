@@ -43,12 +43,13 @@ namespace Storier
             Dictionary saveData = new Dictionary() {
                 {
                     "Story", storyData.SaveData()
-                },
-                {
-                    "Storier", new Dictionary(){
-                        // Version: "v0.2"
-                    }
                 }
+                // ,
+                // {
+                //     "Storier", new Dictionary(){
+                //         {"Version", "v0.2"}
+                //     }
+                // }
             };
             FileManager.SaveFile(storyData.directory + storyData.name + ".storier", JSON.Print(saveData, "\t"));
             CreateHierarchy();

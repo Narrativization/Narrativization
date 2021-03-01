@@ -16,7 +16,7 @@ namespace Storier
             ConfigFile configFile = new ConfigFile();
             Directory dir = new Directory();
             dir.MakeDirRecursive(configFileName.GetBaseDir());
-            configFile.SetValue("Stories", "RecentStory", Story.story.storyData.directory);
+            configFile.SetValue("Stories", "RecentStory", Story.story.storyData.directory + Story.story.storyData.name + ".storier");
             Error err = configFile.Save(configFileName);
             if (err != Error.Ok) { GD.Print(err); }
         }

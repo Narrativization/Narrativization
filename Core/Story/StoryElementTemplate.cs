@@ -4,8 +4,8 @@ using Godot.Collections;
 
 public class StoryElementTemplate : Control
 {
-    [Export] // Prof of Concept - Template Creation
-    private Dictionary<Godot.Object, Godot.Object> assets; // Create Enum Asset Types (include variables, Texture etc.)
+    // [Export] // Prof of Concept - Template Creation
+    // private Dictionary<Godot.Object, Godot.Object> assets; // Create Enum Asset Types (include variables, Texture etc.)
 
     public override void _Ready()
     {
