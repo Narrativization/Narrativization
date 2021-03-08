@@ -124,7 +124,7 @@ Good for creating causation; also ***Hero's Journey***, ***Three Act Structure**
 [Narrative Structures](https://en.wikipedia.org/wiki/Narrative_structure)
 
 ## Technical
-[Design](#Design), 
+[Design](#Design)
 
 Workspace & Settings Folder
 - Default project folder: ***"~/Documents/Storier"***
@@ -134,11 +134,12 @@ Workspace & Settings Folder
 ### Hierarchy Formats
 - Story(.storier) -> json
     - Flows(.flow) -> config
-    - Entities(.entity) -> json
+    - Entities(.entity) -> json, ~config(Internationalization)
     - Assets -> png, jpg, txt, csv... 
     - Journeys() -> config
     - Templates(.template) -> config, json, ~xml
     - References(.reference) -> config
+    - .Export -> json/csv(Entities)
 
 Story
     - Story Elements (Flow, Entity, Assets, ...)
@@ -147,4 +148,19 @@ Story
             - Files
 
 
+### Entity Format
+Entity Example(.entity) -> .json
+{
+    Id: "", 
+    Name: "", 
+    Description: "",
+    Template: "",
+    Data: {
+        ...
+    }
+}
 
+StoryElement General Informations
+Id, Name, Description, Template 
+StoryElement Template Informations
+Data

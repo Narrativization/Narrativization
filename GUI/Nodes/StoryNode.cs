@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using Godot.Collections;
+using Storier;
 
 public class StoryNode : GraphNode
 {
@@ -11,14 +12,15 @@ public class StoryNode : GraphNode
     [Export] // Export(Dictionary, string, NodePath)
     private Array<NodePath> editables = new Array<NodePath>(); // NodePath: JSON.Direction  
 
+    private string recentStory = "";
     private Dictionary storyData;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        string recentStory = Storier.StoryManager.PopRecentStory();
-        GD.Print(Storier.FileManager.LoadFile(recentStory));
-        storyData = JSON.Parse(Storier.FileManager.LoadFile(recentStory)).Result as Dictionary;
+        recentStory = StoryManager.PopRecentStory();
+        GD.Print(FileManager.LoadFile(recentStory));
+        storyData = JSON.Parse(FileManager.LoadFile(recentStory)).Result as Dictionary;
         DisplayData();
     }
 
@@ -34,7 +36,13 @@ public class StoryNode : GraphNode
         {
             if (eventMouseButton.Doubleclick)
             {
-                GD.Print(storyData);
+                if (recentStory != "")
+                {
+                    Story story = new Story();
+                    GetTree().Root.AddChild(story);
+                    Story.story.LoadStory(recentStory);
+                    GD.Print(storyData);
+                }
             }
         }
     }

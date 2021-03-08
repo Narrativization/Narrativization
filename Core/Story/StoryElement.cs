@@ -66,3 +66,24 @@ Story Elements(Hierarchy) - File/Folder Structure
     - Templates(.template) -> config, json, ~xml, tscn
     - References(.reference) -> config
 */
+
+
+/*
+
+Entity Example
+{
+    Id: "", 
+    Name: "", 
+    Description: "",
+    Template: "",
+    Data: {
+        ...
+    }
+}
+
+StoryElement General Informations (All time included to Property/Details Modal)
+Id, Name, Description, Template 
+StoryElement Template Informations (After selected template)
+Data
+
+*/

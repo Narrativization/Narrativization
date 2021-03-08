@@ -76,6 +76,11 @@ namespace Storier
             }
             return null;
         }
+
+        // Create Story
+        // Get Story (bool Default, Path ="")
+        
+
     }
 }
 

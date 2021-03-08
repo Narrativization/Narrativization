@@ -6,6 +6,7 @@ public class FlowGraphEditor : GraphEdit
     [Export]
     public float zoomSpeed = 1.0f;
 
+    private bool hovering = false; // ~Focusing
     private bool dragging = false;
 
     public override void _Ready()
@@ -16,17 +17,17 @@ public class FlowGraphEditor : GraphEdit
     public override void _Input(InputEvent inputEvent)
     {
         // Generic Node Editor Inputs
-        if (inputEvent.IsAction("ZoomIn"))
+        if (inputEvent.IsAction("ZoomIn") && hovering)
         {
             Zoom += zoomSpeed * GetProcessDeltaTime();
             AcceptEvent();
         } 
-        else if (inputEvent.IsAction("ZoomOut"))
+        else if (inputEvent.IsAction("ZoomOut") && hovering)
         {
             Zoom -= zoomSpeed * GetProcessDeltaTime();
             AcceptEvent();
         } 
-        else if (inputEvent.IsActionPressed("ZoomHold"))
+        else if (inputEvent.IsActionPressed("ZoomHold") && hovering)
         {
             dragging = true;
             AcceptEvent();
@@ -48,13 +49,30 @@ public class FlowGraphEditor : GraphEdit
         }
 
         // Flow Editor Inputs
-        if (inputEvent.IsActionReleased("Context"))
+        if (inputEvent.IsActionReleased("Context") && hovering)
         {
             InputEventMouse mouse = inputEvent as InputEventMouse;
             PopupMenu popupMenu = GetParent().GetNode<PopupMenu>("./FlowContext");
             popupMenu.SetPosition(mouse.GlobalPosition);
             popupMenu.ShowModal();
         }
+    }
+
+    public override void _Notification(int what)
+    {
+        switch (what)
+        {
+            case NotificationMouseEnter:
+                hovering = true;
+                break;
+            case NotificationMouseExit:
+                hovering = false;
+                break;
+            default:
+                break;
+        }
+
+        base._Notification(what);
     }
 
 }
