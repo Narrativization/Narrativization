@@ -7,22 +7,15 @@ namespace Storier
     // Story(Project) 
     public class Story : Node
     {
-        // Current Story
-        public static Story story;
-
         // Story Data
         public StoryData storyData = new StoryData();
 
-        
-        public Story() { story = this; } // Create New Empty Story 
-        // Create New Story 
-        public Story(StoryData _storyData)
+        private Story() {}
+        public Story(StoryData _storyData) // Create New Story 
         {
-            story = this;
             storyData = _storyData;
             Name = storyData.name;
-            StoryManager.PushRecentStory();
-            SaveStory();
+            CreateHierarchy();
         }
         
 
@@ -38,44 +31,15 @@ namespace Storier
     //      
     //  }
 
-        public void SaveStory()
+        private bool SaveStory()
         {
-            Dictionary saveData = new Dictionary() {
-                {
-                    "Story", storyData.SaveData()
-                }
-                // ,
-                // {
-                //     "Storier", new Dictionary(){
-                //         {"Version", "v0.2"}
-                //     }
-                // }
-            };
-            FileManager.SaveFile(storyData.directory + storyData.name + ".storier", JSON.Print(saveData, "\t"));
-            CreateHierarchy();
+            
+            return true;
         }
 
-        public void LoadStory(string fileName)
+        public void LoadStory()
         {
-            string str = FileManager.LoadFile(fileName);
-            JSONParseResult jsonObject = JSON.Parse(str);
-            if(jsonObject.Error != 0) { GD.Print("Error:", jsonObject.ErrorLine); } 
-            else
-            {
-                // GD.Print(JSON.Print(jsonObject.Result));
-                Dictionary storyJson = jsonObject.Result as Dictionary; // Godot.Collections.Array  <-  [] 
-                storyData = new StoryData(fileName.BaseName(), "", fileName.GetBaseDir());
-
-                if (storyJson.Contains("Story"))
-                {
-                    Dictionary storyInfos = storyJson["Story"] as Dictionary; 
-                    storyData.LoadData(storyInfos);
-                }
-                GD.Print(storyData);
-            }
-            // Story Name/Recent
-            Name = storyData.name;
-            StoryManager.PushRecentStory();
+            
         }
 
         // Create Folder/File Structure of project

@@ -38,7 +38,7 @@ public class MenuEditBar : HBoxContainer
                 break;
             case 1: // Save
                 GD.Print("Save Story");
-                Story.story.SaveStory();
+                StoryManager.SaveStory();
                 break;
             case 2: // Load
                 GD.Print("Load Story");

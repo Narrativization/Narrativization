@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Storier;
 
 public class CreateStoryModal : ConfirmationDialog
 {
@@ -32,10 +33,10 @@ public class CreateStoryModal : ConfirmationDialog
 //      
 //  }
 
-    public Storier.StoryData GetInfos()
+    public StoryData GetInfos()
     {
         ValidateInfos();
-        Storier.StoryData sData = new Storier.StoryData(
+        StoryData sData = new StoryData(
             storyName.Text, 
             descriptionName.Text, 
             OS.GetSystemDir(OS.SystemDir.Documents) + "/Storier/" + storyName.Text, 

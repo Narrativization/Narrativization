@@ -19,7 +19,7 @@ namespace Storier
         // Creating Story Element from anywhere
         public static StoryElement CreateStoryElement(string _name = "NewStoryElement", string _relativePath = "/Entities/Characters/")
         {
-            string sePath = Story.story.storyData.directory + "" + _relativePath;
+            string sePath = StoryManager.currentStory.storyData.directory + "" + _relativePath;
             StoryElement storyElement = new StoryElement(_name, sePath, true);
             return storyElement;
         }

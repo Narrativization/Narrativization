@@ -104,15 +104,14 @@ public class ModalManager : Control
 
     public void _OnFileDialogFileSelected(string path)
     {
-        Story story = new Story();
-        GetTree().Root.AddChild(story);
-        Story.story.LoadStory(path);
+        GD.Print("Load Story");
+        StoryManager.LoadStory(path);
     }
 
     public void _OnCreateDialogConfirmed()
     {
-        Story story = new Story(createDialog.GetInfos());
-        GetTree().Root.AddChild(story);
+        GD.Print("Create Story");
+        StoryManager.CreateStory(createDialog.GetInfos());
     }
 
     

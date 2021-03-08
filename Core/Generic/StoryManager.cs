@@ -4,10 +4,78 @@ using Godot.Collections;
 
 namespace Storier
 {
-    // Managing Settings and recents of Stories
-    public static class StoryManager
+    // Managing Settings and recents of Stories | Singleton
+    public class StoryManager : Node    
     {
+        // Singleton
+        private static StoryManager storyManager;
+
         public static string workspace = OS.GetSystemDir(OS.SystemDir.Documents) + "/Storier/";
+        public static Story currentStory;
+
+        private StoryManager()
+        {
+            storyManager = this;
+        }
+
+        // Create Story
+        public static Story CreateStory(StoryData _storyData)
+        {
+            currentStory = new Story(_storyData);
+            storyManager.AddChild(currentStory);
+            SaveStory();
+            return currentStory;
+        }
+
+        // Save Story
+        public static bool SaveStory()
+        {
+            Dictionary storierData = new Dictionary() {
+                {
+                    "Story", currentStory.storyData.SaveData()
+                },
+                {
+                    "Storier", new Dictionary(){
+                        {"Version", "v0.2"}
+                    }
+                }
+            };
+            bool isSuccess = FileManager.SaveFile(
+                currentStory.storyData.directory + currentStory.storyData.name + ".storier", 
+                JSON.Print(storierData, "\t"));
+            PushRecentStory();
+            return isSuccess;
+        }
+
+        // Load Story
+        public static Story LoadStory(string fileName)
+        {
+            string str = FileManager.LoadFile(fileName);
+            JSONParseResult jsonObject = JSON.Parse(str);
+            StoryData storyData = new StoryData();
+
+            if(jsonObject.Error != 0) { GD.Print("Error:", jsonObject.ErrorLine); } 
+            else
+            {
+                // GD.Print(JSON.Print(jsonObject.Result));
+                Dictionary storyJson = jsonObject.Result as Dictionary; // Godot.Collections.Array  <-  [] 
+                storyData = new StoryData(fileName.BaseName(), "", fileName.GetBaseDir());
+
+                if (storyJson.Contains("Story"))
+                {
+                    Dictionary storyInfos = storyJson["Story"] as Dictionary; 
+                    storyData.LoadData(storyInfos);
+                }
+                if (storyJson.Contains("Storier"))
+                {
+                    Dictionary storierInfos = storyJson["Storier"] as Dictionary; 
+                    // Storier Version etc.
+                }
+                // GD.Print(storyData);
+            }
+            return CreateStory(storyData);
+        }
+
 
         // Record Recently Story
         public static void PushRecentStory()
@@ -16,7 +84,7 @@ namespace Storier
             ConfigFile configFile = new ConfigFile();
             Directory dir = new Directory();
             dir.MakeDirRecursive(configFileName.GetBaseDir());
-            configFile.SetValue("Stories", "RecentStory", Story.story.storyData.directory + Story.story.storyData.name + ".storier");
+            configFile.SetValue("Stories", "RecentStory", currentStory.storyData.directory + currentStory.storyData.name + ".storier");
             Error err = configFile.Save(configFileName);
             if (err != Error.Ok) { GD.Print(err); }
         }
@@ -76,11 +144,6 @@ namespace Storier
             }
             return null;
         }
-
-        // Create Story
-        // Get Story (bool Default, Path ="")
-        
-
     }
 }
 

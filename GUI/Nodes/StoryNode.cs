@@ -18,10 +18,19 @@ public class StoryNode : GraphNode
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        recentStory = StoryManager.PopRecentStory();
-        GD.Print(FileManager.LoadFile(recentStory));
-        storyData = JSON.Parse(FileManager.LoadFile(recentStory)).Result as Dictionary;
-        DisplayData();
+        try
+        {
+            recentStory = StoryManager.PopRecentStory();
+            GD.Print(FileManager.LoadFile(recentStory));
+            storyData = JSON.Parse(FileManager.LoadFile(recentStory)).Result as Dictionary;
+            DisplayData();
+        }
+        catch (System.Exception err)
+        {
+            GD.Print(err);
+            // throw;
+        }
+        
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -38,10 +47,8 @@ public class StoryNode : GraphNode
             {
                 if (recentStory != "")
                 {
-                    Story story = new Story();
-                    GetTree().Root.AddChild(story);
-                    Story.story.LoadStory(recentStory);
-                    GD.Print(storyData);
+                    GD.Print("Load Story");
+                    StoryManager.LoadStory(recentStory);
                 }
             }
         }
