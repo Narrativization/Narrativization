@@ -3,6 +3,7 @@ using System;
 using Godot.Collections;
 using Storier;
 
+// Create(or rename) FlowNode -> Generic Flow editor Node
 public class StoryNode : GraphNode
 {
     // Exports

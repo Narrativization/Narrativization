@@ -29,20 +29,10 @@ namespace Storier
     //      
     //  }
 
-        private bool SaveStory()
-        {
-            
-            return true;
-        }
-
-        public void LoadStory()
-        {
-            
-        }
-
         // Create Folder/File Structure of project
         public void CreateHierarchy()
         {
+            if (storyData.directory == "") { GD.Print("Story Directory can't found!"); return; }
             Godot.Collections.Array<string> defaultDirs = new Godot.Collections.Array<string>()
             {
                 storyData.directory + "Flows/",
@@ -70,6 +60,21 @@ namespace Storier
     }
 }
 
+
+/*
+Story Elements(Hierarchy) - File/Folder Structure
+- Story(.storier) -> json
+    - Flows(.flow) -> config
+    - Entities(.entity) -> json
+        - Characters
+        - Locations
+        - ~Items
+    - Assets -> png, jpg, txt, csv... 
+    - Journeys() -> config
+    - Templates(.template) -> config, json, ~xml, tscn
+    - References(.reference) -> config
+*/
+
 /*
     Create a project file structure | .storier
     {
@@ -80,8 +85,8 @@ namespace Storier
             Copyright: "Copyright © Atakan Ateş, All Rights Reserved!"
         },
         Storier: {
+            Version: "v0.2"
             // 
-            // Version: "v0.2"
         }
     }
     Additional Story Informations

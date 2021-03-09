@@ -68,7 +68,7 @@ public class ModalManager : Control
     {
         overlay.Hide();
         detailsDialog.ShowModal();
-        detailsDialog.InitModal(StoryElement.CreateStoryElement());
+        detailsDialog.InitModal();
     }
 
     public void ShowLoadModal()

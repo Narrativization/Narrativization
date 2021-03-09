@@ -23,6 +23,7 @@ namespace Storier
         // Create Story
         public static Story CreateStory(StoryData _storyData)
         {
+            CloseAllStories(); // Single Story Workflow
             currentStory = new Story(_storyData);
             storyManager.AddChild(currentStory);
             SaveStory();
@@ -78,6 +79,18 @@ namespace Storier
                 // GD.Print(storyData);
             }
             return CreateStory(storyData);
+        }
+
+        public static void CloseAllStories()
+        {
+            Godot.Collections.Array _stories = storyManager.GetChildren();
+            for (int i = 0; i < _stories.Count; i++)
+            {
+                if (_stories[i] is Story s)
+                {
+                    s.Free();
+                }
+            }
         }
 
         // Record Recently Story

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Storier;
 
 public class DetailsModal : WindowDialog
 {
@@ -9,16 +10,19 @@ public class DetailsModal : WindowDialog
     [Export]
     private NodePath pureDataPath = new NodePath("./Tabs/Pure Data/PureData");
     [Export]
-    private NodePath resourceNamePath = new NodePath("./ResourceName");
+    private NodePath resourceNamePath = new NodePath("./Menu/ResourceName");
     [Export]
-    private NodePath readOnlyPath = new NodePath("./ReadOnly");
+    private NodePath readOnlyPath = new NodePath("./Menu/ReadOnly");
+    [Export]
+    private NodePath entityTypePath = new NodePath("./Menu/EntityType");
 
     public Node properties;
     public PackedScene storyElementTemplate; // Story Element Properties Template
     public CheckButton readOnlyButton;
     public TextEdit pureData;
     public LineEdit resourceName;
-    public Storier.StoryElement editedStoryElement;
+    public MenuButton entityType;
+    public StoryElement editedStoryElement;
 
     public override void _Ready()
     {
@@ -26,18 +30,25 @@ public class DetailsModal : WindowDialog
         readOnlyButton = GetNode<CheckButton>(readOnlyPath);
         pureData = GetNode<TextEdit>(pureDataPath);
         resourceName = GetNode<LineEdit>(resourceNamePath);
+        entityType = GetNode<MenuButton>(entityTypePath);
+        
+        if (IsInstanceValid(entityType))
+        {
+            entityType.GetPopup().Connect("id_pressed", this, "_OnEntityTypeItemPressed");
+        }
     }
 
-    public void InitModal(Storier.StoryElement storyElement)
+    public void InitModal()
     {
         foreach (Node item in properties.GetChildren())
         {
             item.Free();
         }
+
+        StoryElement storyElement = StoryElement.CreateStoryElement(resourceName.Text, GetEntityDirectory());
         PackedScene propertyTemplate = ResourceLoader.Load(storyElement.defaultTemplate) as PackedScene;
         properties.AddChild(propertyTemplate.Instance());
         editedStoryElement = storyElement;
-        resourceName.Text = editedStoryElement.ResourceName;
     }
 
     public override void _Notification(int what)
@@ -51,6 +62,11 @@ public class DetailsModal : WindowDialog
                 editedStoryElement.Save(JSON.Print(templateProperties.GetSaveData(), "\t"));
                 break;
         }
+    }
+
+    private string GetEntityDirectory()
+    {
+        return "Entities/" + (entityType.Text != "Other" ? entityType.Text + "/" : "");
     }
 
     public void _OnTabsTabChanged(int tab)
@@ -71,4 +87,26 @@ public class DetailsModal : WindowDialog
         }
     }
 
+    public void _OnEntityTypeItemPressed(int _id)
+    {
+        switch (_id)
+        {
+            case 0: // Character
+                GD.Print("Characters");
+                entityType.Text = "Characters";
+                break;
+            case 1: // Location
+                GD.Print("Locations");
+                entityType.Text = "Locations";
+                break;
+            case 2: // Other
+                GD.Print("Other");
+                entityType.Text = "Other";
+                break;
+            default:
+            break;
+        }
+    }
+
+    
 }

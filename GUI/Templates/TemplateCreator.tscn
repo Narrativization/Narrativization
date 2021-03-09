@@ -1,0 +1,47 @@
+[gd_scene format=2]
+
+[node name="TemplateCreator" type="WindowDialog"]
+visible = true
+margin_right = 517.0
+margin_bottom = 455.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 40.0
+margin_top = 40.0
+margin_right = -40.0
+margin_bottom = -40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 127.0
+margin_top = 175.0
+margin_right = 309.0
+margin_bottom = 199.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+margin_right = 182.0
+margin_bottom = 24.0
+
+[node name="Name" type="LineEdit" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+margin_right = 58.0
+margin_bottom = 24.0
+placeholder_text = "Name"
+
+[node name="Value" type="LineEdit" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+margin_left = 62.0
+margin_right = 120.0
+margin_bottom = 24.0
+placeholder_text = "Value"
+
+[node name="Type" type="LineEdit" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+margin_left = 124.0
+margin_right = 182.0
+margin_bottom = 24.0
+placeholder_text = "Type"

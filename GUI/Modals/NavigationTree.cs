@@ -6,7 +6,7 @@ using Storier;
 
 public class NavigationTree : Tree
 {
-
+    // Tree's Root
     private TreeItem root;
 
     private Dictionary<string, string> iconResources = new Dictionary<string, string>()

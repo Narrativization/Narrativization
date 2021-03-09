@@ -4,8 +4,14 @@ using System;
 
 namespace Storier
 {
+    public enum StoryElementType
+    {
+        Flow, Entity, Asset // ~ ,Reference, Template
+    }
+
     public class StoryElement : Resource
     {
+        public StoryElementType storyElementType = StoryElementType.Entity;
         public string defaultTemplate = "res://Templates/DefaultTemplate.tscn";
 
         private StoryElement() {}
@@ -19,8 +25,8 @@ namespace Storier
         // Creating Story Element from anywhere
         public static StoryElement CreateStoryElement(string _name = "NewStoryElement", string _relativePath = "/Entities/Characters/")
         {
-            string sePath = StoryManager.currentStory.storyData.directory + "" + _relativePath;
-            StoryElement storyElement = new StoryElement(_name, sePath, true);
+            string storyElementPath = StoryManager.currentStory.storyData.directory + "" + _relativePath;
+            StoryElement storyElement = new StoryElement(_name, storyElementPath, true);
             return storyElement;
         }
 
@@ -54,22 +60,6 @@ namespace Storier
 
 
 /*
-Story Elements(Hierarchy) - File/Folder Structure
-- Story(.storier) -> json
-    - Flows(.flow) -> config
-    - Entities(.entity) -> json
-        - Characters
-        - Locations
-        - ~Items
-    - Assets -> png, jpg, txt, csv... 
-    - Journeys() -> config
-    - Templates(.template) -> config, json, ~xml, tscn
-    - References(.reference) -> config
-*/
-
-
-/*
-
 Entity Example
 {
     Id: "", 

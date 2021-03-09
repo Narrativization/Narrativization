@@ -21,7 +21,6 @@ __meta__ = {
 }
 
 [node name="FlowContext" parent="Background" instance=ExtResource( 3 )]
-items = [ "Create Story", null, 0, false, false, 0, 0, null, "", false, "Create Character", null, 0, false, false, 1, 0, null, "", false ]
 
 [node name="FlowGraphEditor" type="GraphEdit" parent="Background"]
 margin_left = 7.0
