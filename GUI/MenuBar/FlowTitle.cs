@@ -1,11 +1,21 @@
 using Godot;
 using System;
+using Storier;
 
 public class FlowTitle : RichTextLabel
 {
     public override void _Ready()
     {
         
+    }
+
+    public override void _Process(float delta)
+    {
+        base._Process(delta);
+        if (StoryManager.flowName != "" && StoryManager.flowName != Text) // ~Replace with Signal
+        {
+            ChangeFlowTitle(StoryManager.flowName);
+        }
     }
 
     public void ChangeFlowTitle(string _flowName)

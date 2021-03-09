@@ -4,14 +4,16 @@ using Godot.Collections;
 
 namespace Storier
 {
-    // Managing Settings and recents of Stories | Singleton
+    // Managing Settings and recents of Stories | Singleton(AutoLoaded)
     public class StoryManager : Node    
     {
         // Singleton
         private static StoryManager storyManager;
 
         public static string workspace = OS.GetSystemDir(OS.SystemDir.Documents) + "/Storier/";
+        public static string StorierVersion = "v0.2";
         public static Story currentStory;
+        public static string flowName = "";
 
         private StoryManager()
         {
@@ -36,7 +38,7 @@ namespace Storier
                 },
                 {
                     "Storier", new Dictionary(){
-                        {"Version", "v0.2"}
+                        {"Version", StorierVersion}
                     }
                 }
             };
@@ -69,13 +71,14 @@ namespace Storier
                 if (storyJson.Contains("Storier"))
                 {
                     Dictionary storierInfos = storyJson["Storier"] as Dictionary; 
-                    // Storier Version etc.
+                    string sVersion = storierInfos["Version"] as string; 
+                    if (sVersion != StorierVersion) { GD.Print(sVersion + " != " + StorierVersion + "[Current] Storier Version!"); }
+                    else { GD.Print("Same Storier Version!"); }
                 }
                 // GD.Print(storyData);
             }
             return CreateStory(storyData);
         }
-
 
         // Record Recently Story
         public static void PushRecentStory()

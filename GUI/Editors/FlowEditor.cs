@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Godot.Collections;
 
 public class FlowEditor : Control
 {
@@ -23,4 +24,19 @@ public class FlowEditor : Control
 //  {
 //      
 //  }
+
+    // Removes All child Graph Nodes
+    public void RemoveFlowNodes()
+    {
+        Godot.Collections.Array children = flowGraphEditor.GetChildren();
+        for (int i = 0; i < children.Count; i++)
+        {
+            if (children[i] is GraphNode c)
+            {
+                c.QueueFree();
+            }
+        }
+    }
+
+
 }

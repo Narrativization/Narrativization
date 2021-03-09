@@ -143,4 +143,14 @@ public class NavigationTree : Tree
         )));
     }
 
+    public override void _GuiInput(InputEvent inputEvent)
+    {
+        if (inputEvent is InputEventMouseButton mouseEvent)
+        {
+            if (mouseEvent.Doubleclick && IsInstanceValid(GetItemAtPosition(mouseEvent.Position)))
+            {
+                GD.Print("Double Click: " + GetItemAtPosition(mouseEvent.Position).GetText(0));
+            }
+        }
+    }
 }
