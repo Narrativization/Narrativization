@@ -3,18 +3,14 @@
 Roadmap include, [Future Versions](#Future-Versions) and [Released Versions](#Released-Versions).
 
 
-### v0.2
-Basic software abilities, file management and asset creation.
-- [x] UI management
-- [x] File System Creation and management(Default-Templated Folder Structure)
-- [x] Modal and Folder Tree
-
+### v0.4
+Basic Flow management. Linear Act, Chapter or Quest flow creation.
+- [ ] Basic Flow Nodes and Flow Editor Nodes.
+- [ ] Better navigation management. (Navigator, Flow Editor, Flow title).
+- [ ] StoryElement file improvements 
 
 ## Future Versions
 Go Back [Roadmap](#Roadmap).
-
-### v0.4
-Basic Flow management. Linear Act, Chapter or Quest flow creation. 
 
 ### v0.6
 Advanced Flow management. Non-linear, conditional flows(dialogues).
@@ -35,6 +31,8 @@ Multi-User editing, ~Dockable ModalWindows
 ## Released Versions
 Go Back [Roadmap](#Roadmap).
 
+### v0.2
+Basic software abilities, file management and creation.
 ### v0.1
 Basic UI and Runnable Project
 ### v0.0
