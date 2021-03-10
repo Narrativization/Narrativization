@@ -48,6 +48,7 @@ margin_bottom = -36.0
 text = "{
 	Key: Value
 }"
+readonly = true
 minimap_draw = true
 __meta__ = {
 "_edit_use_anchors_": false
