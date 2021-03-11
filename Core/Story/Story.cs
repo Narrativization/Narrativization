@@ -29,7 +29,7 @@ namespace Storier
     //      
     //  }
 
-        // Needs improvement
+        // Remove Creating From story every element create themself
         public static StoryElement CreateStoryElement(string _name = "NewStoryElement", string _relativePath = "/")
         {
             string storyElementPath = StoryManager.currentStory.storyData.directory + _relativePath;

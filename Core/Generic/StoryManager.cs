@@ -145,6 +145,7 @@ namespace Storier
             workspace = configFile.GetValue("Workspace", "Directory").ToString(); // Workscape
         }
 
+        // Don't need in Single Story Workflow
         public static Story GetNamedStory(string name, SceneTree sceneTree)
         {
             if (Godot.Object.IsInstanceValid(sceneTree))

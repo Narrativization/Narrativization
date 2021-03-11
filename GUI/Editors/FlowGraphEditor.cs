@@ -1,13 +1,14 @@
 using Godot;
 using System;
 
-public class FlowGraphEditor : GraphEdit
+// Basic Flow Controls for GraphEdit(Without Storier)
+public class GraphNodeEditor : GraphEdit
 {
     [Export]
     public float zoomSpeed = 1.0f;
 
-    private bool hovering = false; // ~Focusing
-    private bool dragging = false;
+    protected bool hovering = false; // ~Focusing
+    protected bool dragging = false;
 
     public override void _Ready()
     {
@@ -46,15 +47,6 @@ public class FlowGraphEditor : GraphEdit
                 ScrollOffset += -motion.Relative;
                 AcceptEvent();
             }
-        }
-
-        // Flow Editor Inputs
-        if (inputEvent.IsActionReleased("Context") && hovering)
-        {
-            InputEventMouse mouse = inputEvent as InputEventMouse;
-            PopupMenu popupMenu = GetParent().GetNode<PopupMenu>("./FlowContext");
-            popupMenu.SetPosition(mouse.GlobalPosition);
-            popupMenu.ShowModal();
         }
     }
 

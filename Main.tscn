@@ -1,10 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://GUI/MenuBar/MenuBar.tscn" type="PackedScene" id=1]
 [ext_resource path="res://GUI/Managers/ModalManager.tscn" type="PackedScene" id=2]
-[ext_resource path="res://GUI/Editors/FlowEditor.tscn" type="PackedScene" id=3]
-
-[sub_resource type="StyleBoxEmpty" id=1]
+[ext_resource path="res://GUI/Editors/Editors.tscn" type="PackedScene" id=3]
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -25,35 +23,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EditorViewport" type="Panel" parent="View"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="TabContainer" type="TabContainer" parent="View/EditorViewport"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_styles/panel = SubResource( 1 )
-tabs_visible = false
-drag_to_rearrange_enabled = true
-__meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false,
-"_editor_description_": "Create a Scene in the future. 
-Multi tab logic useful when present to someone."
-}
-
-[node name="Default" type="Tabs" parent="View/EditorViewport/TabContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="FlowEditor" parent="View/EditorViewport/TabContainer/Default" instance=ExtResource( 3 )]
+[node name="Editors" parent="View" instance=ExtResource( 3 )]
 
 [node name="ModalWindows" parent="." instance=ExtResource( 2 )]
 mouse_filter = 2
