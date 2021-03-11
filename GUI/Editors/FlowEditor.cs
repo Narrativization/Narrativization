@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using Godot.Collections;
+using Storier;
 
 public class FlowEditor : Control
 {
@@ -16,7 +17,13 @@ public class FlowEditor : Control
     public override void _Ready()
     {
         flowGraphEditor = GetNode<FlowGraphEditor>(flowGraphEditorPath);
-        flowGraphEditor.AddChild(storyNode.Instance());
+        
+        string recentStory = StoryManager.PopRecentStory();
+        Directory dir = new Directory(); 
+        if (dir.FileExists(recentStory))
+        {
+            flowGraphEditor.AddChild(storyNode.Instance());
+        }
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.

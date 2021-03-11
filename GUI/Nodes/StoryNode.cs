@@ -19,19 +19,14 @@ public class StoryNode : GraphNode
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        try
+        recentStory = StoryManager.PopRecentStory();
+        Directory dir = new Directory(); 
+        if (dir.FileExists(recentStory))
         {
-            recentStory = StoryManager.PopRecentStory();
             GD.Print(FileManager.LoadFile(recentStory));
             storyData = JSON.Parse(FileManager.LoadFile(recentStory)).Result as Dictionary;
             DisplayData();
         }
-        catch (System.Exception err)
-        {
-            GD.Print(err);
-            // throw;
-        }
-        
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.

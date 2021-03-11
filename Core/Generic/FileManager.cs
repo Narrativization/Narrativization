@@ -87,6 +87,31 @@ namespace Storier
             return false;
         }
 
+        public static void ReadCsvFile(string fileName)
+        {
+            if (fileName != null)
+            {
+                File csvFile = new File(); 
+                Error err = csvFile.Open(fileName, File.ModeFlags.Read);
+                if (err == Error.Ok)
+                {
+                    while (!csvFile.EofReached())
+                    {
+                        string[] csvLine = csvFile.GetCsvLine(); // ";"
+                        for (int i = 0; i < csvLine.Length; i++)
+                        {
+                            GD.Print("csvLine" + i + ": " + csvLine[i]);
+                        }
+                    }
+                }
+                else
+                {
+                    GD.Print(err);
+                }
+                csvFile.Close();
+            }
+        }
+
         public static Dictionary DirectoryContents(string fileName)
         {
             Dictionary dictionary = new Dictionary(){};

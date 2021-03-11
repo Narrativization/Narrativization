@@ -45,7 +45,7 @@ public class DetailsModal : WindowDialog
             item.Free();
         }
 
-        StoryElement storyElement = StoryElement.CreateStoryElement(resourceName.Text, GetEntityDirectory());
+        StoryElement storyElement = Story.CreateStoryEntity(resourceName.Text, GetEntityDirectory());//StoryElement.CreateStoryElement(resourceName.Text, GetEntityDirectory());
         PackedScene propertyTemplate = ResourceLoader.Load(storyElement.defaultTemplate) as PackedScene;
         properties.AddChild(propertyTemplate.Instance());
         editedStoryElement = storyElement;
@@ -106,7 +106,6 @@ public class DetailsModal : WindowDialog
             default:
             break;
         }
-
         editedStoryElement.TakeOverPath(StoryManager.currentStory.storyData.directory + "/" + GetEntityDirectory());
         GD.Print(StoryManager.currentStory.storyData.directory + "/" + GetEntityDirectory());
     }

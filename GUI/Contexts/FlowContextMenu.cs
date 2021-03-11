@@ -21,7 +21,7 @@ public class FlowContextMenu : PopupMenu
                 ModalManager.modals.ShowDetailsModal();
                 break;
             case 2: // Create Flow 
-                StoryElement.CreateStoryElement();
+                Story.CreateStoryFlow().Save("Save me!");
                 GD.Print("Create Flow");
                 break;
             default:

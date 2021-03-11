@@ -1,60 +1,46 @@
 using Godot;
 using System;
 
-
 namespace Storier
 {
     public enum StoryElementType
     {
-        Flow, Entity, Asset // ~ ,Reference, Template
+        None, Flow, Entity, Asset // ~ ,Reference, Template
     }
 
+    // Base Class of Story Elements
     public class StoryElement : Resource
     {
-        public StoryElementType storyElementType = StoryElementType.Entity;
+        public StoryElementType storyElementType = StoryElementType.None;
+
         public string defaultTemplate = "res://Templates/DefaultTemplate.tscn";
 
-        private StoryElement() {}
+        protected StoryElement() {}
         public StoryElement(string _name, string _path, bool _localToScene = false)
         {
             ResourceName = _name;
-            TakeOverPath(_path);
+            TakeOverPath(_path); // _path + "/" + _name + _ext -> Use full path with Extension 
             ResourceLocalToScene = _localToScene;
         }
 
-        // Creating Story Element from anywhere
-        public static StoryElement CreateStoryElement(string _name = "NewStoryElement", string _relativePath = "/Entities/Characters/")
-        {
-            string storyElementPath = StoryManager.currentStory.storyData.directory + "" + _relativePath;
-            StoryElement storyElement = new StoryElement(_name, storyElementPath, true);
-            return storyElement;
-        }
-
         // Saving Story Element | ~Maybe create Resource Format Saver/Loader
-        public void Save(string _data)
+        public virtual void Save(string _data)
         {
-            if (!FileManager.SaveFile(ResourcePath + ResourceName + ".story", _data))
-            {
-                GD.Print(ResourceName + " save Failed!");
-                return; 
-            }
-            GD.Print(ResourceName + " saved!");
+            if (storyElementType != StoryElementType.None)
+                GD.Print(ResourceName + " saved!");
         }
 
-        public void Load()
+        // Loading Story Element | ~Maybe create Resource Format Saver/Loader
+        public virtual void Load()
         {
-            // PackedScene packedScene = ResourceLoader.Load("res://PackedScene.tscn") as PackedScene;
-            // Story customSprite = packedScene.Instance() as Story;
-            // AddChild(customSprite);
+            if (storyElementType != StoryElementType.None)
+                GD.Print(ResourceName + " loaded!");
         }
 
-        public void Reload()
+        public virtual void Reload()
         {
             
         }
-
-        
-
     }
 }
 
