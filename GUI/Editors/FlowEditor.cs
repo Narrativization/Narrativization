@@ -7,12 +7,17 @@ public class FlowEditor : GraphNodeEditor
 {
     // Exports
     [Export]
-    PackedScene storyNode = GD.Load<PackedScene>("res://GUI/Nodes/StoryNode.tscn");
+    private NodePath flowContextMenuPath = new NodePath("./FlowContext");
+    [Export]
+    private PackedScene storyNode = GD.Load<PackedScene>("res://GUI/Nodes/StoryNode.tscn");
 
 
+    private FlowContextMenu contextMenu;
 
     public override void _Ready()
     {        
+        contextMenu = GetNode<FlowContextMenu>("./FlowContext");
+
         string recentStory = StoryManager.PopRecentStory();
         Directory dir = new Directory(); 
         if (dir.FileExists(recentStory))
@@ -33,9 +38,8 @@ public class FlowEditor : GraphNodeEditor
         if (inputEvent.IsActionReleased("Context"))
         {
             InputEventMouse mouse = inputEvent as InputEventMouse;
-            PopupMenu popupMenu = GetParent().GetNode<PopupMenu>("./FlowContext");
-            popupMenu.SetPosition(mouse.GlobalPosition);
-            popupMenu.ShowModal();
+            contextMenu.SetPosition(mouse.GlobalPosition);
+            contextMenu.ShowModal();
         }
 
         if (inputEvent.IsActionPressed("Backward"))
