@@ -55,12 +55,12 @@ namespace Storier
                 }
                 else
                 {
-                    GD.PushError("Save File Error Code: " + err);
+                    GD.PushError("Load File Error Code: " + err);
                 }
             }
             else
             {
-                GD.PushError("SaveFile fileName is null!");
+                GD.PushError("LoadFile fileName is null!");
             }
             return content;
         }

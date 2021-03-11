@@ -5,42 +5,68 @@ namespace Storier
 {
     public enum StoryElementType
     {
-        None, Flow, Entity, Asset // ~ ,Reference, Template
+        Flow, Entity, Asset // ~ ,Reference, Template
     }
 
     // Base Class of Story Elements
     public class StoryElement : Resource
     {
-        public StoryElementType storyElementType = StoryElementType.None;
+        // Relative path to project(<ProjectName>.storier)
+        public string Id { get; protected set; } // Example: /Entity/Character/MyChar
+        public string Name { get { return ResourceName; } set { ResourceName = value; } }  // Example: MyChar | Uses ResourceName 
+        public string Description { get; set; }  // Example: Character Example
 
-        public string defaultTemplate = "res://Templates/DefaultTemplate.tscn";
+        public StoryElementType storyElementType = StoryElementType.Asset;
+        // public string storyElementTemplate = "res://Templates/DefaultTemplate.tscn";
+        public string storyElementExtension = ""; // Example ext: ".ext" 
 
         protected StoryElement() {}
-        public StoryElement(string _name, string _path, bool _localToScene = false)
+        protected StoryElement(string _id, string _name, string _description, string _ext) 
         {
-            ResourceName = _name;
-            TakeOverPath(_path); // _path + "/" + _name + _ext -> Use full path with Extension 
-            ResourceLocalToScene = _localToScene;
+            InitStoryElement(_id, _name, _description, _ext);
         }
+
+        protected void InitStoryElement(string _id, string _name, string _description, string _ext)
+        {
+            Id = _id;
+            Name = ResourceName = _name;
+            Description = _description;
+            
+            GD.Print(StoryManager.currentStory.storyData.directory + Id + _ext); // Del
+            storyElementExtension = _ext;
+            // Full path of StoryElement(with extension)
+            TakeOverPath(StoryManager.currentStory.storyData.directory + Id + _ext);
+        }
+
+        // Replace/Move Story Element | Not ready for use -> Move to File Manager?
+        private Error Move(string _destination)
+        {
+            Directory dir = new Directory();
+            Error errCopy = dir.Copy(ResourcePath, _destination);
+            if (errCopy != Error.Ok) { return errCopy; }
+            Error errDelete = dir.Remove(ResourcePath);
+            if (errDelete != Error.Ok) { return errDelete; }
+            return Error.Ok;
+        }
+
+        // Change Id(Relative Path) Story Element 
+        public Error ReId(string _id)
+        {
+            string _destination = StoryManager.currentStory.storyData.directory + Id + storyElementExtension;
+            Id = Id.Replace(Name, _id);
+            Error err = Move(_destination);
+            TakeOverPath(_destination);
+            return err; // Error.Ok;
+        }         
 
         // Saving Story Element | ~Maybe create Resource Format Saver/Loader
-        public virtual void Save(string _data)
-        {
-            if (storyElementType != StoryElementType.None)
-                GD.Print(ResourceName + " saved!");
-        }
-
-        // Loading Story Element | ~Maybe create Resource Format Saver/Loader
-        public virtual void Load()
-        {
-            if (storyElementType != StoryElementType.None)
-                GD.Print(ResourceName + " loaded!");
-        }
-
-        public virtual void Reload()
-        {
-            
-        }
+        public virtual void Save(string _data) { } // ~Save text  -- Change to bool?
+        // Reloading Story Element
+        public virtual void Reload() { }
+        // Import Story Element
+        public virtual void Import() { }
+        // Export Story Element
+        public virtual void Export() { } // ~List of Character(csv), Single File(json)
     }
 }
 

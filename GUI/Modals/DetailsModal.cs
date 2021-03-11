@@ -45,10 +45,11 @@ public class DetailsModal : WindowDialog
             item.Free();
         }
 
-        StoryElement storyElement = Story.CreateStoryEntity(resourceName.Text, GetEntityDirectory());//StoryElement.CreateStoryElement(resourceName.Text, GetEntityDirectory());
-        PackedScene propertyTemplate = ResourceLoader.Load(storyElement.defaultTemplate) as PackedScene;
-        properties.AddChild(propertyTemplate.Instance());
-        editedStoryElement = storyElement;
+        // StoryEntity storyEntity = StoryEntity.GetStoryEntity("/");
+        // StoryElement storyElement = Story.CreateStoryEntity(resourceName.Text, GetEntityDirectory());//StoryElement.CreateStoryElement(resourceName.Text, GetEntityDirectory());
+        // PackedScene propertyTemplate = ResourceLoader.Load(storyElement.storyElementTemplate) as PackedScene;
+        // properties.AddChild(propertyTemplate.Instance());
+        // editedStoryElement = storyElement;
     }
 
     public override void _Notification(int what)
