@@ -23,6 +23,10 @@ config/icon="res://icon.png"
 
 StoryManager="*res://Core/Generic/StoryManager.cs"
 
+[gui]
+
+theme/custom_font="res://Theme/Font/Roboto-Regular.tres"
+
 [input]
 
 Fullscreen={
