@@ -46,7 +46,7 @@ public class StoryNode : GraphNode
                     GD.Print("Load Story");
                     Story loadedStory = StoryManager.LoadStory(recentStory);
                     StoryManager.flowName = loadedStory.Name;
-                    GetParent<FlowEditor>().RemoveFlowNodes();
+                    GetParent<FlowEditor>().DeleteAll();
                 }
             }
         }

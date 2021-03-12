@@ -41,5 +41,22 @@ public class StoryFlowNode : GraphNode
             HintTooltip = Id;
         }
     }
-
 }
+
+
+/*
+    // When resize, resize description text area
+    public void _OnStoryFlowNodeResizeRequest(Vector2 newMinSize)
+    {
+        RectSize = newMinSize;
+        int botMargin = 50;
+        if (newMinSize.y - botMargin < textDefaultMinSize.y)
+        {
+            GetChild<TextEdit>(0).RectMinSize = new Vector2(GetChild<TextEdit>(0).RectMinSize.x, textDefaultMinSize.y);
+        }
+        else
+        {
+            GetChild<TextEdit>(0).RectMinSize = new Vector2(GetChild<TextEdit>(0).RectMinSize.x, newMinSize.y - botMargin);
+        }
+    }
+*/

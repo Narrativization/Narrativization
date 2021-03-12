@@ -7,7 +7,25 @@ margin_right = 180.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 180, 80 )
 title = "Story Flow"
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Description" type="TextEdit" parent="."]
+margin_left = 16.0
+margin_top = 24.0
+margin_right = 164.0
+margin_bottom = 54.0
+rect_min_size = Vector2( 120, 30 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }

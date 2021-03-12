@@ -18,6 +18,8 @@ public class FlowEditor : GraphNodeEditor
 
     public override void _Ready()
     {        
+        base._Ready(); 
+        
         contextMenu = GetNode<FlowContextMenu>("./FlowContext");
 
         string recentStory = StoryManager.PopRecentStory();
@@ -43,6 +45,11 @@ public class FlowEditor : GraphNodeEditor
             contextMenu.SetPosition(mouse.GlobalPosition);
             contextMenu.ShowModal();
         }
+        if (inputEvent.IsActionPressed("Delete"))
+        {
+            GD.Print("Delete Selected Nodes");
+            DeleteSelected();
+        }    
 
         if (inputEvent.IsActionPressed("Backward"))
         {
@@ -51,6 +58,19 @@ public class FlowEditor : GraphNodeEditor
         else if (inputEvent.IsActionPressed("Forward"))
         {
             GD.Print("Next Flow");
+        }
+        
+        
+        if (inputEvent.IsActionPressed("Enter"))
+        {
+            GD.Print("Enter");
+            Godot.Collections.Array selected = GetSelected();
+            if (selected.Count == 1)
+            {
+                GraphNode graphNode = selected[0] as GraphNode;
+                // graphNode.Open();
+                GD.Print(graphNode.Name);
+            }
         }
 
         base._GuiInput(inputEvent);
@@ -67,20 +87,4 @@ public class FlowEditor : GraphNodeEditor
         GD.Print("AddChild Story Flow Node!");
         return true;
     }
-
-
-    // Removes All child Graph Nodes
-    public void RemoveFlowNodes()
-    {
-        Godot.Collections.Array children = GetChildren();
-        for (int i = 0; i < children.Count; i++)
-        {
-            if (children[i] is GraphNode c)
-            {
-                c.QueueFree();
-            }
-        }
-    }
-
-
 }

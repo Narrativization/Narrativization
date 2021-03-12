@@ -7,7 +7,7 @@ public class FlowContextMenu : PopupMenu
     
     public override void _Ready()
     {
-        
+        Connect("id_pressed", this, "_OnFlowContextIdPressed");
     }
 
     public void _OnFlowContextIdPressed(int Id)
@@ -18,11 +18,10 @@ public class FlowContextMenu : PopupMenu
                 ModalManager.modals.ShowCreateModal();
                 break;
             case 1: // Create Entity
-                ModalManager.modals.ShowDetailsModal();
+                // ModalManager.modals.ShowDetailsModal();
                 break;
             case 2: // Create Flow 
                 GetParent<FlowEditor>().CreateFlowNode();
-                // Story.CreateStoryFlow().Save("Save me!");
                 GD.Print("Create Flow");
                 break;
             default:

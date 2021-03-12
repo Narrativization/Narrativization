@@ -11,4 +11,3 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="id_pressed" from="." to="." method="_OnFlowContextIdPressed"]

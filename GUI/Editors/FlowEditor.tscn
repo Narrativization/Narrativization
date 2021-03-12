@@ -6,6 +6,7 @@
 [node name="FlowEditor" type="GraphEdit"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+right_disconnects = true
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
