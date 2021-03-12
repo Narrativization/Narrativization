@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using Godot.Collections;
+// using GCollection = Godot.Collections; // ~Maybe?
 
 namespace Storier
 {
@@ -10,8 +11,6 @@ namespace Storier
         // All Opened Entities
         private static Godot.Collections.Array<StoryEntity> storyEntities = new Godot.Collections.Array<StoryEntity>();
 
-        public string Template = "res://Templates/DefaultTemplate.tscn"; // Template reference
-
         protected StoryEntity() {} 
         public StoryEntity(string _id, string _name, string _description) 
         {
@@ -20,24 +19,26 @@ namespace Storier
             storyEntities.Add(this);
         }
 
-        public override void Save(string _data)
+        public override bool Save(string _data)
         {
-            if (!FileManager.SaveFile(ResourcePath + ResourceName + ".entity", _data))
-            {
-                GD.Print(ResourceName + " save Failed!");
-                return; 
-            }
-            base.Save(_data);
+            // if (!FileManager.SaveFile(ResourcePath + ResourceName + ".entity", _data))
+            // {
+            //     GD.Print(ResourceName + " save Failed!");
+            //     return; 
+            // }
+            // base.Save(_data);
+            return false;
         }
 
-        public override void Reload()
+        public override bool Reload()
         {
-            if (FileManager.LoadFile(ResourcePath + ResourceName + ".entity") == "")
-            {
-                GD.Print(ResourcePath + ResourceName + ".entity" + " load failed!");
-                return; 
-            }
-            base.Reload();
+            // if (FileManager.LoadFile(ResourcePath + ResourceName + ".entity") == "")
+            // {
+            //     GD.Print(ResourcePath + ResourceName + ".entity" + " load failed!");
+            //     return; 
+            // }
+            // base.Reload();
+            return false;
         }
 
         public Godot.Collections.Dictionary<string, object> SaveData()
@@ -48,7 +49,7 @@ namespace Storier
                 { "Name", Name },
                 { "Description", Description }, 
                 { "Template", Template },
-                { "Data", new Godot.Object() }
+                { "Data", TemplateData }
             };
         }
         
@@ -76,7 +77,7 @@ namespace Storier
             string loadedName = entityData["Name"] as String;
             string loadedDescription = entityData["Description"] as String;
             string loadedTemplate = entityData["Template"] as String;
-            Godot.Object loadedData = entityData["Data"] as Godot.Object; // Custom Informations
+            Dictionary<string, object> loadedData = entityData["Data"] as Dictionary<string, object>; // Custom Informations
             loadFile.Close();
             return new StoryEntity(loadedId, loadedName, loadedDescription);
         }

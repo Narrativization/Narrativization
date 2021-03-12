@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://GUI/Nodes/StoryNode.cs" type="Script" id=1]
+[ext_resource path="res://Theme/Font/Lora-Regular.tres" type="DynamicFont" id=2]
 
 [node name="StoryNode" type="GraphNode"]
 margin_right = 283.0
@@ -23,15 +24,16 @@ editables = [ NodePath("VBoxContainer/Name"), NodePath("VBoxContainer/Descriptio
 margin_left = 16.0
 margin_top = 24.0
 margin_right = 267.0
-margin_bottom = 56.0
+margin_bottom = 67.0
 
 [node name="Name" type="Label" parent="VBoxContainer"]
 margin_right = 251.0
-margin_bottom = 14.0
+margin_bottom = 22.0
+custom_fonts/font = ExtResource( 2 )
 text = "Story Name"
 
 [node name="Description" type="Label" parent="VBoxContainer"]
-margin_top = 18.0
+margin_top = 26.0
 margin_right = 251.0
-margin_bottom = 32.0
+margin_bottom = 43.0
 text = "Story Description"

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Godot.Collections;
 
 namespace Storier
 {
@@ -15,10 +16,11 @@ namespace Storier
         public string Id { get; protected set; } // Example: /Entity/Character/MyChar
         public string Name { get { return ResourceName; } set { ResourceName = value; } }  // Example: MyChar | Uses ResourceName 
         public string Description { get; set; }  // Example: Character Example
+        public string Template { get; set; } = "res://Templates/DefaultTemplate.tscn"; // Template reference
+        public Dictionary<string, object> TemplateData { get; set; } = new Dictionary<string, object>();
 
         public StoryElementType storyElementType = StoryElementType.Asset;
-        // public string storyElementTemplate = "res://Templates/DefaultTemplate.tscn";
-        public string storyElementExtension = ""; // Example ext: ".ext" 
+        protected string storyElementExtension = ".asset"; // Example ext: ".ext" 
 
         protected StoryElement() {}
         protected StoryElement(string _id, string _name, string _description, string _ext) 
@@ -60,9 +62,9 @@ namespace Storier
         }         
 
         // Saving Story Element | ~Maybe create Resource Format Saver/Loader
-        public virtual void Save(string _data) { } // ~Save text  -- Change to bool?
+        public virtual bool Save(string _data) { return false; } // ~Save text  -- Change to bool?
         // Reloading Story Element
-        public virtual void Reload() { }
+        public virtual bool Reload() { return false; }
         // Import Story Element
         public virtual void Import() { }
         // Export Story Element

@@ -17,28 +17,43 @@ namespace Storier
             storyFlows.Add(this);
         }
 
-        public override void Save(string _data)
+        public override bool Save(string _data)
         {
             ConfigFile configFile = new ConfigFile();
             configFile.SetValue("StoryElement", "Name", ResourceName);
-            Error err = configFile.Save(ResourcePath + ResourceName + ".flow");
+            Error err = configFile.Save(ResourcePath);
             if (err != Error.Ok) { GD.Print(err); }
             base.Save(_data);
+            return false;
+        }
+
+
+        public static StoryFlow Load(string _id)
+        {
+            string fileName = StoryManager.currentStory.storyData.directory + _id + ".entity";
+            ConfigFile configFile = new ConfigFile();
+            Error err = configFile.Load(fileName);
+            if (err != Error.Ok) { GD.Print(err); return null; }
+            string loadedId = configFile.GetValue("StoryElement", "Id").ToString();
+            if (loadedId != _id) { GD.Print("Loaded File Id and Id isn't same!"); }
+            string loadedName = configFile.GetValue("StoryElement", "Name").ToString();
+            string loadedDescription = configFile.GetValue("StoryElement", "Id").ToString();
+            return new StoryFlow(_id, loadedName, loadedDescription);
+        }
+
+        public static StoryFlow GetStoryFlow(string _id)
+        {
+            for (int i = 0; i < storyFlows.Count; i++)
+            {
+                if (IsInstanceValid(storyFlows[i]) && storyFlows[i].Id == _id)
+                {
+                    return storyFlows[i];
+                }
+            }
+            return Load(_id);
         }
 
         
 
-        // public static StoryFlow Load(string _id)
-        // {
-        //     string fileName = StoryManager.currentStory.storyData.directory + _id + ".entity";
-        //     ConfigFile configFile = new ConfigFile();
-        //     Error err = configFile.Load(fileName);
-        //     if (err != Error.Ok) { GD.Print(err); return null; }
-        //     string loadedId = configFile.GetValue("StoryElement", "Id").ToString();
-        //     if (loadedId != _id) { GD.Print("Loaded File Id and Id isn't same!"); }
-        //     string loadedName = configFile.GetValue("StoryElement", "Name").ToString();
-        //     string loadedDescription = configFile.GetValue("StoryElement", "Id").ToString();
-        //     return new StoryEntity(_id, loadedName, loadedDescription);
-        // }
     }
 }

@@ -10,6 +10,8 @@ public class FlowEditor : GraphNodeEditor
     private NodePath flowContextMenuPath = new NodePath("./FlowContext");
     [Export]
     private PackedScene storyNode = GD.Load<PackedScene>("res://GUI/Nodes/StoryNode.tscn");
+    [Export]
+    private PackedScene storyFlowNodeScene = GD.Load<PackedScene>("res://GUI/Nodes/StoryFlowNode.tscn");
 
 
     private FlowContextMenu contextMenu;
@@ -53,6 +55,19 @@ public class FlowEditor : GraphNodeEditor
 
         base._GuiInput(inputEvent);
     }
+
+    int ind = 1;
+    public bool CreateFlowNode()
+    {
+        GD.Print("Create Story Flow Node!");
+        StoryFlowNode storyFlowNode = storyFlowNodeScene.Instance() as StoryFlowNode;
+        storyFlowNode.InitNode("/Flows/Chapter" + ind++);
+        // StoryFlowNode storyFlowNode = new StoryFlowNode("/Flows/Chapter1");
+        AddChild(storyFlowNode);
+        GD.Print("AddChild Story Flow Node!");
+        return true;
+    }
+
 
     // Removes All child Graph Nodes
     public void RemoveFlowNodes()

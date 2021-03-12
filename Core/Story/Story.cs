@@ -29,27 +29,6 @@ namespace Storier
     //      
     //  }
 
-        // // Remove Creating From story every element create themself
-        // public static StoryElement CreateStoryElement(string _name = "NewStoryElement", string _relativePath = "/")
-        // {
-        //     string storyElementPath = StoryManager.currentStory.storyData.directory + _relativePath;
-        //     return new StoryElement(_name, storyElementPath);
-        // }
-
-        // // Create Story Entity from anywhere
-        // public static StoryEntity CreateStoryEntity(string _name = "NewStoryEntity", string _relativePath = "/Entities/Characters/")
-        // {
-        //     string storyElementPath = StoryManager.currentStory.storyData.directory + _relativePath;
-        //     return new StoryEntity(_name, storyElementPath);
-        // }
-
-        // // Create Story Flow from anywhere
-        // public static StoryFlow CreateStoryFlow(string _name = "NewStoryFlow", string _relativePath = "/Flows/")
-        // {
-        //     string storyElementPath = StoryManager.currentStory.storyData.directory + _relativePath;
-        //     return new StoryFlow(_name, storyElementPath);
-        // }
-
         // Create Folder/File Structure of project
         public void CreateHierarchy()
         {

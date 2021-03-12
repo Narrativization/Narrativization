@@ -24,7 +24,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
-margin_top = 32.0
+margin_top = 35.0
 margin_right = -4.0
 margin_bottom = -4.0
 
@@ -33,7 +33,7 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
-margin_top = 32.0
+margin_top = 35.0
 margin_right = -4.0
 margin_bottom = -4.0
 __meta__ = {
@@ -62,7 +62,7 @@ __meta__ = {
 }
 
 [node name="ReadOnly" type="CheckButton" parent="Menu"]
-margin_right = 141.0
+margin_right = 140.0
 margin_bottom = 40.0
 text = "ReadOnly"
 __meta__ = {
@@ -70,8 +70,8 @@ __meta__ = {
 }
 
 [node name="EntityType" type="MenuButton" parent="Menu"]
-margin_left = 145.0
-margin_right = 224.0
+margin_left = 144.0
+margin_right = 225.0
 margin_bottom = 40.0
 hint_tooltip = "Select Entity Save Path
 /Entity/EntityType/<ResourceName>"
@@ -79,8 +79,8 @@ text = "Characters"
 items = [ "Character", null, 0, false, false, 0, 0, null, "", false, "Location", null, 0, false, false, 1, 0, null, "", false, "Other", null, 0, false, false, 2, 0, null, "", false ]
 
 [node name="ResourceName" type="LineEdit" parent="Menu"]
-margin_left = 228.0
-margin_right = 388.0
+margin_left = 229.0
+margin_right = 389.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 160, 0 )
 text = "NewEntity"

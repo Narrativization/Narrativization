@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://GUI/Nodes/StoryFlowNode.cs" type="Script" id=1]
+
+[node name="StoryFlowNode" type="GraphNode"]
+margin_right = 180.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 180, 80 )
+title = "Story Flow"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
