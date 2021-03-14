@@ -1,9 +1,0 @@
-[gd_scene format=2]
-
-[node name="BaseNode" type="GraphNode"]
-margin_right = 165.0
-margin_bottom = 73.0
-title = "BaseNode"
-__meta__ = {
-"_edit_use_anchors_": false
-}

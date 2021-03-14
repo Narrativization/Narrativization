@@ -58,16 +58,126 @@ public class GraphNodeEditor : GraphEdit
         {
             GD.Print("Home");
             Godot.Collections.Array selected = GetSelected();
-            GraphNode graphNode = selected[0] as GraphNode;
-            if (IsInstanceValid(graphNode))
-                FocusNode(graphNode);
+            if (selected.Count > 0 && selected[0] is GraphNode graphNode)
+            {
+                if (IsInstanceValid(graphNode))
+                    FocusNode(graphNode);
+            }
         }
-        else if (inputEvent.IsActionPressed("MoveLeft"))
+        
+        if (inputEvent.IsActionPressed("JumpLeft")) // CTRL + Shift + Left Arrow | Get Nearlest(Left) Graph Node
+        {
+            GD.Print("JumpLeft");
+            Godot.Collections.Array selected = GetSelected();
+            Godot.Collections.Array allNodes = GetChildren();
+            if (selected.Count > 0 && selected[0] is GraphNode selectedNode)
+            {
+                if (allNodes.Count > 0)
+                {
+                    GraphNode jumpNode = selectedNode as GraphNode;
+                    for (int i = 0; i < allNodes.Count; i++)
+                    {
+                        if (allNodes[i] is GraphNode graphNode)
+                        {
+                            if (graphNode.Offset.x < selectedNode.Offset.x && (jumpNode == selectedNode || 
+                                Mathf.Abs(selectedNode.Offset.x - graphNode.Offset.x) < Mathf.Abs(selectedNode.Offset.x - jumpNode.Offset.x)))
+                            {
+                                jumpNode = graphNode;
+                            }
+                        }
+                    }
+                    FocusNode(jumpNode);
+                    UnselectAll();
+                    jumpNode.Selected = true;
+                }
+            }
+        }
+        else if (inputEvent.IsActionPressed("JumpRight"))
+        {
+            GD.Print("JumpRight");
+            Godot.Collections.Array selected = GetSelected();
+            Godot.Collections.Array allNodes = GetChildren();
+            if (selected.Count > 0 && selected[0] is GraphNode selectedNode)
+            {
+                if (allNodes.Count > 0)
+                {
+                    GraphNode jumpNode = selectedNode as GraphNode;
+                    for (int i = 0; i < allNodes.Count; i++)
+                    {
+                        if (allNodes[i] is GraphNode graphNode)
+                        {
+                            if (graphNode.Offset.x > selectedNode.Offset.x && (jumpNode == selectedNode || 
+                                Mathf.Abs(selectedNode.Offset.x - graphNode.Offset.x) < Mathf.Abs(selectedNode.Offset.x - jumpNode.Offset.x)))
+                            {
+                                jumpNode = graphNode;
+                            }
+                        }
+                    }
+                    FocusNode(jumpNode);
+                    UnselectAll();
+                    jumpNode.Selected = true;
+                }
+            }
+        }
+        else if (inputEvent.IsActionPressed("JumpUp"))
+        {
+            GD.Print("JumpUp");
+            Godot.Collections.Array selected = GetSelected();
+            Godot.Collections.Array allNodes = GetChildren();
+            if (selected.Count > 0 && selected[0] is GraphNode selectedNode)
+            {
+                if (allNodes.Count > 0)
+                {
+                    GraphNode jumpNode = selectedNode as GraphNode;
+                    for (int i = 0; i < allNodes.Count; i++)
+                    {
+                        if (allNodes[i] is GraphNode graphNode)
+                        {
+                            if (graphNode.Offset.y < selectedNode.Offset.y && (jumpNode == selectedNode || 
+                                Mathf.Abs(selectedNode.Offset.y - graphNode.Offset.y) < Mathf.Abs(selectedNode.Offset.y - jumpNode.Offset.y)))
+                            {
+                                jumpNode = graphNode;
+                            }
+                        }
+                    }
+                    FocusNode(jumpNode);
+                    UnselectAll();
+                    jumpNode.Selected = true;
+                }
+            }
+        }
+        else if (inputEvent.IsActionPressed("JumpDown"))
+        {
+            GD.Print("JumpDown");
+            Godot.Collections.Array selected = GetSelected();
+            Godot.Collections.Array allNodes = GetChildren();
+            if (selected.Count > 0 && selected[0] is GraphNode selectedNode)
+            {
+                if (allNodes.Count > 0)
+                {
+                    GraphNode jumpNode = selectedNode as GraphNode;
+                    for (int i = 0; i < allNodes.Count; i++)
+                    {
+                        if (allNodes[i] is GraphNode graphNode)
+                        {
+                            if (graphNode.Offset.y > selectedNode.Offset.y && (jumpNode == selectedNode || 
+                                Mathf.Abs(selectedNode.Offset.y - graphNode.Offset.y) < Mathf.Abs(selectedNode.Offset.y - jumpNode.Offset.y)))
+                            {
+                                jumpNode = graphNode;
+                            }
+                        }
+                    }
+                    FocusNode(jumpNode);
+                    UnselectAll();
+                    jumpNode.Selected = true;
+                }
+            }
+        }
+        else if (inputEvent.IsActionPressed("MoveLeft"))  // CTRL + Left Arrow
         {
             GD.Print("MoveLeft");
             Godot.Collections.Array selected = GetSelected();
-            GraphNode graphNode = selected[0] as GraphNode;
-            if (IsInstanceValid(graphNode))
+            if (selected.Count > 0 && selected[0] is GraphNode graphNode)
             {
                 Godot.Collections.Array<GraphNode> lefts = GetLeftNodes(graphNode);
                 if (lefts.Count > 0)
@@ -82,10 +192,9 @@ public class GraphNodeEditor : GraphEdit
         {
             GD.Print("MoveRight");
             Godot.Collections.Array selected = GetSelected();
-            GraphNode graphNode = selected[0] as GraphNode;
-            if (IsInstanceValid(graphNode))
+            if (selected.Count > 0 && selected[0] is GraphNode graphNode)
             {
-               Godot.Collections.Array<GraphNode> rights = GetRightNodes(graphNode);
+                Godot.Collections.Array<GraphNode> rights = GetRightNodes(graphNode);
                 if (rights.Count > 0)
                 {
                     FocusNode(rights[0]);
@@ -98,8 +207,7 @@ public class GraphNodeEditor : GraphEdit
         {
             GD.Print("MoveUp");
             Godot.Collections.Array selected = GetSelected();
-            GraphNode graphNode = selected[0] as GraphNode;
-            if (IsInstanceValid(graphNode))
+            if (selected.Count > 0 && selected[0] is GraphNode graphNode)
             {
                 GraphNode upNode = selected[0] as GraphNode;
                 Godot.Collections.Array<GraphNode> lefts = GetLeftNodes(graphNode);
@@ -124,8 +232,7 @@ public class GraphNodeEditor : GraphEdit
         {
             GD.Print("MoveDown");
             Godot.Collections.Array selected = GetSelected();
-            GraphNode graphNode = selected[0] as GraphNode;
-            if (IsInstanceValid(graphNode))
+            if (selected.Count > 0 && selected[0] is GraphNode graphNode)
             {
                 GraphNode downNode = selected[0] as GraphNode;
                 Godot.Collections.Array<GraphNode> lefts = GetLeftNodes(graphNode);
@@ -146,6 +253,8 @@ public class GraphNodeEditor : GraphEdit
                 downNode.Selected = true;
             }
         }
+        
+
         base._GuiInput(inputEvent);
     }
 
@@ -287,13 +396,11 @@ public class GraphNodeEditor : GraphEdit
     public void _OnGraphEditorConnectionRequest(string from, int fromSlot, string to, int toSlot)
     {
         ConnectNode(from, fromSlot, to, toSlot);
-        GD.Print(GetConnectionList());
     }
 
     public void _OnGraphEditorDisconnectionRequest(string from, int fromSlot, string to, int toSlot)
     {
         DisconnectNode(from, fromSlot, to, toSlot);
-        GD.Print(GetConnectionList());
     }
 
 }

@@ -13,7 +13,6 @@ namespace Storier
         public static string workspace = OS.GetSystemDir(OS.SystemDir.Documents) + "/Storier/";
         public static string StorierVersion = "v0.2";
         public static Story currentStory;
-        public static string flowName = "";
 
         private StoryManager()
         {

@@ -30,7 +30,7 @@ __meta__ = {
 }
 
 [node name="Story" type="MenuButton" parent="EditBar"]
-margin_right = 44.0
+margin_right = 45.0
 margin_bottom = 25.0
 text = "Story"
 items = [ "New", null, 0, false, false, 0, 0, null, "", false, "Save", null, 0, false, false, 1, 0, null, "", false, "Load", null, 0, false, false, 2, 0, null, "", false, "Settings", null, 0, false, false, 3, 0, null, "", false, "Help", null, 0, false, false, 4, 0, null, "", false, "Quit", null, 0, false, false, 5, 0, null, "", false ]
@@ -44,8 +44,8 @@ __meta__ = {
 }
 
 [node name="Edit" type="MenuButton" parent="EditBar"]
-margin_left = 48.0
-margin_right = 84.0
+margin_left = 49.0
+margin_right = 85.0
 margin_bottom = 25.0
 text = "Edit"
 items = [ "Journeys", null, 0, false, false, 0, 0, null, "", false, "Decisions", null, 0, false, false, 1, 0, null, "", false, "Annotations", null, 0, false, false, 2, 0, null, "", false ]
@@ -93,8 +93,8 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 125, 15 )
 size_flags_vertical = 0
 bbcode_enabled = true
-bbcode_text = "[center] [url]Story[/url]  / [url]Flow[/url] / [url]Current[/url] [/center]"
-text = " Story  / Flow / Current "
+bbcode_text = "[center] [url]Story[/url]  / [url]Flows[/url] / [url]Current[/url] [/center]"
+text = " Story  / Flows / Current "
 scroll_active = false
 scroll_following = true
 script = ExtResource( 3 )
@@ -119,7 +119,7 @@ __meta__ = {
 }
 
 [node name="Editor" type="Button" parent="ToolBar"]
-margin_right = 41.0
+margin_right = 42.0
 margin_bottom = 25.0
 text = "Flow"
 flat = true
@@ -135,8 +135,8 @@ Every Click changing editor. Default Editor: Flow
 }
 
 [node name="Navigator" type="Button" parent="ToolBar"]
-margin_left = 45.0
-margin_right = 117.0
+margin_left = 46.0
+margin_right = 120.0
 margin_bottom = 25.0
 text = "Navigator"
 flat = true

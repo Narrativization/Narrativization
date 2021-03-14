@@ -9,12 +9,14 @@ namespace Storier
     {
         // Story Data
         public StoryData storyData = new StoryData();
+        public static string flowTarget = ""; // ~Folder View and Flow View 
 
         private Story() {}
         public Story(StoryData _storyData) // Create New Story 
         {
             storyData = _storyData;
             Name = storyData.name;
+            flowTarget = Name + "/" + "Flow" + "/";
             CreateHierarchy();
         }
         

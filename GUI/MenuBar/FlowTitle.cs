@@ -4,6 +4,9 @@ using Storier;
 
 public class FlowTitle : RichTextLabel
 {
+    [Export]
+    public string displayedFlow = "";
+
     public override void _Ready()
     {
         
@@ -11,12 +14,18 @@ public class FlowTitle : RichTextLabel
 
     public override void _Process(float delta)
     {
-        base._Process(delta);
-        if (StoryManager.flowName != "" && StoryManager.flowName != Text) // ~Replace with Signal
+        if (Story.flowTarget != "" && Story.flowTarget != displayedFlow) // ~Replace with Signal
         {
-            ChangeFlowTitle(StoryManager.flowName);
+            ChangeFlowTitle(Story.flowTarget);
+            displayedFlow = Story.flowTarget;
+            GD.Print(StoryManager.workspace  + Story.flowTarget);
+            Godot.Collections.Dictionary dictionary = new Godot.Collections.Dictionary();
+            dictionary = FileManager.DirectoryContents(StoryManager.currentStory.storyData.directory);
+            GD.Print("Flow Changed");
+            GD.Print(dictionary);
         }
-    }
+        base._Process(delta);
+    } 
 
     public void ChangeFlowTitle(string _flowName)
     {
@@ -25,15 +34,9 @@ public class FlowTitle : RichTextLabel
 
         for (int i = 0; i < flowNames.Length; i++)
         {
-            if (i != flowNames.Length - 1) // Isn't Last 
-            {
-                cFlow += ("[url]" + flowNames[i] + "[/url] / ");
-            }
-            else // Last
-            {
-                cFlow += ("[url]" + flowNames[i] + "[/url][/center]");
-            }
+            cFlow += ("[url]" + flowNames[i] + "[/url] / ");
         }
+        cFlow += "[/center]";
         BbcodeText = cFlow;
     }
 

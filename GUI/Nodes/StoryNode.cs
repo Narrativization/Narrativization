@@ -6,10 +6,6 @@ using Storier;
 // Create(or rename) FlowNode -> Generic Flow editor Node
 public class StoryNode : GraphNode
 {
-    // Exports
-    // [Export] // Export(Dictionary, string, NodePath)
-    // private Dictionary<NodePath, string> editables = new Dictionary<NodePath, string>(); // NodePath: JSON.Direction  
-
     [Export] // Export(Dictionary, string, NodePath)
     private Array<NodePath> editables = new Array<NodePath>(); // NodePath: JSON.Direction  
 
@@ -45,7 +41,6 @@ public class StoryNode : GraphNode
                 {
                     GD.Print("Load Story");
                     Story loadedStory = StoryManager.LoadStory(recentStory);
-                    StoryManager.flowName = loadedStory.Name;
                     GetParent<FlowEditor>().DeleteAll();
                 }
             }
