@@ -1,24 +1,62 @@
 using Godot;
 using System;
 using Godot.Collections;
+using Array = Godot.Collections.Array;
 
 namespace Storier
 {
     // Story(Project) 
     public class Story : Node
     {
+        // Custom Story Data
+        private static Dictionary<string, string> StoryData { get; set; } = new Dictionary<string, string>(); 
+        
         // Story Data
+        public static string StoryName { get { return StoryData["Name"]; } set { StoryData["Name"] = value; } } // Current Story Name
+        public static string StoryDescription { get { return StoryData["Description"]; } set { StoryData["Description"] = value; } } // Current Story Description
+        public static string StoryDirectory { get { return StoryData["Directory"]; } set { StoryData["Directory"] = value; } } // Current Story Directory
+
+        // Story Informations
+        // Id of Opened File/Directory
+        public static string FlowTitle { get; set; } 
+        // Full Path of Flow
+        public static string FlowFileName { get {return StoryDirectory + FlowTitle; } } 
+
+
         public StoryData storyData = new StoryData();
         public static string flowTitle {get { return StoryManager.currentStory.Name + flowTarget; } }  // ~Folder View and Flow View 
         public static string flowTarget = ""; // ~Folder View and Flow View 
 
-        private Story() {}
-        public Story(StoryData _storyData) // Create New Story 
+        private Story() 
+        {
+            StoryName = "Untitled Story";
+            StoryDescription = "";
+            StoryDirectory = "";
+        }
+        public Story(string _name, string _description, string _directory) 
+        {
+            StoryName = _name;
+            StoryDescription = _description;
+            StoryDirectory = _directory;
+            CreateHierarchy();
+        }        
+        public Story(string _name, string _description, string _directory, string _author, string _copyright) 
+        {
+            StoryName = _name;
+            StoryDescription = _description;
+            StoryDirectory = _directory;
+            StoryData.Add("Author", _author);
+            StoryData.Add("Copyright", _copyright);
+        }
+        private Story(StoryData _storyData) // Create New Story Old 
         {
             storyData = _storyData;
             Name = storyData.name;
             flowTarget = "/" + "Flows" + "/";
             CreateHierarchy();
+            StoryName = "Untitled Story";
+            StoryDescription = "";
+            StoryDirectory = "";    
         }
         
 
@@ -32,6 +70,20 @@ namespace Storier
     //      
     //  }
 
+        public static string SaveData()
+        {
+            return StoryData.ToString();
+        }
+
+        public override void _Input(InputEvent inputEvent)
+        {
+            if (inputEvent.IsActionPressed("Help"))
+            {
+                GD.Print(StoryData);
+                GD.Print("Done!");
+            }
+        }
+        
         // Create Folder/File Structure of project
         public void CreateHierarchy()
         {

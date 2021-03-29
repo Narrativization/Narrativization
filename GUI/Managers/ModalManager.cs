@@ -111,7 +111,9 @@ public class ModalManager : Control
     public void _OnCreateDialogConfirmed()
     {
         GD.Print("Create Story");
-        StoryManager.CreateStory(createDialog.GetInfos());
+        createDialog.ValidateInfos();
+        StoryManager.CreateStory(createDialog.storyName.Text, createDialog.descriptionName.Text, createDialog.GetDir());
+        createDialog.ClearDialogue();
     }
 
     

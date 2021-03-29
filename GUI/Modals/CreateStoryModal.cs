@@ -33,21 +33,26 @@ public class CreateStoryModal : ConfirmationDialog
 //      
 //  }
 
-    public StoryData GetInfos()
+    // public StoryData GetInfos()
+    // {
+    //     ValidateInfos();
+    //     StoryData sData = new StoryData(
+    //         storyName.Text, 
+    //         descriptionName.Text, 
+    //         OS.GetSystemDir(OS.SystemDir.Documents) + "/Storier/" + storyName.Text, 
+    //         authorName.Text, 
+    //         copyrightName.Text
+    //     );
+    //     ClearDialogue();
+    //     return sData;
+    // }
+    
+    public string GetDir()
     {
-        ValidateInfos();
-        StoryData sData = new StoryData(
-            storyName.Text, 
-            descriptionName.Text, 
-            OS.GetSystemDir(OS.SystemDir.Documents) + "/Storier/" + storyName.Text, 
-            authorName.Text, 
-            copyrightName.Text
-        );
-        ClearDialogue();
-        return sData;
+        return OS.GetSystemDir(OS.SystemDir.Documents) + "/Storier/" + storyName.Text;
     }
 
-    private void ValidateInfos()
+    public void ValidateInfos()
     {
         if (storyName.Text == "")
         {
