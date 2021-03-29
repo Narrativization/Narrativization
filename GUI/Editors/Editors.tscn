@@ -30,7 +30,7 @@ margin_top = 5.0
 margin_right = -5.0
 margin_bottom = -5.0
 
-[node name="FlowGraphEditor" parent="FlowEditor" instance=ExtResource( 1 )]
+[node name="Flowditor" parent="FlowEditor" instance=ExtResource( 1 )]
 scroll_offset = Vector2( -5, -5 )
 
 [node name="EntityEditor" type="Tabs" parent="."]
@@ -41,3 +41,29 @@ margin_left = 5.0
 margin_top = 5.0
 margin_right = -5.0
 margin_bottom = -5.0
+
+[node name="PropertyEditor" type="Tabs" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = -5.0
+margin_bottom = -5.0
+
+[node name="TextEditor" type="Tabs" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = -5.0
+margin_bottom = -5.0
+
+[node name="TextEditor" type="TextEdit" parent="TextEditor"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+minimap_draw = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

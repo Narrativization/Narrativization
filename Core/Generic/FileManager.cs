@@ -112,14 +112,14 @@ namespace Storier
             }
         }
 
-        public static Dictionary DirectoryContents(string fileName)
+        public static Dictionary DirectoryTree(string fileName)
         {
             Dictionary dictionary = new Dictionary(){};
-            dictionary = DirectoryContents(fileName, dictionary);
+            dictionary = DirectoryTreeWalker(fileName, dictionary);
             return dictionary;
         }
 
-        private static Dictionary DirectoryContents(string fileName, Dictionary dictionary)
+        private static Dictionary DirectoryTreeWalker(string fileName, Dictionary dictionary)
         {
             Directory dir = new Directory();
             if (dir.Open(fileName) == Error.Ok)
@@ -130,11 +130,36 @@ namespace Storier
                 {
                     if (dir.CurrentIsDir())
                     {
-                        dictionary.Add(fName.BaseName(), DirectoryContents(fileName + "/" + fName, new Dictionary()));
+                        dictionary.Add(fName.BaseName(), DirectoryTreeWalker(fileName + "/" + fName, new Dictionary()));
                     }
                     else
                     {
                         dictionary.Add(fName.BaseName(), "");
+                    }
+                    fName = dir.GetNext();
+                }
+                dir.ListDirEnd();
+            }
+            return dictionary;
+        }
+
+        public static Godot.Collections.Array DirectoryContents(string fileName)
+        {
+            Godot.Collections.Array dictionary = new Godot.Collections.Array();
+            Directory dir = new Directory();
+            if (dir.Open(fileName) == Error.Ok)
+            {
+                dir.ListDirBegin(true, true);
+                string fName = dir.GetNext();
+                while (fName != "")
+                {
+                    if (dir.CurrentIsDir())
+                    {
+                        dictionary.Add(fName.BaseName());
+                    }
+                    else
+                    {
+                        dictionary.Add(fName.BaseName());
                     }
                     fName = dir.GetNext();
                 }

@@ -9,6 +9,7 @@ namespace Storier
     {
         // Story Data
         public StoryData storyData = new StoryData();
+        public static string flowTitle {get { return StoryManager.currentStory.Name + flowTarget; } }  // ~Folder View and Flow View 
         public static string flowTarget = ""; // ~Folder View and Flow View 
 
         private Story() {}
@@ -16,7 +17,7 @@ namespace Storier
         {
             storyData = _storyData;
             Name = storyData.name;
-            flowTarget = Name + "/" + "Flow" + "/";
+            flowTarget = "/" + "Flows" + "/";
             CreateHierarchy();
         }
         
@@ -56,7 +57,10 @@ namespace Storier
 
         public Dictionary LookHierarchy()
         {
-            return FileManager.DirectoryContents(storyData.directory);
+            GD.Print(FileManager.DirectoryTree(storyData.directory));
+            GD.Print((storyData.directory + flowTarget));
+            GD.Print(FileManager.DirectoryContents(storyData.directory + flowTarget));
+            return FileManager.DirectoryTree(storyData.directory);
         }
 
     }
