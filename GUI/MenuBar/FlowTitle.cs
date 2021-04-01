@@ -21,11 +21,11 @@ public class FlowTitle : RichTextLabel
             displayedFlow = Story.flowTarget;
             GD.Print(StoryManager.workspace  + Story.flowTarget);
             Godot.Collections.Dictionary dictionary = new Godot.Collections.Dictionary();
-            dictionary = FileManager.DirectoryTree(StoryManager.currentStory.storyData.directory);
+            dictionary = FileManager.DirectoryTree(StoryManager.CurrentStory.storyData.directory);
             GD.Print("Flow Changed");
             GD.Print(dictionary);
-            GD.Print("Folder: " + StoryManager.currentStory.storyData.directory + Story.flowTitle);
-            GD.Print("Folder Content: " + FileManager.DirectoryContents(StoryManager.currentStory.storyData.directory + Story.flowTitle));
+            GD.Print("Folder: " + StoryManager.CurrentStory.storyData.directory + Story.flowTitle);
+            GD.Print("Folder Content: " + FileManager.DirectoryContents(StoryManager.CurrentStory.storyData.directory + Story.flowTitle));
         }
         base._Process(delta);
     } 

@@ -41,9 +41,9 @@ public class NavigationTree : Tree
 
     public void Refresh()
     {
-        if(IsInstanceValid(StoryManager.currentStory))
+        if(IsInstanceValid(StoryManager.CurrentStory))
         {
-            CreateTree(StoryManager.currentStory.LookHierarchy(), StoryManager.currentStory.storyData.name);
+            CreateTree(StoryManager.CurrentStory.LookHierarchy(), StoryManager.CurrentStory.storyData.name);
         }
         else
         {

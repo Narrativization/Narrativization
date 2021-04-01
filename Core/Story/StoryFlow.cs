@@ -30,7 +30,7 @@ namespace Storier
 
         public static StoryFlow Load(string _id)
         {
-            string fileName = StoryManager.currentStory.storyData.directory + _id + ".entity";
+            string fileName = StoryManager.CurrentStory.storyData.directory + _id + ".entity";
             ConfigFile configFile = new ConfigFile();
             Error err = configFile.Load(fileName);
             if (err != Error.Ok) { GD.Print(err); return null; }

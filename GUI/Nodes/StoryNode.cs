@@ -40,8 +40,10 @@ public class StoryNode : GraphNode
                 if (recentStory != "")
                 {
                     GD.Print("Load Story");
-                    Story loadedStory = StoryManager.LoadStory(recentStory);
-                    GetParent<FlowEditor>().DeleteAll();
+                    if (StoryManager.LoadStory(recentStory))
+                    {
+                        GetParent<FlowEditor>().DeleteAll();
+                    } 
                 }
             }
         }

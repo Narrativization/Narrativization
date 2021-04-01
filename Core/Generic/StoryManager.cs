@@ -10,10 +10,10 @@ namespace Storier
     {
         // Singleton
         private static StoryManager storyManager;
+        public static Story CurrentStory { get; set; }
 
         public static string workspace = OS.GetSystemDir(OS.SystemDir.Documents) + "/Storier/";
         public static string StorierVersion = "v0.2";
-        public static Story currentStory;
 
         private StoryManager()
         {
@@ -24,10 +24,10 @@ namespace Storier
         public static Story CreateStory(string _name, string _description, string _directory)
         {
             CloseAllStories(); // Single Story Workflow
-            currentStory = new Story(_name, _description, _directory);
-            storyManager.AddChild(currentStory);
-            SaveStory();
-            return currentStory;
+            CurrentStory = new Story(_name, _description, _directory);
+            storyManager.AddChild(CurrentStory);
+            if (SaveStory()) { CurrentStory.CreateHierarchy(); } 
+            return CurrentStory;
         }
 
         // Save Story
@@ -35,7 +35,7 @@ namespace Storier
         {
             Dictionary storierData = new Dictionary() {
                 {
-                    "Story", Story.SaveData()
+                    "Story", CurrentStory.StoryData
                 },
                 {
                     "Storier", new Dictionary(){
@@ -44,35 +44,33 @@ namespace Storier
                 }
             };
             bool isSuccess = FileManager.SaveFile(
-                currentStory.storyData.directory + currentStory.storyData.name + ".storier", 
+                CurrentStory.StoryDirectory + CurrentStory.StoryName + ".storier", 
                 JSON.Print(storierData, "\t"));
-            PushRecentStory();
+            if (isSuccess) { PushRecentStory(); } 
             return isSuccess;
         }
 
         // Load Story
-        public static Story LoadStory(string fileName)
+        public static bool LoadStory(string fileName)
         {
             string str = FileManager.LoadFile(fileName);
             JSONParseResult jsonObject = JSON.Parse(str);
-            Dictionary<string, string> storyData = new Dictionary<string, string>(); 
 
             if(jsonObject.Error != 0) { GD.Print("Error:", jsonObject.ErrorLine); } 
             else
             {
                 // GD.Print(JSON.Print(jsonObject.Result));
                 Dictionary storyJson = jsonObject.Result as Dictionary; // Godot.Collections.Array  <-  [] 
+                GD.Print(storyJson);
+                GD.Print(storyJson["Story"]);
                 
                 if (storyJson.Contains("Story"))
                 {
-                    Dictionary storyInfos = storyJson["Story"] as Dictionary; 
-                    IDictionaryEnumerator enumerator = storyInfos.GetEnumerator();
-                    while (enumerator.MoveNext())
-                    {
-                        GD.Print(enumerator.Key.ToString(), " : " , enumerator.Value.ToString());
-                        storyData.Add(enumerator.Key.ToString(), enumerator.Value.ToString());
-                    }
-                    enumerator.Reset();
+                    // Dictionary<string, string> storyInfos = storyJson["Story"] as Dictionary<string, string>;
+                    Dictionary storyDic = storyJson["Story"] as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
+                    Dictionary<string, string> storyInfos = new Dictionary<string, string>(storyDic);
+                    CreateStory(storyInfos["Name"], storyInfos["Description"], fileName.GetBaseDir() + "/");
+                    CurrentStory.StoryData = storyInfos;
                 }
                 if (storyJson.Contains("Storier"))
                 {
@@ -81,61 +79,9 @@ namespace Storier
                     if (sVersion != StorierVersion) { GD.Print(sVersion + " != " + StorierVersion + "[Current] Storier Version!"); }
                     else { GD.Print("Same Storier Version!"); }
                 }
-                // GD.Print(storyData);
             }
-            return CreateStory(storyData["Name"], storyData["Description"], fileName.GetBaseDir());
+            return true;
         }
-
-        // // Save StoryOld
-        // public static bool SaveStoryOld()
-        // {
-        //     Dictionary storierData = new Dictionary() {
-        //         {
-        //             "Story", currentStory.storyData.SaveData()
-        //         },
-        //         {
-        //             "Storier", new Dictionary(){
-        //                 {"Version", StorierVersion}
-        //             }
-        //         }
-        //     };
-        //     bool isSuccess = FileManager.SaveFile(
-        //         currentStory.storyData.directory + currentStory.storyData.name + ".storier", 
-        //         JSON.Print(storierData, "\t"));
-        //     PushRecentStory();
-        //     return isSuccess;
-        // }
-
-        // // Load Story Old | Deprecated
-        // public static Story LoadStoryOld(string fileName)
-        // {
-        //     string str = FileManager.LoadFile(fileName);
-        //     JSONParseResult jsonObject = JSON.Parse(str);
-        //     StoryData storyData = new StoryData();
-
-        //     if(jsonObject.Error != 0) { GD.Print("Error:", jsonObject.ErrorLine); } 
-        //     else
-        //     {
-        //         // GD.Print(JSON.Print(jsonObject.Result));
-        //         Dictionary storyJson = jsonObject.Result as Dictionary; // Godot.Collections.Array  <-  [] 
-        //         storyData = new StoryData(fileName.BaseName(), "", fileName.GetBaseDir());
-
-        //         if (storyJson.Contains("Story"))
-        //         {
-        //             Dictionary storyInfos = storyJson["Story"] as Dictionary; 
-        //             storyData.LoadData(storyInfos);
-        //         }
-        //         if (storyJson.Contains("Storier"))
-        //         {
-        //             Dictionary storierInfos = storyJson["Storier"] as Dictionary; 
-        //             string sVersion = storierInfos["Version"] as string; 
-        //             if (sVersion != StorierVersion) { GD.Print(sVersion + " != " + StorierVersion + "[Current] Storier Version!"); }
-        //             else { GD.Print("Same Storier Version!"); }
-        //         }
-        //         // GD.Print(storyData);
-        //     }
-        //     return CreateStory(storyData);
-        // }
 
         public static void CloseAllStories()
         {
@@ -156,7 +102,7 @@ namespace Storier
             ConfigFile configFile = new ConfigFile();
             Directory dir = new Directory();
             dir.MakeDirRecursive(configFileName.GetBaseDir());
-            configFile.SetValue("Stories", "RecentStory", currentStory.storyData.directory + currentStory.storyData.name + ".storier");
+            configFile.SetValue("Stories", "RecentStory", CurrentStory.StoryDirectory + CurrentStory.StoryName + ".storier");
             Error err = configFile.Save(configFileName);
             if (err != Error.Ok) { GD.Print(err); }
         }

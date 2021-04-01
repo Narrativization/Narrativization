@@ -49,7 +49,7 @@ public class CreateStoryModal : ConfirmationDialog
     
     public string GetDir()
     {
-        return OS.GetSystemDir(OS.SystemDir.Documents) + "/Storier/" + storyName.Text;
+        return OS.GetSystemDir(OS.SystemDir.Documents) + "/Storier/" + storyName.Text + "/";
     }
 
     public void ValidateInfos()
