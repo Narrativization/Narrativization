@@ -34,10 +34,10 @@ namespace Storier
             Name = ResourceName = _name;
             Description = _description;
             
-            GD.Print(StoryManager.CurrentStory.storyData.directory + Id + _ext); // Del
+            GD.Print(StoryManager.CurrentStory.StoryBase + Id + _ext); // Del
             storyElementExtension = _ext;
             // Full path of StoryElement(with extension)
-            TakeOverPath(StoryManager.CurrentStory.storyData.directory + Id + _ext);
+            TakeOverPath(StoryManager.CurrentStory.StoryBase + Id + _ext);
         }
 
         // Replace/Move Story Element | Not ready for use -> Move to File Manager?
@@ -54,7 +54,7 @@ namespace Storier
         // Change Id(Relative Path) Story Element 
         public Error ReId(string _id)
         {
-            string _destination = StoryManager.CurrentStory.storyData.directory + Id + storyElementExtension;
+            string _destination = StoryManager.CurrentStory.StoryBase + Id + storyElementExtension;
             Id = Id.Replace(Name, _id);
             Error err = Move(_destination);
             TakeOverPath(_destination);

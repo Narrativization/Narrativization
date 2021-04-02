@@ -43,7 +43,7 @@ public class NavigationTree : Tree
     {
         if(IsInstanceValid(StoryManager.CurrentStory))
         {
-            CreateTree(StoryManager.CurrentStory.LookHierarchy(), StoryManager.CurrentStory.storyData.name);
+            CreateTree(StoryManager.CurrentStory.LookHierarchy(), StoryManager.CurrentStory.StoryName);
         }
         else
         {

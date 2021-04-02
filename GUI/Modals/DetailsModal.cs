@@ -107,7 +107,7 @@ public class DetailsModal : WindowDialog
             default:
             break;
         }
-        editedStoryElement.TakeOverPath(StoryManager.CurrentStory.storyData.directory + "/" + GetEntityDirectory());
-        GD.Print(StoryManager.CurrentStory.storyData.directory + "/" + GetEntityDirectory());
+        editedStoryElement.TakeOverPath(StoryManager.CurrentStory.StoryDirectory + GetEntityDirectory());
+        GD.Print(StoryManager.CurrentStory.StoryDirectory + GetEntityDirectory());
     }
 }

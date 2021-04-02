@@ -14,18 +14,11 @@ namespace Storier
         // Story Data
         public string StoryName { get { return StoryData["Name"]; } set { Name = StoryData["Name"] = value; } } // Current Story Name
         public string StoryDescription { get { return StoryData["Description"]; } set { StoryData["Description"] = value; } } // Current Story Description
-        public string StoryDirectory { get; set; } // Current Story Directory
+        public string StoryDirectory { get; set; } // Current Story Directory | isn't stored in ".storier"
 
-        // Story Informations
-        // Id of Opened File/Directory
-        public string FlowTitle { get; set; } 
-        // Full Path of Flow
-        public string FlowFileName { get {return StoryDirectory.GetBaseDir() + FlowTitle; } } // FlowTitle Start with "/" Character 
-
-
-        public StoryData storyData = new StoryData();
-        public static string flowTitle {get { return StoryManager.CurrentStory.Name + flowTarget; } }  // ~Folder View and Flow View 
-        public static string flowTarget = ""; // ~Folder View and Flow View 
+        // Story Base[.../<StoryName>] + StoryElementId[/Flow/Chapter1]
+        public string StoryBase { get { return StoryDirectory.GetBaseDir(); } } // Story Base Directory
+        public string StoryElementId { get; set; } // Id of opened Relative File/Directory ...[/Flow/Chapter]
 
         private Story() 
         {
@@ -47,18 +40,6 @@ namespace Storier
             StoryData.Add("Author", _author);
             StoryData.Add("Copyright", _copyright);
         }
-        private Story(StoryData _storyData) // Create New Story Old 
-        {
-            storyData = _storyData;
-            Name = storyData.name;
-            flowTarget = "/" + "Flows" + "/";
-
-            CreateHierarchy();
-            StoryName = "Untitled Story";
-            StoryDescription = "";
-            StoryDirectory = "";    
-        }
-        
 
         public override void _Ready()
         {
@@ -105,8 +86,6 @@ namespace Storier
         public Dictionary LookHierarchy()
         {
             GD.Print(FileManager.DirectoryTree(StoryDirectory));
-            GD.Print((StoryDirectory + flowTarget));
-            GD.Print(FileManager.DirectoryContents(StoryDirectory + flowTarget));
             return FileManager.DirectoryTree(StoryDirectory);
         }
 

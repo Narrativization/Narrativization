@@ -63,7 +63,7 @@ namespace Storier
 
         public static StoryEntity Load(string _id)
         {
-            string fileName = StoryManager.CurrentStory.storyData.directory + _id + ".entity";
+            string fileName = StoryManager.CurrentStory.StoryBase + _id + ".entity";
             // File Checks
             File loadFile = new File(); 
             if (!loadFile.FileExists(fileName)) { GD.Print("File isn't exist!"); return null; }

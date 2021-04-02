@@ -15,17 +15,17 @@ public class FlowTitle : RichTextLabel
 
     public override void _Process(float delta)
     {
-        if (Story.flowTarget != "" && Story.flowTarget != displayedFlow) // ~Replace with Signal
+        if (IsInstanceValid(StoryManager.CurrentStory) && StoryManager.CurrentStory.StoryElementId != "" && StoryManager.CurrentStory.StoryElementId != displayedFlow) // ~Replace with Signal
         {
-            ChangeFlowTitle(Story.flowTitle);
-            displayedFlow = Story.flowTarget;
-            GD.Print(StoryManager.workspace  + Story.flowTarget);
+            ChangeFlowTitle("..." + StoryManager.CurrentStory.StoryElementId); // Dots(...) means root
+            displayedFlow = StoryManager.CurrentStory.StoryElementId;
+            GD.Print(StoryManager.CurrentStory.StoryBase + StoryManager.CurrentStory.StoryElementId);
             Godot.Collections.Dictionary dictionary = new Godot.Collections.Dictionary();
-            dictionary = FileManager.DirectoryTree(StoryManager.CurrentStory.storyData.directory);
+            dictionary = FileManager.DirectoryTree(StoryManager.CurrentStory.StoryBase + StoryManager.CurrentStory.StoryElementId);
             GD.Print("Flow Changed");
             GD.Print(dictionary);
-            GD.Print("Folder: " + StoryManager.CurrentStory.storyData.directory + Story.flowTitle);
-            GD.Print("Folder Content: " + FileManager.DirectoryContents(StoryManager.CurrentStory.storyData.directory + Story.flowTitle));
+            GD.Print("Folder: " + StoryManager.CurrentStory.StoryBase + StoryManager.CurrentStory.StoryElementId);
+            GD.Print("Folder Content: " + FileManager.DirectoryContents(StoryManager.CurrentStory.StoryBase + StoryManager.CurrentStory.StoryElementId));
         }
         base._Process(delta);
     } 
@@ -34,7 +34,7 @@ public class FlowTitle : RichTextLabel
     {
         string cFlow = "[center]";
         string fileName = "";
-        string[] flowNames = _flowName.Split("/");
+        string[] flowNames = _flowName.Split("/", false);
 
         for (int i = 0; i < flowNames.Length; i++)
         {
