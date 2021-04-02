@@ -74,7 +74,7 @@ namespace Storier
 
 
 /*
-Entity Example
+Story Element Informations
 {
     Id: "", 
     Name: "", 

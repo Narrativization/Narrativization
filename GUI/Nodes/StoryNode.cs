@@ -19,7 +19,7 @@ public class StoryNode : GraphNode
         Directory dir = new Directory(); 
         if (dir.FileExists(recentStory))
         {
-            GD.Print(FileManager.LoadFile(recentStory));
+            GD.Print("Recent Story: " + recentStory);
             storyData = JSON.Parse(FileManager.LoadFile(recentStory)).Result as Dictionary;
             DisplayData();
         }

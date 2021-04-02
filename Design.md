@@ -2,34 +2,37 @@
 [General Design](#General), [Technical Design](#Technical)
 
 ## General
-[Design](#Design), [Folder Structure and Flows](#Folder-Structure-and-Flows), [User Interface](#User-Interfaces), 
+[Design](#Design), [Story Design](#Story-Design), [User Interface](#User-Interfaces), 
 
-### Folder Structure and Flows
-[General Design](#General)
+### Story Design
 
-Storier uses "Flow in Flow" Logic: Each Flow consists of another flow.
+- Story
+    - Plot[Flows]
+    - Character[Entity/Characters]
+    - Setting[Entity/Locations]
+    - Theme[StoryInfo], Conflict[StoryInfo]...
 
-Story(Project) 
+Storier uses Story as Project.
 Flow consists of flows and contains Entity & Assets. 
-While Entities are derived informations from assets and user defines, Assets are pure informations.
+Entities consists of derived informations and contains Assets.
+Assets are pure informations such as images.  
 Every Flow and Entity templatable with changing their details.
+Some points(nodes or subflow) in the flow can be marked as keypoints([Plot](https://en.wikipedia.org/wiki/Plot_(narrative))).
 
-Some points(nodes or subflow) in the flow can be marked as keypoints([Plot](https://en.wikipedia.org/wiki/Plot_(narrative))). [Narrative Structures](#Narrative-Structure)
+#### Basic Folder Structure
 
-### Basic
-
-Basic Folder Structure
 - Story
     - Flows
     - Entities
+        - Characters
+        - Locations
     - Assets
     - Journeys
     - Templates
     - References
 
-### Advanced
+#### Advanced Folder Structure
 
-Customized or enhanced file structure
 - Story
     - Flows
         - Act
@@ -37,7 +40,7 @@ Customized or enhanced file structure
                 - Quest(~Cinamatic/Gameplay)
                     - Dialogue
     - Entities
-        - Character
+        - Characters
             - Files
             - Folders
                 - Files
@@ -59,31 +62,12 @@ Customized or enhanced file structure
         - Entities(Pre Templated)
             - Character …
     - References
+        - Id(/)
         - Mentions(@)
         - Tags(#)
         - Links(href, :, ->)
 
-### Depth of Flows
-
-Flows can be deepened as desired.
-- Use case 1
-    - Flow
-        - Act 
-            - Chapter
-                - Quests(~Cinamatic/Gameplay)
-                    - Dialogues
-- Use case 2
-    - Flow
-        - Universe
-            - Timeline
-                - Act 
-                    - Chapter
-                        - Quests(~Cinamatic/Gameplay)
-                            - Dialogues
-- Use case 3
-    - Flow
-        - Story Flow
-            - Dialogue
+Also can consist of flows such as Universe, Timeline.
 
 ## User Interfaces
 [General Design](#General)
@@ -91,9 +75,9 @@ Flows can be deepened as desired.
 ### Editors
 Main Panel
 - Flow Editor (Node-Graph Editor)
-- Data Editor (Sheet Editor)
+- Property Editor (Entity Editor)
+- ~Data Editor (Sheet Editor)
 - Document Editor (Text Editor)
-- ~Property Editor (Entity Editor)
 
 ### Views
 Modals
@@ -111,13 +95,6 @@ Be UX focused!
 ### Import/Export
 Multi and Single File Save(or Export)
 Game Engine integrated import/exports
-
-### Story Elements
-- Story
-    - Plot[Flow]
-    - Character[Entity]
-    - Settings[Entity]
-    - ~Theme[StoryInfo], Conflict[?], ~~Point of View, Tone, Style
 
 ### Narrative Structure
 Good for creating causation; also ***Hero's Journey***, ***Three Act Structure*** etc. 

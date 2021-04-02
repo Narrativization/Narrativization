@@ -19,13 +19,10 @@ public class FlowTitle : RichTextLabel
         {
             ChangeFlowTitle("..." + StoryManager.CurrentStory.StoryElementId); // Dots(...) means root
             displayedFlow = StoryManager.CurrentStory.StoryElementId;
-            GD.Print(StoryManager.CurrentStory.StoryBase + StoryManager.CurrentStory.StoryElementId);
+            GD.Print("Opened Element: " + StoryManager.CurrentStory.StoryElementId);
             Godot.Collections.Dictionary dictionary = new Godot.Collections.Dictionary();
             dictionary = FileManager.DirectoryTree(StoryManager.CurrentStory.StoryBase + StoryManager.CurrentStory.StoryElementId);
-            GD.Print("Flow Changed");
-            GD.Print(dictionary);
-            GD.Print("Folder: " + StoryManager.CurrentStory.StoryBase + StoryManager.CurrentStory.StoryElementId);
-            GD.Print("Folder Content: " + FileManager.DirectoryContents(StoryManager.CurrentStory.StoryBase + StoryManager.CurrentStory.StoryElementId));
+            // GD.Print(JSON.Print(dictionary, "\t"));
         }
         base._Process(delta);
     } 

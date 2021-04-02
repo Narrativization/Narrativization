@@ -61,8 +61,7 @@ namespace Storier
             {
                 // GD.Print(JSON.Print(jsonObject.Result));
                 Dictionary storyJson = jsonObject.Result as Dictionary; // Godot.Collections.Array  <-  [] 
-                GD.Print(storyJson);
-                GD.Print(storyJson["Story"]);
+                GD.Print(JSON.Print(storyJson, "\t"));
                 
                 if (storyJson.Contains("Story"))
                 {
@@ -145,23 +144,6 @@ namespace Storier
             Error err = configFile.Load(configFileName);
             if (err != Error.Ok) { GD.Print(err); }
             workspace = configFile.GetValue("Workspace", "Directory").ToString(); // Workscape
-        }
-
-        // Don't need in Single Story Workflow
-        public static Story GetNamedStory(string name, SceneTree sceneTree)
-        {
-            if (Godot.Object.IsInstanceValid(sceneTree))
-            {
-                for (int i = 0; i < sceneTree.GetNodesInGroup("Story").Count; i++)
-                {
-                    Story s = sceneTree.GetNodesInGroup("Story")[i] as Story;
-                    if (s.Name == name)
-                    {
-                        return s;
-                    }
-                }
-            }
-            return null;
         }
     }
 }
