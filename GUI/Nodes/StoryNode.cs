@@ -43,6 +43,7 @@ public class StoryNode : GraphNode
                     if (StoryManager.LoadStory(recentStory))
                     {
                         GetParent<FlowEditor>().DeleteAll();
+                        // StoryManager.CurrentStory.CurrentStoryElement = StoryFlow.Load();
                     } 
                 }
             }

@@ -1,59 +1,43 @@
 using Godot;
 using System;
+using Godot.Collections;
 
 namespace Storier
 {
     // Flow Definations
     public class StoryFlow : StoryElement
     {
-        // All Opened Flows
-        private static Godot.Collections.Array<StoryFlow> storyFlows = new Godot.Collections.Array<StoryFlow>();
+        // Custom Story Element Data
+        public Dictionary<string, string> StoryFlowData { get; set; } = new Dictionary<string, string>();
 
         protected StoryFlow() {} 
-        public StoryFlow(string _id, string _name, string _description) 
+        // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + StoryElementExtension
+        public StoryFlow(string path) : base(path)
         {
-            storyElementType = StoryElementType.Flow;
-            base.InitStoryElement(_id, _name, _description, ".flow");
-            storyFlows.Add(this);
+            StoryElementType = StoryElementTypes.Flow;
+            StoryElementExtension = ".flow";
         }
 
-        public override bool Save(string _data)
+        public override bool Save()
         {
             ConfigFile configFile = new ConfigFile();
-            configFile.SetValue("StoryElement", "Name", ResourceName);
+            configFile.SetValue("StoryElement", "Data", StoryElementData);
+            configFile.SetValue("Flow", "Data", StoryFlowData);
             Error err = configFile.Save(ResourcePath);
-            if (err != Error.Ok) { GD.Print(err); }
-            base.Save(_data);
-            return false;
+            if (err != Error.Ok) { GD.Print(err); return false; }
+            return true;
         }
 
-
-        public static StoryFlow Load(string _id)
-        {
-            string fileName = StoryManager.CurrentStory.StoryBase + _id + ".entity";
+        // Loading Story Element
+        public static new StoryFlow Load(string path) 
+        { 
+            StoryFlow loaded = new StoryFlow(path);
             ConfigFile configFile = new ConfigFile();
-            Error err = configFile.Load(fileName);
+            Error err = configFile.Load(path);
             if (err != Error.Ok) { GD.Print(err); return null; }
-            string loadedId = configFile.GetValue("StoryElement", "Id").ToString();
-            if (loadedId != _id) { GD.Print("Loaded File Id and Id isn't same!"); }
-            string loadedName = configFile.GetValue("StoryElement", "Name").ToString();
-            string loadedDescription = configFile.GetValue("StoryElement", "Id").ToString();
-            return new StoryFlow(_id, loadedName, loadedDescription);
+            loaded.StoryElementData = configFile.GetValue("StoryElement", "Data") as Dictionary<string, string>;
+            loaded.StoryFlowData = configFile.GetValue("Flow", "Data") as Dictionary<string, string>;
+            return loaded; 
         }
-
-        public static StoryFlow GetStoryFlow(string _id)
-        {
-            for (int i = 0; i < storyFlows.Count; i++)
-            {
-                if (IsInstanceValid(storyFlows[i]) && storyFlows[i].Id == _id)
-                {
-                    return storyFlows[i];
-                }
-            }
-            return Load(_id);
-        }
-
-        
-
     }
 }

@@ -11,7 +11,7 @@ public class FlowEditor : GraphNodeEditor
     [Export]
     private PackedScene storyNode = GD.Load<PackedScene>("res://GUI/Nodes/StoryNode.tscn");
     [Export]
-    private PackedScene storyFlowNodeScene = GD.Load<PackedScene>("res://GUI/Nodes/FlowNode.tscn");
+    private PackedScene storyFlowNodeScene = GD.Load<PackedScene>("res://GUI/Nodes/StoryFlowNode.tscn");
 
 
     private FlowContextMenu contextMenu;
@@ -58,6 +58,12 @@ public class FlowEditor : GraphNodeEditor
             DeleteSelected();
         }    
 
+        if (inputEvent.IsActionPressed("Duplicate"))
+        {
+            GD.Print("Duplicate Selected Nodes");
+            DuplicateSelected();
+        }   
+
         if (inputEvent.IsActionPressed("Backward"))
         {
             GD.Print("Previous Flow");
@@ -85,7 +91,7 @@ public class FlowEditor : GraphNodeEditor
     public bool CreateFlowNode()
     {
         GD.Print("Create Story Flow Node");
-        FlowNode storyFlowNode = storyFlowNodeScene.Instance() as FlowNode;
+        StoryFlowNode storyFlowNode = storyFlowNodeScene.Instance() as StoryFlowNode;
         storyFlowNode.InitNode("/Flows/Chapter" + ind++);
         AddChild(storyFlowNode);
         storyFlowNode.Offset = ScrollOffset + GetLocalMousePosition() - (storyFlowNode.RectSize/2);

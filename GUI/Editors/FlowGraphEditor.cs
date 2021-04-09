@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using Godot.Collections;
+using GArray = Godot.Collections.Array;
 
 // Basic Flow Controls for GraphEdit(Without Storier)
 public class GraphNodeEditor : GraphEdit
@@ -23,11 +24,13 @@ public class GraphNodeEditor : GraphEdit
         if (inputEvent.IsAction("ZoomIn") && hovering)
         {
             Zoom += zoomSpeed * GetProcessDeltaTime();
+            // ~ZoomIn to Mouse Position
             AcceptEvent();
         }
         else if (inputEvent.IsAction("ZoomOut") && hovering)
         {
             Zoom -= zoomSpeed * GetProcessDeltaTime();
+            // ~ZoomOut from Mouse Position
             AcceptEvent();
         }
         else if (inputEvent.IsActionPressed("ZoomHold") && hovering)
@@ -364,6 +367,30 @@ public class GraphNodeEditor : GraphEdit
         }
     }
 
+    // Select Nodes
+    public void SelectNodes(Godot.Collections.Array graphNodes)
+    {
+        for (int i = 0; i < graphNodes.Count; i++)
+        {
+            if (graphNodes[i] is GraphNode graphNode)
+            {
+                graphNode.Selected = true;
+            }
+        }
+    }
+
+    // Unselect Nodes
+    public void UnselectNodes(Godot.Collections.Array graphNodes)
+    {
+        for (int i = 0; i < graphNodes.Count; i++)
+        {
+            if (graphNodes[i] is GraphNode graphNode)
+            {
+                graphNode.Selected = false;
+            }
+        }
+    }
+
     // Delete/Removes Selected Nodes | Delete selected GraphNodes
     public void DeleteSelected()
     {
@@ -391,6 +418,25 @@ public class GraphNodeEditor : GraphEdit
                 }
             }
         }
+    }
+
+    // Duplicate Selected Nodes | Duplicate selected GraphNodes
+    public void DuplicateSelected()
+    {
+        Godot.Collections.Array duplicatedNodes = new Godot.Collections.Array();
+        Godot.Collections.Array selectedNodes = GetSelected();
+        for (int i = 0; i < selectedNodes.Count; i++)
+        {
+            if (selectedNodes[i] is GraphNode selectedNode)
+            {
+                GraphNode duplicated = selectedNode.Duplicate((int)DuplicateFlags.UseInstancing) as GraphNode;
+                duplicated.Offset += new Vector2(10, 10); 
+                duplicatedNodes.Add(duplicated);
+                AddChild(duplicated);
+            }
+        }
+        UnselectAll();
+        SelectNodes(duplicatedNodes);
     }
 
     public void _OnGraphEditorConnectionRequest(string from, int fromSlot, string to, int toSlot)

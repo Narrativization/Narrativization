@@ -60,7 +60,7 @@ public class DetailsModal : WindowDialog
                 StoryElementTemplate templateProperties = properties.GetChild<StoryElementTemplate>(0);
                 GD.Print(templateProperties.GetSaveData());
                 editedStoryElement.ResourceName = resourceName.Text;
-                editedStoryElement.Save(JSON.Print(templateProperties.GetSaveData(), "\t"));
+                // editedStoryElement.Save(JSON.Print(templateProperties.GetSaveData(), "\t"));
                 break;
         }
     }

@@ -5,10 +5,8 @@ using Storier;
 
 public class Editors : TabContainer
 {
-    [Export]
-    public StoryElementType editorType = StoryElementType.Flow; 
-
-    public Godot.Collections.Array editedStoryElements = new Godot.Collections.Array();
+    public Godot.Collections.Array<StoryElement> editedStoryElements = new Godot.Collections.Array<StoryElement>();
+    public StoryElement currentStoryElement;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()

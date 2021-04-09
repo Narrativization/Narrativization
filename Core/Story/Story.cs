@@ -16,9 +16,14 @@ namespace Storier
         public string StoryDescription { get { return StoryData["Description"]; } set { StoryData["Description"] = value; } } // Current Story Description
         public string StoryDirectory { get; set; } // Current Story Directory | isn't stored in ".storier"
 
-        // Story Base[.../<StoryName>] + StoryElementId[/Flow/Chapter1]
+        // Story and Element Informations
         public string StoryBase { get { return StoryDirectory.GetBaseDir(); } } // Story Base Directory
-        public string StoryElementId { get; set; } // Id of opened Relative File/Directory ...[/Flow/Chapter]
+        public StoryElement CurrentStoryElement { get; set; } // Current Story Element
+
+        // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + StoryElementExtension
+        public string StoryElementId { get { return IsInstanceValid(CurrentStoryElement) ? CurrentStoryElement.Id : ""; } } // Id of opened Relative File/Directory without extension [/Flow/Chapter]
+        public string StoryElementExtension { get { return IsInstanceValid(CurrentStoryElement) ? CurrentStoryElement.StoryElementExtension : ""; } } // Extension of opened Relative File/Directory [.flow]
+        public string StoryElementPath { get { return StoryBase + CurrentStoryElement.Id + CurrentStoryElement.StoryElementExtension; } } // Path of opened File ...[/Flow/Chapter]...
 
         private Story() 
         {
@@ -26,19 +31,19 @@ namespace Storier
             StoryDescription = "";
             StoryDirectory = "";
         }
-        public Story(string _name, string _description, string _directory) 
+        public Story(string name, string description, string directory) 
         {
-            StoryName = _name;
-            StoryDescription = _description;
-            StoryDirectory = _directory;
+            StoryName = name;
+            StoryDescription = description;
+            StoryDirectory = directory;
         }        
-        public Story(string _name, string _description, string _directory, string _author, string _copyright) 
+        public Story(string name, string description, string directory, string author, string copyright) 
         {
-            StoryName = _name;
-            StoryDescription = _description;
-            StoryDirectory = _directory;
-            StoryData.Add("Author", _author);
-            StoryData.Add("Copyright", _copyright);
+            StoryName = name;
+            StoryDescription = description;
+            StoryDirectory = directory;
+            StoryData.Add("Author", author);
+            StoryData.Add("Copyright", copyright);
         }
 
         public override void _Ready()
@@ -55,8 +60,15 @@ namespace Storier
         {
             if (inputEvent.IsActionPressed("Help"))
             {
-                GD.Print(StoryData);
-                GD.Print("Done!");
+                GD.Print("Help");
+                // StoryEntity se = new StoryEntity(StoryBase + "/Entities/Characters/F1.entity");
+                // se.Save();
+                // GD.Print(StoryEntity.Load(StoryBase + "/Entities/Characters/F1.entity"));
+            }
+            else if (inputEvent.IsActionPressed("Fullscreen"))
+            {
+                GD.Print("Fullscreen");
+                OS.WindowFullscreen = !OS.WindowFullscreen;
             }
         }
         

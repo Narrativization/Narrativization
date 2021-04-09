@@ -4,7 +4,7 @@ using Godot.Collections;
 
 namespace Storier
 {
-    public enum StoryElementType
+    public enum StoryElementTypes
     {
         Flow, Entity, Asset // ~ ,Reference, Template
     }
@@ -12,63 +12,85 @@ namespace Storier
     // Base Class of Story Elements
     public class StoryElement : Resource
     {
-        // Relative path to project(<ProjectName>.storier)
-        public string Id { get; protected set; } // Example: /Entity/Character/MyChar
-        public string Name { get { return ResourceName; } set { ResourceName = value; } }  // Example: MyChar | Uses ResourceName 
-        public string Description { get; set; }  // Example: Character Example
-        public string Template { get; set; } = "res://Templates/DefaultTemplate.tscn"; // Template reference
-        public Dictionary<string, object> TemplateData { get; set; } = new Dictionary<string, object>();
+        // Custom Story Element Data
+        public Dictionary<string, string> StoryElementData { get; set; } = new Dictionary<string, string>();
 
-        public StoryElementType storyElementType = StoryElementType.Asset;
-        protected string storyElementExtension = ".asset"; // Example ext: ".ext" 
+        // Story Element Data 
+        public string Id { get { return StoryElementData["Id"]; } set { ResourceName = StoryElementData["Id"] = value; } } // Example: /Entity/Character/MyChar | Relative path to project(<ProjectName>.storier)
+        public string Name { get { return StoryElementData["Name"]; } set { ResourceName = StoryElementData["Name"] = value; } } // Example: MyChar | Uses ResourceName 
+        public string Description { get { return StoryElementData["Description"]; } set { StoryElementData["Description"] = value; } }  // Example: Character Example
+        
+        // public string Template { get { return StoryElementData["Template"]; } set { StoryElementData["Template"] = value; } }  // Template reference
+        // public Dictionary<string, object> TemplateData { get; set; } = new Dictionary<string, object>();
+
+        // Story Element Informations
+        public StoryElementTypes StoryElementType { get; set; } = StoryElementTypes.Asset; 
+        public string StoryElementExtension { get; set; } = ".asset"; // Example ext: ".ext" 
 
         protected StoryElement() {}
-        protected StoryElement(string _id, string _name, string _description, string _ext) 
+        // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + StoryElementExtension
+        public StoryElement(string path) // _path means to Full Path
         {
-            InitStoryElement(_id, _name, _description, _ext);
+            if (!path.StartsWith(StoryManager.CurrentStory.StoryBase)) { GD.PushWarning("Story Element isn't in Workspace!\n" + path); return; }
+            Id = path.Replace(StoryManager.CurrentStory.StoryBase, "").Replace("." + path.Extension(), "");
+            Name = path.GetFile().Replace("." + path.Extension(), "");
+            StoryElementExtension = "." + path.Extension();
+            TakeOverPath(path);
         }
-
-        protected void InitStoryElement(string _id, string _name, string _description, string _ext)
+        public StoryElement(string name, string description, string path)
         {
-            Id = _id;
-            Name = ResourceName = _name;
-            Description = _description;
-            
-            GD.Print(StoryManager.CurrentStory.StoryBase + Id + _ext); // Del
-            storyElementExtension = _ext;
-            // Full path of StoryElement(with extension)
-            TakeOverPath(StoryManager.CurrentStory.StoryBase + Id + _ext);
+            if (!path.StartsWith(StoryManager.CurrentStory.StoryBase)) { GD.PushWarning("Story Element isn't in Workspace!\n" + path); return; }
+            Id = path.Replace(StoryManager.CurrentStory.StoryBase, "").Replace("." + path.Extension(), "");
+            Name = name;
+            Description = description;
+            StoryElementExtension = "." + path.Extension();
+            TakeOverPath(path);
         }
 
         // Replace/Move Story Element | Not ready for use -> Move to File Manager?
-        private Error Move(string _destination)
+        private Error Move(string destination)
         {
             Directory dir = new Directory();
-            Error errCopy = dir.Copy(ResourcePath, _destination);
+            Error errCopy = dir.Copy(ResourcePath, destination);
             if (errCopy != Error.Ok) { return errCopy; }
             Error errDelete = dir.Remove(ResourcePath);
             if (errDelete != Error.Ok) { return errDelete; }
             return Error.Ok;
         }
 
-        // Change Id(Relative Path) Story Element 
-        public Error ReId(string _id)
+        // Change Story Element Id(Relative Path) 
+        public Error ReId(string id)
         {
-            string _destination = StoryManager.CurrentStory.StoryBase + Id + storyElementExtension;
-            Id = Id.Replace(Name, _id);
+            string _destination = StoryManager.CurrentStory.StoryBase + Id + StoryElementExtension;
+            Id = Id.Replace(Name, id);
             Error err = Move(_destination);
             TakeOverPath(_destination);
             return err; // Error.Ok;
-        }         
+        }   
 
         // Saving Story Element | ~Maybe create Resource Format Saver/Loader
-        public virtual bool Save(string _data) { return false; } // ~Save text  -- Change to bool?
+        public virtual bool Save() { return FileManager.SaveFile(ResourcePath, JSON.Print(StoryElementData)); } // ~Save text
         // Reloading Story Element
         public virtual bool Reload() { return false; }
         // Import Story Element
         public virtual void Import() { }
         // Export Story Element
         public virtual void Export() { } // ~List of Character(csv), Single File(json)
+
+        // Loading Story Element
+        public static StoryElement Load(string path) 
+        { 
+            StoryElement loaded = new StoryElement(path);
+            JSONParseResult jsonObject = JSON.Parse(FileManager.LoadFile(path));
+            if(jsonObject.Error != 0) { GD.Print("Error:", jsonObject.ErrorLine); return null; } 
+            else
+            {
+                Dictionary elementDictionary = jsonObject.Result as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
+                loaded.StoryElementData = new Dictionary<string, string>(elementDictionary);
+                // GD.Print("Story Element Data:\n" + JSON.Print(loaded.StoryElementData, "\t"));
+            }
+            return loaded; 
+        }
     }
 }
 

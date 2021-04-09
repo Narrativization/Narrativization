@@ -21,10 +21,10 @@ namespace Storier
         }
 
         // Create Story
-        public static Story CreateStory(string _name, string _description, string _directory)
+        public static Story CreateStory(string name, string description, string directory)
         {
             CloseAllStories(); // Single Story Workflow
-            CurrentStory = new Story(_name, _description, _directory);
+            CurrentStory = new Story(name, description, directory);
             storyManager.AddChild(CurrentStory);
             if (SaveStory()) { CurrentStory.CreateHierarchy(); } 
             return CurrentStory;
