@@ -130,6 +130,30 @@ namespace Storier
                 {
                     if (dir.CurrentIsDir())
                     {
+                        dictionary.Add(fName, DirectoryTreeWalker(fileName + "/" + fName, new Dictionary()));
+                    }
+                    else
+                    {
+                        dictionary.Add(fName.BaseName(), fName.Extension());
+                    }
+                    fName = dir.GetNext();
+                }
+                dir.ListDirEnd();
+            }
+            return dictionary;
+        }
+
+        private static Dictionary DirectoryTreeWalkerBaseName(string fileName, Dictionary dictionary)
+        {
+            Directory dir = new Directory();
+            if (dir.Open(fileName) == Error.Ok)
+            {
+                dir.ListDirBegin(true, true);
+                string fName = dir.GetNext();
+                while (fName != "")
+                {
+                    if (dir.CurrentIsDir())
+                    {
                         dictionary.Add(fName.BaseName(), DirectoryTreeWalker(fileName + "/" + fName, new Dictionary()));
                     }
                     else

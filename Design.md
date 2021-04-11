@@ -78,7 +78,7 @@ Editors
 - Flow Editor (Graph-Node Editor)
 - Property Editor (Entity Editor)
 - Text Editor (Document Editor)
-- ~Data Editor (Sheet Editor)
+- ~Sheet Editor (List-Data Editor)
 
 ### Views
 Modals

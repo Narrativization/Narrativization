@@ -55,37 +55,36 @@ public class Navigator : Tree
         }
     }
 
-    public void CreateTree(Dictionary _dictionary, string rootName)
+    public void CreateTree(Dictionary dictionary, string rootName)
     {
         Clear();
         root = CreateItemWithIcon(0, rootName, icons["Folder"], null);
-        CreateTreeDisplay(_dictionary, root); 
+        CreateTreeDisplay(dictionary, root); 
     }
 
-    private void CreateTreeDisplay(Dictionary _dictionary, TreeItem _parent = null)
+    private void CreateTreeDisplay(Dictionary dictionary, TreeItem parent = null)
     {
-        IDictionaryEnumerator _dicEn = _dictionary.GetEnumerator();
-        for (int i = 0; i < _dictionary.Count; i++)
+        IDictionaryEnumerator _dicEn = dictionary.GetEnumerator();
+        for (int i = 0; i < dictionary.Count; i++)
         {
             _dicEn.MoveNext();
             if (_dicEn.Key is string && _dicEn.Value is string)
             {
-                if (IsInstanceValid(_parent) && !((_parent == root) && (_parent.GetText(0) == (string)_dicEn.Key))) // Ignore Project(.storier) File
+                if (IsInstanceValid(parent) && !((parent == root) && (parent.GetText(0) == (string)_dicEn.Key))) // Ignore Project(.storier) File
                 {
-                    TreeItem treeItem = CreateItemWithIcon(0, (string)_dicEn.Key, icons["File"], _parent);
+                    TreeItem treeItem = CreateItemWithIcon(0, (string)_dicEn.Key, icons["File"], parent);
+                    treeItem.SetMeta("Extension", _dicEn.Value);
                 }
             }
             else if (_dicEn.Key is string && _dicEn.Value is Dictionary)
             {
-                TreeItem treeItem = CreateItemWithIcon(0, (string)_dicEn.Key, SelectIcon((string)_dicEn.Key, _parent), _parent);
-                treeItem.Set("Directory", _dicEn.Value);
-                GD.Print(_dicEn.Value);
+                TreeItem treeItem = CreateItemWithIcon(0, (string)_dicEn.Key, SelectIcon((string)_dicEn.Key, parent), parent);
                 CreateTreeDisplay((Dictionary)_dicEn.Value, treeItem);
 
-                if (!IsInstanceValid(treeItem.GetChildren()))
-                {
-                    TreeItem treeChild = CreateItemWithIcon(0, "> Empty", icons["XSquare"], treeItem);
-                }
+                // if (!IsInstanceValid(treeItem.GetChildren()))
+                // {
+                //     TreeItem treeChild = CreateItemWithIcon(0, "> Empty", icons["XSquare"], treeItem);
+                // }
                 treeItem.Collapsed = true;
             }
             else
@@ -95,11 +94,11 @@ public class Navigator : Tree
         }
     }
 
-    private TreeItem CreateItemWithIcon(int _column, string _str, Texture _icon,  TreeItem _parent = null)
+    private TreeItem CreateItemWithIcon(int column, string text, Texture icon,  TreeItem parent = null)
     {
-        TreeItem treeItem = CreateItem(_parent);
-        treeItem.SetText(_column, _str);
-        if (IsInstanceValid(_icon)) treeItem.SetIcon(_column, _icon);
+        TreeItem treeItem = CreateItem(parent);
+        treeItem.SetText(column, text);
+        if (IsInstanceValid(icon)) treeItem.SetIcon(column, icon);
         return treeItem;
     }
     
@@ -153,8 +152,25 @@ public class Navigator : Tree
         {
             if (mouseEvent.Doubleclick && IsInstanceValid(GetItemAtPosition(mouseEvent.Position)))
             {
-                GD.Print("Double Click: " + GetItemAtPosition(mouseEvent.Position).GetText(0));
+                TreeItem treeItem = GetItemAtPosition(mouseEvent.Position);
+                string path = PathFromTree(treeItem);
+                GD.Print("Double Click: " + treeItem.GetText(0) + " -> \"" + path + "\"");
+                StoryManager.CurrentStory.CurrentStoryElement = new StoryElement(StoryManager.CurrentStory.StoryBase + path);
             }
         }
+    }
+
+    private string PathFromTree(TreeItem treeItem)
+    {
+        if (treeItem == root) { return "/"; }
+        TreeItem parent = treeItem.GetParent();
+        string path = "/" + treeItem.GetText(0) + (treeItem.GetChildren() != null ? "/" : "");
+        while (parent != root)
+        {
+            path =  "/" + parent.GetText(0) + path;
+            parent = parent.GetParent();
+        }
+        if (treeItem.GetChildren() == null) { path += "." + treeItem.GetMeta("Extension"); }
+        return path;
     }
 }

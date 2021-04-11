@@ -78,21 +78,25 @@ namespace Storier
             if (StoryDirectory  == "") { GD.Print("Story Directory can't found!"); return; }
             Godot.Collections.Array<string> defaultDirs = new Godot.Collections.Array<string>()
             {
-                StoryDirectory + "Flows/",
-                StoryDirectory + "Entities/",
-                StoryDirectory + "Entities/Characters/",
-                StoryDirectory + "Entities/Locations/",
-                // StoryDirectory + "Entities/Items/",
-                StoryDirectory + "Assets/",
-                // StoryDirectory + "Journeys/"
-                StoryDirectory + "Templates/",
-                StoryDirectory + "References/"
+                StoryBase + "/Flows/",
+                StoryBase + "/Entities/",
+                StoryBase + "/Entities/Characters/",
+                StoryBase + "/Entities/Locations/",
+                // StoryBase + "/Entities/Items/",
+                StoryBase + "/Assets/",
+                // StoryBase + "/Journeys/"
+                StoryBase + "/Templates/",
+                StoryBase + "/References/"
             };
             Directory dir = new Directory();
             for (int i = 0; i < defaultDirs.Count; i++)
             {
                 dir.MakeDirRecursive(defaultDirs[i]);
             }
+            StoryFlow defaultStory = new StoryFlow(StoryBase + "/Flows/Starter.flow");
+            StoryManager.StorierData.Add("Starter", "/Flows/Starter.flow");
+            defaultStory.Save();
+            CurrentStoryElement = defaultStory;
         }
 
         public Dictionary LookHierarchy()

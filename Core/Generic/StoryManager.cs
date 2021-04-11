@@ -13,7 +13,11 @@ namespace Storier
         public static Story CurrentStory { get; set; }
 
         public static string workspace = OS.GetSystemDir(OS.SystemDir.Documents) + "/Storier/";
-        public static string StorierVersion = "v0.2";
+        // Custom Story Data
+        public static Dictionary<string, string> StorierData { get; set; } = new Dictionary<string, string>()
+        {
+            {"Version", "v0.2"}
+        }; 
 
         private StoryManager()
         {
@@ -26,7 +30,8 @@ namespace Storier
             CloseAllStories(); // Single Story Workflow
             CurrentStory = new Story(name, description, directory);
             storyManager.AddChild(CurrentStory);
-            if (SaveStory()) { CurrentStory.CreateHierarchy(); } 
+            if (!(new Directory()).DirExists(directory)) { CurrentStory.CreateHierarchy(); } 
+            SaveStory();
             return CurrentStory;
         }
 
@@ -38,9 +43,7 @@ namespace Storier
                     "Story", CurrentStory.StoryData
                 },
                 {
-                    "Storier", new Dictionary(){
-                        {"Version", StorierVersion}
-                    }
+                    "Storier", StorierData
                 }
             };
             bool isSuccess = FileManager.SaveFile(
@@ -73,10 +76,12 @@ namespace Storier
                 }
                 if (storyJson.Contains("Storier"))
                 {
-                    Dictionary storierInfos = storyJson["Storier"] as Dictionary; 
+                    Dictionary storierDic = storyJson["Storier"] as Dictionary; 
+                    Dictionary<string, string> storierInfos = new Dictionary<string, string>(storierDic);
                     string sVersion = storierInfos["Version"] as string; 
-                    if (sVersion != StorierVersion) { GD.Print(sVersion + " != " + StorierVersion + "[Current] Storier Version!"); }
+                    if (sVersion != StorierData["Version"]) { GD.Print(sVersion + " != " + StorierData["Version"] + "[Current] Storier Version!"); }
                     else { GD.Print("Same Storier Version!"); }
+                    StorierData = storierInfos;
                 }
             }
             return true;

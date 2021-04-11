@@ -36,7 +36,8 @@ public class FlowTitle : RichTextLabel
         for (int i = 0; i < flowNames.Length; i++)
         {
             fileName += flowNames[i] + "/"; 
-            cFlow += ("[url=" + fileName + "]" + flowNames[i] + "[/url]" + " / ");
+            cFlow += ("[url=" + fileName + "]" + flowNames[i] + "[/url]");
+            if (i != flowNames.Length - 1) { cFlow += " / "; }
         }
         cFlow += "[/center]";
         BbcodeText = cFlow;
