@@ -1,12 +1,13 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://GUI/MenuBar/MenuEditBar.cs" type="Script" id=1]
-[ext_resource path="res://GUI/MenuBar/MenuToolBar.cs" type="Script" id=2]
+[ext_resource path="res://GUI/MenuBar/MenuStoryBar.cs" type="Script" id=2]
 [ext_resource path="res://GUI/MenuBar/FlowTitle.cs" type="Script" id=3]
 
 [node name="MenuBar" type="Control"]
 anchor_right = 1.0
 margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -19,17 +20,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EditBar" type="HBoxContainer" parent="."]
+[node name="StoryBar" type="HBoxContainer" parent="."]
 anchor_bottom = 1.0
 margin_left = 10.0
+margin_right = 133.0
 size_flags_horizontal = 0
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
-[node name="Story" type="MenuButton" parent="EditBar"]
+[node name="Story" type="MenuButton" parent="StoryBar"]
 margin_right = 45.0
 margin_bottom = 25.0
 text = "Story"
@@ -43,20 +45,17 @@ __meta__ = {
 ~Project, View, ~Undo/Redo,"
 }
 
-[node name="Edit" type="MenuButton" parent="EditBar"]
+[node name="Tools" type="Button" parent="StoryBar"]
 margin_left = 49.0
-margin_right = 85.0
+margin_right = 95.0
 margin_bottom = 25.0
-text = "Edit"
-items = [ "Journeys", null, 0, false, false, 0, 0, null, "", false, "Decisions", null, 0, false, false, 1, 0, null, "", false, "Annotations", null, 0, false, false, 2, 0, null, "", false ]
-switch_on_hover = true
+text = "Tools"
+flat = true
 __meta__ = {
 "_edit_lock_": true,
-"_edit_use_anchors_": false,
-"_editor_description_": "Fastly adding:  
-Journey(Run Flow)
-Decisions(Global Variables), 
-Annotations(Notes)"
+"_editor_description_": "Modals
+- Navigator(Tree)
+- List & Tile "
 }
 
 [node name="FlowBar" type="HBoxContainer" parent="."]
@@ -103,22 +102,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ToolBar" type="HBoxContainer" parent="."]
+[node name="EditBar" type="HBoxContainer" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -102.0
 margin_right = -10.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 0
 alignment = 2
-script = ExtResource( 2 )
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
-[node name="Editor" type="Button" parent="ToolBar"]
+[node name="Editor" type="Button" parent="EditBar"]
 margin_right = 42.0
 margin_bottom = 25.0
 text = "Flow"
@@ -134,49 +134,18 @@ Every Click changing editor. Default Editor: Flow
 - ~Property Editor (Entity Editor (json+ img))"
 }
 
-[node name="Navigator" type="Button" parent="ToolBar"]
+[node name="Manage" type="MenuButton" parent="EditBar"]
 margin_left = 46.0
-margin_right = 120.0
+margin_right = 109.0
 margin_bottom = 25.0
-text = "Navigator"
-flat = true
-__meta__ = {
-"_edit_lock_": true,
-"_editor_description_": "Modals
-- Navigator(Tree)
-- List & Tile "
-}
-
-[node name="EditorMenu" type="MenuButton" parent="ToolBar"]
-visible = false
-margin_left = 152.0
-margin_right = 201.0
-margin_bottom = 25.0
-hint_tooltip = "Editors"
-text = "Editor"
-items = [ "Flow", null, 0, false, false, 0, 0, null, "", false, "Property", null, 0, false, false, 1, 0, null, "", false, "Data", null, 0, false, false, 2, 0, null, "", false, "Document", null, 0, false, false, 3, 0, null, "", false ]
+text = "Manage"
+items = [ "Journeys", null, 0, false, false, 0, 0, null, "", false, "Decisions", null, 0, false, false, 1, 0, null, "", false, "Annotations", null, 0, false, false, 2, 0, null, "", false ]
 switch_on_hover = true
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false,
-"_editor_description_": "Main Panel
-- Flow Editor (Node Editor (json))
-- Property Editor (Entity Editor (json+ img))
-- Data Editor (Sheet Editor (csv))
-- Document Editor (Text Editor (txt))"
+"_editor_description_": "Fastly adding:  
+Journey(Run Flow)
+Decisions(Global Variables), 
+Annotations(Notes)"
 }
-
-[node name="NavigatorMenu" type="MenuButton" parent="ToolBar"]
-visible = false
-margin_left = 102.0
-margin_right = 174.0
-margin_bottom = 25.0
-hint_tooltip = "Natigations"
-text = "Navigator"
-switch_on_hover = true
-__meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false,
-"_editor_description_": "Hided"
-}
-[connection signal="button_down" from="ToolBar/Navigator" to="ToolBar" method="_OnNavigatorButtonDown"]

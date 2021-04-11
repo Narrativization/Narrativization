@@ -4,7 +4,7 @@ using System.Collections;
 using Godot.Collections;
 using Storier;
 
-public class NavigationTree : Tree
+public class Navigator : Tree
 {
     // Tree's Root
     private TreeItem root;
@@ -32,6 +32,8 @@ public class NavigationTree : Tree
             ImageTexture imgTex = FileManager.ResizeImage(ResourceLoader.Load<Texture>(iRes.Value), 16, 16); 
             icons.Add(iRes.Key, (Texture)imgTex);
         }
+        // Navigator Group
+        AddToGroup("Navigator");
     }
 
 //  public override void _Process(float delta)
@@ -76,6 +78,8 @@ public class NavigationTree : Tree
             else if (_dicEn.Key is string && _dicEn.Value is Dictionary)
             {
                 TreeItem treeItem = CreateItemWithIcon(0, (string)_dicEn.Key, SelectIcon((string)_dicEn.Key, _parent), _parent);
+                treeItem.Set("Directory", _dicEn.Value);
+                GD.Print(_dicEn.Value);
                 CreateTreeDisplay((Dictionary)_dicEn.Value, treeItem);
 
                 if (!IsInstanceValid(treeItem.GetChildren()))

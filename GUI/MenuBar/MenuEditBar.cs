@@ -6,60 +6,39 @@ public class MenuEditBar : HBoxContainer
 {
     // Exports
     [Export]
-    private NodePath storyNodePath = new NodePath("./Story");
+    private NodePath editorNodePath = new NodePath("./Editor");
     [Export]
-    private NodePath editNodePath = new NodePath("./Edit");
+    private NodePath manageNodePath = new NodePath("./Manage");
 
     // Publics
-    public MenuButton storyMenu;
-    public MenuButton editMenu;
-    
+    public Button editorButton;
+    public MenuButton manageMenu;
+
     public override void _Ready()
     {
-        storyMenu = GetNode<MenuButton>(storyNodePath);
-        editMenu = GetNode<MenuButton>(editNodePath);
-        if (IsInstanceValid(storyMenu))
+        editorButton = GetNode<Button>(editorNodePath);
+        editorButton.Connect("pressed", this, "_OnEditorPressed");
+
+        manageMenu = GetNode<MenuButton>(manageNodePath);
+        if (IsInstanceValid(manageMenu))
         {
-            storyMenu.GetPopup().Connect("id_pressed", this, "_OnStoryMenuItemPressed");
-        }
-        if (IsInstanceValid(editMenu))
-        {
-            editMenu.GetPopup().Connect("id_pressed", this, "_OnEditMenuItemPressed");
+            manageMenu.GetPopup().Connect("id_pressed", this, "_OnManageMenuItemPressed");
         }
     }
 
-    public void _OnStoryMenuItemPressed(int _id)
+//  // Called every frame. 'delta' is the elapsed time since the previous frame.
+//  public override void _Process(float delta)
+//  {
+//      
+//  }
+
+    public void _OnEditorPressed()
     {
-        switch (_id)
-        {
-            case 0: // New
-                GD.Print("New Story");
-                ModalManager.modals.ShowCreateModal();
-                break;
-            case 1: // Save
-                GD.Print("Save Story");
-                StoryManager.SaveStory();
-                break;
-            case 2: // Load
-                GD.Print("Load Story");
-                ModalManager.modals.ShowLoadModal();
-                break;
-            case 3: // Settings
-                GD.Print("Settings");
-                break;
-            case 4: // Help
-                GD.Print("Help");
-                break;
-            case 5: // Quit
-                GetTree().Quit();
-                break;
-            default:
-            break;
-        }
+        Editors editors = GetTree().GetNodesInGroup("Editors")[0] as Editors;
+        editorButton.Text = editors.ChangeEditor();
     }
 
-
-    public void _OnEditMenuItemPressed(int _id)
+    public void _OnManageMenuItemPressed(int _id)
     {
         switch (_id)
         {
@@ -76,5 +55,4 @@ public class MenuEditBar : HBoxContainer
             break;
         }
     }
-
 }

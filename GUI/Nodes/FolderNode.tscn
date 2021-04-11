@@ -1,0 +1,10 @@
+[gd_scene format=2]
+
+[node name="Folder" type="GraphNode"]
+margin_right = 32.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 180, 80 )
+title = "Folder"
+__meta__ = {
+"_edit_use_anchors_": false
+}

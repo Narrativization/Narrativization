@@ -97,7 +97,7 @@ namespace Storier
 
         public Dictionary LookHierarchy()
         {
-            GD.Print(FileManager.DirectoryTree(StoryDirectory));
+            GD.Print(JSON.Print(FileManager.DirectoryTree(StoryDirectory), "\t"));
             return FileManager.DirectoryTree(StoryDirectory);
         }
 

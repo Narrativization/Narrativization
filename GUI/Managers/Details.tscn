@@ -1,0 +1,9 @@
+[gd_scene format=2]
+
+[node name="Details" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+hint_tooltip = "Details"
+__meta__ = {
+"_edit_use_anchors_": false
+}

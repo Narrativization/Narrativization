@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=2]
-
-[ext_resource path="res://GUI/Modals/NavigationTree.cs" type="Script" id=1]
+[gd_scene format=2]
 
 [node name="Navigator" type="WindowDialog"]
 anchor_left = 0.5
@@ -32,7 +30,6 @@ margin_top = 20.0
 allow_reselect = true
 allow_rmb_select = true
 select_mode = 2
-script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

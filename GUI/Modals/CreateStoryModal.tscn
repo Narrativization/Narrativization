@@ -23,7 +23,7 @@ anchor_bottom = 1.0
 margin_left = 8.0
 margin_top = 8.0
 margin_right = -8.0
-margin_bottom = -36.0
+margin_bottom = -39.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -37,16 +37,17 @@ __meta__ = {
 
 [node name="Story" type="LineEdit" parent="Content/VBoxContainer"]
 margin_right = 350.0
-margin_bottom = 24.0
-placeholder_text = "Story Title"
+margin_bottom = 27.0
+placeholder_text = "Name"
 caret_blink = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Description" type="LineEdit" parent="Content/VBoxContainer"]
+margin_top = 31.0
 margin_right = 350.0
-margin_bottom = 24.0
+margin_bottom = 58.0
 placeholder_text = "Description"
 caret_blink = true
 __meta__ = {
@@ -54,27 +55,27 @@ __meta__ = {
 }
 
 [node name="Author" type="LineEdit" parent="Content/VBoxContainer"]
-margin_top = 28.0
+margin_top = 62.0
 margin_right = 350.0
-margin_bottom = 52.0
+margin_bottom = 89.0
 placeholder_text = "Author"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Copyright" type="LineEdit" parent="Content/VBoxContainer"]
-margin_top = 56.0
+margin_top = 93.0
 margin_right = 350.0
-margin_bottom = 80.0
+margin_bottom = 120.0
 placeholder_text = "Copyright"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="DefaultDir" type="CheckBox" parent="Content/VBoxContainer"]
-margin_top = 84.0
+margin_top = 124.0
 margin_right = 350.0
-margin_bottom = 108.0
+margin_bottom = 149.0
 disabled = true
 pressed = true
 text = "Use Default Directory(~/Documents/Storier/)"
@@ -83,9 +84,9 @@ __meta__ = {
 }
 
 [node name="Override" type="CheckBox" parent="Content/VBoxContainer"]
-margin_top = 112.0
+margin_top = 153.0
 margin_right = 350.0
-margin_bottom = 136.0
+margin_bottom = 178.0
 disabled = true
 pressed = true
 text = "Replace the existing project"

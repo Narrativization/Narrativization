@@ -50,6 +50,7 @@ public class FlowEditor : GraphNodeEditor
         {
             contextMenu.SetPosition(GetGlobalMousePosition());
             contextMenu.ShowModal();
+            contextMenu.GrabFocus();
         }
 
         if (inputEvent.IsActionPressed("Delete"))
@@ -84,6 +85,15 @@ public class FlowEditor : GraphNodeEditor
             }
         }
 
+        if (inputEvent.IsActionPressed("Save"))
+        {
+            GD.Print("Save");
+            if (IsInstanceValid(StoryManager.CurrentStory.CurrentStoryElement))
+            {
+                StoryManager.CurrentStory.CurrentStoryElement.Save();
+            }
+        }
+
         base._GuiInput(inputEvent);
     }
 
@@ -96,5 +106,19 @@ public class FlowEditor : GraphNodeEditor
         AddChild(storyFlowNode);
         storyFlowNode.Offset = ScrollOffset + GetLocalMousePosition() - (storyFlowNode.RectSize/2);
         return true;
+    }
+
+    public Dictionary<string, string> SaveData()
+    {
+        Dictionary<string, string> saveData = new Dictionary<string, string>();
+        Godot.Collections.Array graphNodes = GetChildren();
+        for (int i = 0; i < graphNodes.Count; i++)
+        {
+            if (graphNodes[i] is FlowGraphNode flowNode)
+            {
+                saveData.Add(flowNode.Uid, "");  // flowNode.flowData
+            }
+        }
+        return saveData;
     }
 }

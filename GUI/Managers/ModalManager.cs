@@ -12,8 +12,6 @@ public class ModalManager : Control
     [Export]
     private NodePath fileDialogNodePath = new NodePath("./FileDialog");
     [Export]
-    private NodePath navigatorNodePath = new NodePath("./Navigator");
-    [Export]
     private NodePath detailsDialogNodePath = new NodePath("./DetailsDialogue");
 
     private static ModalManager _modals = null;  
@@ -32,7 +30,6 @@ public class ModalManager : Control
     public Panel overlay;
     public CreateStoryModal createDialog;
     public FileDialog fileDialog;
-    public WindowDialog navigator;
     public DetailsModal detailsDialog;
     
     public override void _Ready()
@@ -41,7 +38,6 @@ public class ModalManager : Control
         overlay = GetNode<Panel>(overlayNodePath);
         createDialog = GetNode<CreateStoryModal>(createDialogNodePath);
         fileDialog = GetNode<FileDialog>(fileDialogNodePath);
-        navigator = GetNode<WindowDialog>(navigatorNodePath);
         detailsDialog = GetNode<DetailsModal>(detailsDialogNodePath);
     }
 
@@ -81,15 +77,6 @@ public class ModalManager : Control
         fileDialog.ShowModal(); // ~Popup Centered
         fileDialog.Invalidate();
     }
-
-    public void ShowNavigatorModal()
-    {
-        overlay.Hide();
-        navigator.ShowModal();
-        navigator.GetNode<NavigationTree>("./Tree").Refresh();
-    }
-
-
     
     // Some actions displaying an overlay so after that hide the overlay
     public void _OnHideOverlay()

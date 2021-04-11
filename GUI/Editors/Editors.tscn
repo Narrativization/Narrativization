@@ -22,7 +22,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FlowEditor" type="Tabs" parent="."]
+[node name="Flow" type="Tabs" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 5.0
@@ -30,10 +30,10 @@ margin_top = 5.0
 margin_right = -5.0
 margin_bottom = -5.0
 
-[node name="Flowditor" parent="FlowEditor" instance=ExtResource( 1 )]
+[node name="FlowEditor" parent="Flow" instance=ExtResource( 1 )]
 scroll_offset = Vector2( -5, -5 )
 
-[node name="EntityEditor" type="Tabs" parent="."]
+[node name="Property" type="Tabs" parent="."]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -42,7 +42,7 @@ margin_top = 5.0
 margin_right = -5.0
 margin_bottom = -5.0
 
-[node name="PropertyEditor" type="Tabs" parent="."]
+[node name="Text" type="Tabs" parent="."]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -51,18 +51,10 @@ margin_top = 5.0
 margin_right = -5.0
 margin_bottom = -5.0
 
-[node name="TextEditor" type="Tabs" parent="."]
-visible = false
+[node name="TextEditor" type="TextEdit" parent="Text"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 5.0
-margin_top = 5.0
-margin_right = -5.0
-margin_bottom = -5.0
-
-[node name="TextEditor" type="TextEdit" parent="TextEditor"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+syntax_highlighting = true
 minimap_draw = true
 __meta__ = {
 "_edit_use_anchors_": false

@@ -4,11 +4,13 @@ using System;
 // Basic Flow Node Controls for GraphNode(Without Storier)
 public class FlowGraphNode : GraphNode
 {
-    
+    // Flow Fragment Id
+    public static int UidIndex = 0;
+    public string Uid = "FlowFragment" + UidIndex;
 
     public override void _Ready()
     {
-        
+        UidIndex++;
     }
 
 //  public override void _Process(float delta)

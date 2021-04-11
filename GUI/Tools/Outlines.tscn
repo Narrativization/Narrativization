@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://GUI/Tools/Navigator.cs" type="Script" id=1]
+[ext_resource path="res://GUI/Tools/OutlineMenu.cs" type="Script" id=2]
+
+[node name="Outlines" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+hint_tooltip = "Outlines"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuBar" type="MarginContainer" parent="."]
+anchor_right = 1.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+rect_clip_content = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OutlineMenu" type="HBoxContainer" parent="MenuBar"]
+margin_right = 1024.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Refresh" type="Button" parent="MenuBar/OutlineMenu"]
+margin_right = 60.0
+margin_bottom = 25.0
+text = "Refresh"
+flat = true
+
+[node name="Navigator" type="Tree" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 25.0
+hint_tooltip = "Navigator"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

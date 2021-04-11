@@ -67,17 +67,18 @@ Some points(nodes or subflow) in the flow can be marked as keypoints([Plot](http
         - Tags(#)
         - Links(href, :, ->)
 
-Also can consist of flows such as Universe, Timeline.
+Also can consist of flows such as Universe, Timeline. 
+SnowFlake
 
 ## User Interfaces
 [General Design](#General)
 
 ### Editors
-Main Panel
-- Flow Editor (Node-Graph Editor)
+Editors
+- Flow Editor (Graph-Node Editor)
 - Property Editor (Entity Editor)
+- Text Editor (Document Editor)
 - ~Data Editor (Sheet Editor)
-- Document Editor (Text Editor)
 
 ### Views
 Modals
