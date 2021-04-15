@@ -6,13 +6,7 @@ using Storier;
 public class StoryFlowNode : FlowGraphNode
 {
     [Export]
-    public string Id = "";
-    [Export]
     public StoryFlow storyFlow;
-
-    public bool isFlow = false; // Isn't: Story(.storier), Folder, Entity, Asset etc.   
-    StoryElement storyElement; // Referenced Story Element ~StoryFlow
-    public Godot.Collections.Dictionary displayData = new Godot.Collections.Dictionary(); 
 
     public override void _Ready()
     {
@@ -28,25 +22,29 @@ public class StoryFlowNode : FlowGraphNode
     {
         base._GuiInput(inputEvent);
     } 
-
-    public void InitNode(string _id)
+    
+    public StoryFlow ReferenceStoryFlow(StoryFlow _storyFlow)
     {
-        Id = _id;
-        GD.Print("Ready Id: " + Id);
-
-        if (Id != "")
+        storyFlow = _storyFlow;
+        if (IsInstanceValid(storyFlow))
         {
-            storyFlow = new StoryFlow(StoryManager.CurrentStory.StoryBase + Id + ".flow"); 
-            if (storyFlow == null)
-            {
-                string[] fNames = Id.Split("/");
-                // storyFlow = new StoryFlow(Id, fNames[fNames.Length - 1], "");
-            }
-            storyFlow.Save();
             Title = (storyFlow.Name != "") ? storyFlow.Name : "Story Flow";
-            HintTooltip = Id;
+            HintTooltip = storyFlow.Id;
+        }
+        return storyFlow;
+    }
+
+    public override void OpenNode()
+    {
+        // base.OpenNode();
+        if (IsInstanceValid(storyFlow))
+        {
+            StoryManager.CurrentStory.CurrentStoryElement = storyFlow;
+            GetTree().CallGroup("Editors", "EditStoryElement", StoryManager.CurrentStory.CurrentStoryElement);
         }
     }
+
+    // InitNode
 
 }
 
@@ -66,3 +64,15 @@ public class StoryFlowNode : FlowGraphNode
         }
     }
 */
+
+/*
+Flow Fragment
+{
+    FragmentId
+    Title
+    ReferenceFlow
+    Offset
+    Slots(Connections)
+}
+*/
+

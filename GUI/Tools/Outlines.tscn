@@ -35,6 +35,22 @@ margin_bottom = 25.0
 text = "Refresh"
 flat = true
 
+[node name="Display" type="Button" parent="MenuBar/OutlineMenu"]
+margin_left = 64.0
+margin_right = 91.0
+margin_bottom = 25.0
+hint_tooltip = "All, Recent, Favorite..."
+text = "All"
+flat = true
+
+[node name="Root" type="Button" parent="MenuBar/OutlineMenu"]
+margin_left = 95.0
+margin_right = 140.0
+margin_bottom = 25.0
+hint_tooltip = "Story, Flow, Entity, Asset..."
+text = "Story"
+flat = true
+
 [node name="Navigator" type="Tree" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0

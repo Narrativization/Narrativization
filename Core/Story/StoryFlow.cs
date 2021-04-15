@@ -35,8 +35,10 @@ namespace Storier
             ConfigFile configFile = new ConfigFile();
             Error err = configFile.Load(path);
             if (err != Error.Ok) { GD.Print(err); return null; }
-            loaded.StoryElementData = configFile.GetValue("StoryElement", "Data") as Dictionary<string, string>;
-            loaded.StoryFlowData = configFile.GetValue("Flow", "Data") as Dictionary<string, string>;
+            Dictionary elementDictionary = configFile.GetValue("StoryElement", "Data") as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
+            loaded.StoryElementData = new Dictionary<string, string>(elementDictionary);
+            Dictionary flowDictionary = configFile.GetValue("Flow", "Data") as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
+            loaded.StoryFlowData = new Dictionary<string, string>(flowDictionary);
             return loaded; 
         }
     }

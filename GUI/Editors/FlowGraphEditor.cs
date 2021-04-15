@@ -274,9 +274,11 @@ public class GraphNodeEditor : GraphEdit
             default:
                 break;
         }
-
         base._Notification(what);
     }
+    
+    // Reset GraphEditor
+    public void Reset() { DeleteAll(); FlowGraphNode.Reset(); }
 
     // Centered to given GraphNode
     public void FocusNode(GraphNode _node)
@@ -442,6 +444,7 @@ public class GraphNodeEditor : GraphEdit
     public void _OnGraphEditorConnectionRequest(string from, int fromSlot, string to, int toSlot)
     {
         ConnectNode(from, fromSlot, to, toSlot);
+        GD.Print(from + " " + fromSlot + " - " + to + " " + toSlot);
     }
 
     public void _OnGraphEditorDisconnectionRequest(string from, int fromSlot, string to, int toSlot)

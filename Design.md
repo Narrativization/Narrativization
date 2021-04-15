@@ -73,19 +73,21 @@ SnowFlake
 ## User Interfaces
 [General Design](#General)
 
+### Views
+Tools
+- Editors : [Editing Files](#Editors)
+- Navigator(Outline) : File Structure/FolderTree
+- Details(Inspector) : Edit
+- Journey: Presentation like Visual Novel
+- Idea, Notes: Fastly take Notes
+
 ### Editors
 Editors
 - Flow Editor (Graph-Node Editor)
 - Property Editor (Entity Editor)
 - Text Editor (Document Editor)
-- ~Sheet Editor (List-Data Editor)
-
-### Views
-Modals
-- Detail(Inspector): Edit   ~Property
-- Navigator(Tree): File Structure
-- List & Tile 
-- Journey: Presentation like Visual Novel
+- ~Sheet Editor (List/Tile-Data Editor)
+- Journey/Presentation Editor (Slide Editor)
 
 ### HotKeys
 Be UX focused!
@@ -100,6 +102,10 @@ Game Engine integrated import/exports
 ### Narrative Structure
 Good for creating causation; also ***Hero's Journey***, ***Three Act Structure*** etc. 
 [Narrative Structures](https://en.wikipedia.org/wiki/Narrative_structure)
+[Inspiration Helper](https://en.wikipedia.org/wiki/The_Thirty-Six_Dramatic_Situations)
+
+### Others
+Flow Samples: Cinematic/Gameplay
 
 ## Technical
 [Design](#Design)
@@ -133,12 +139,23 @@ Entity Example(.entity) -> .json
     Name: "", 
     Description: "",
     Template: "",
-    Data: {
+    Data/Information/Content/Paper/Page: {
         ...
     }
 }
 
-StoryElement General Informations
+StoryElement General Informations(Common)
 Id, Name, Description, Template 
 StoryElement Template Informations
 Data
+
+~Aspect, Emotions, 
+
+### Story Element
+Path = ... /Flow/Chapter1 .flow
+- ... -> StoryBase
+- /Flow/Chapter1 -> Id
+- flow -> Extension
+
+Template Defination
+Name : Value ~:Type

@@ -20,10 +20,17 @@ namespace Storier
         public string StoryBase { get { return StoryDirectory.GetBaseDir(); } } // Story Base Directory
         public StoryElement CurrentStoryElement { get; set; } // Current Story Element
 
+        // public string DisplayTitle { get; set; } // Current Title | For Displaying Folder in Flow Editor 
+
         // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + StoryElementExtension
         public string StoryElementId { get { return IsInstanceValid(CurrentStoryElement) ? CurrentStoryElement.Id : ""; } } // Id of opened Relative File/Directory without extension [/Flow/Chapter]
         public string StoryElementExtension { get { return IsInstanceValid(CurrentStoryElement) ? CurrentStoryElement.StoryElementExtension : ""; } } // Extension of opened Relative File/Directory [.flow]
         public string StoryElementPath { get { return StoryBase + CurrentStoryElement.Id + CurrentStoryElement.StoryElementExtension; } } // Path of opened File ...[/Flow/Chapter]...
+
+        // private StoryElement _currentStoryElement { get; set; } // Current Story Element
+        // public StoryElement CurrentStoryElement { get { return _currentStoryElement; } set{ _currentStoryElement = value; EmitSignal("StoryElementUpdated", _currentStoryElement);  } } // Current Story Element
+        // [Signal]
+        // public delegate void StoryElementUpdated(StoryElement storyElement);
 
         private Story() 
         {
@@ -70,6 +77,16 @@ namespace Storier
                 GD.Print("Fullscreen");
                 OS.WindowFullscreen = !OS.WindowFullscreen;
             }
+            if (inputEvent.IsActionPressed("Save"))
+            {
+                GD.Print("Save");
+                if (IsInstanceValid(CurrentStoryElement))
+                {
+                    Editors editors = GetTree().GetNodesInGroup("Editors")[0] as Editors;
+                    CurrentStoryElement.StoryElementData["Flows"] = JSON.Print(editors.flowEditor.SaveData(), "\t");
+                    CurrentStoryElement.Save();
+                }
+            }
         }
         
         // Create Folder/File Structure of project
@@ -93,10 +110,11 @@ namespace Storier
             {
                 dir.MakeDirRecursive(defaultDirs[i]);
             }
-            StoryFlow defaultStory = new StoryFlow(StoryBase + "/Flows/Starter.flow");
-            StoryManager.StorierData.Add("Starter", "/Flows/Starter.flow");
-            defaultStory.Save();
-            CurrentStoryElement = defaultStory;
+
+            // StoryFlow defaultStory = new StoryFlow(StoryBase + "/Flows/Starter.flow");
+            // StoryManager.StorierData.Add("Starter", "/Flows/Starter.flow");
+            // defaultStory.Save();
+            // CurrentStoryElement = defaultStory;
         }
 
         public Dictionary LookHierarchy()

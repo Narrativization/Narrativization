@@ -7,12 +7,17 @@ public class Editors : TabContainer
 {
     // Exports
     [Export]
+    private NodePath flowEditorNodePath = new NodePath("./Flow/FlowEditor");
+    // [Export]
+    // private NodePath propertyEditorNodePath = new NodePath("./Property");
+    [Export]
     private NodePath textEditorNodePath = new NodePath("./Text/TextEditor");
 
     // Properties
     public string CurrentEditor { get { return GetTabTitle(CurrentTab); } }
 
-    private TextEdit textEditor;
+    public FlowEditor flowEditor;
+    public TextEdit textEditor;
 
     public Godot.Collections.Array<StoryElement> editedStoryElements = new Godot.Collections.Array<StoryElement>();
     public StoryElement currentStoryElement;
@@ -21,6 +26,7 @@ public class Editors : TabContainer
     public override void _Ready()
     {
         AddToGroup("Editors");
+        flowEditor = GetNode<FlowEditor>(flowEditorNodePath);
         textEditor = GetNode<TextEdit>(textEditorNodePath);
     }
 
@@ -30,9 +36,14 @@ public class Editors : TabContainer
     //      
     //  }
 
-    public void EditStoryElement(StoryElement _storyElement)
+    public void EditStoryElement(StoryElement storyElement)
     {
-        editedStoryElements.Add(_storyElement);
+        editedStoryElements.Add(storyElement);
+        if (storyElement is StoryFlow storyFlow)
+        {
+            flowEditor.Reset();
+            flowEditor.LoadData(storyFlow.StoryFlowData);
+        }
     }
 
     public string ChangeEditor()
