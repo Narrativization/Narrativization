@@ -13,6 +13,8 @@ public class ModalManager : Control
     private NodePath fileDialogNodePath = new NodePath("./FileDialog");
     [Export]
     private NodePath detailsDialogNodePath = new NodePath("./DetailsDialogue");
+    [Export]
+    private NodePath settingsModalNodePath = new NodePath("./SettingsModal");
 
     private static ModalManager _modals = null;  
     public static ModalManager modals  
@@ -31,6 +33,7 @@ public class ModalManager : Control
     public CreateStoryModal createDialog;
     public FileDialog fileDialog;
     public DetailsModal detailsDialog;
+    public AcceptDialog settingsModal;
     
     public override void _Ready()
     {
@@ -39,6 +42,7 @@ public class ModalManager : Control
         createDialog = GetNode<CreateStoryModal>(createDialogNodePath);
         fileDialog = GetNode<FileDialog>(fileDialogNodePath);
         detailsDialog = GetNode<DetailsModal>(detailsDialogNodePath);
+        settingsModal = GetNode<AcceptDialog>(settingsModalNodePath);
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -76,6 +80,12 @@ public class ModalManager : Control
         fileDialog.Filters = new string[] {"*.storier"};
         fileDialog.ShowModal(); // ~Popup Centered
         fileDialog.Invalidate();
+    }
+
+    public void ShowSettingsModal()
+    {
+        overlay.Hide();
+        settingsModal.ShowModal();
     }
     
     // Some actions displaying an overlay so after that hide the overlay

@@ -101,9 +101,9 @@ namespace Storier
                 // StoryBase + "/Entities/Items/",
                 StoryBase + "/Assets/",
                 // StoryBase + "/Journeys/"
-                StoryBase + "/Templates/",
-                StoryBase + "/References/"
-            };
+                // StoryBase + "/Templates/",
+                // StoryBase + "/References/"
+            }; // Preferences
             Directory dir = new Directory();
             for (int i = 0; i < defaultDirs.Count; i++)
             {

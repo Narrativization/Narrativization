@@ -14,6 +14,7 @@ namespace Storier
         public static Story CurrentStory { get; set; }
 
         public static string workspace = OS.GetSystemDir(OS.SystemDir.Documents) + "/Storier/";
+        public static string userDataDirectory = OS.GetUserDataDir(); // "user://"
         // Custom Story Data
         public static Dictionary<string, string> StorierData { get; set; } = new Dictionary<string, string>()
         {
@@ -111,7 +112,7 @@ namespace Storier
         // Record Recently Story
         public static void PushRecentStory()
         {
-            string configFileName = "user://UserStories.ini";
+            string configFileName = userDataDirectory + "UserStories.ini";
             ConfigFile configFile = new ConfigFile();
             Directory dir = new Directory();
             dir.MakeDirRecursive(configFileName.GetBaseDir());
@@ -123,7 +124,7 @@ namespace Storier
         // Picking Recently Story
         public static string PopRecentStory()
         {
-            string configFileName = "user://UserStories.ini";
+            string configFileName = userDataDirectory + "UserStories.ini";
             ConfigFile configFile = new ConfigFile();
             Error err = configFile.Load(configFileName);
             if (err != Error.Ok) { GD.Print(err); return ""; }
@@ -138,10 +139,10 @@ namespace Storier
 
         // !WARNING: Change Workspace isn't in use!
 
-        // Save Config file to "user://", use as UserStories settings
+        // Save Config file use as UserStories settings
         public static void SaveUserConfig(string fileName = "UserStories")
         {
-            string configFileName = "user://" + fileName + ".ini";
+            string configFileName = userDataDirectory + fileName + ".ini";
             ConfigFile configFile = new ConfigFile();
             Directory dir = new Directory();
             dir.MakeDirRecursive(configFileName.GetBaseDir());
@@ -150,10 +151,10 @@ namespace Storier
             if (err != Error.Ok) { GD.Print(err); }
         }
 
-        // Load Config file from "user://"
+        // Load Config file
         public static void LoadUserConfig(string fileName = "UserStories")
         {
-            string configFileName = "user://" + fileName + ".ini";
+            string configFileName = userDataDirectory + fileName + ".ini";
             ConfigFile configFile = new ConfigFile();
             Error err = configFile.Load(configFileName);
             if (err != Error.Ok) { GD.Print(err); }

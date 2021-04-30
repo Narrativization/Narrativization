@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
+[ext_resource path="res://GUI/Modals/SettingsModal.tscn" type="PackedScene" id=1]
 [ext_resource path="res://GUI/Managers/ModalManager.cs" type="Script" id=2]
 [ext_resource path="res://GUI/Modals/CreateStoryModal.tscn" type="PackedScene" id=3]
 [ext_resource path="res://GUI/Modals/DetailsModal.tscn" type="PackedScene" id=4]
@@ -27,6 +28,7 @@ __meta__ = {
 }
 
 [node name="CreateDialog" parent="." instance=ExtResource( 3 )]
+rect_min_size = Vector2( 150, 52.5 )
 
 [node name="FileDialog" type="FileDialog" parent="."]
 anchor_left = 0.5
@@ -37,6 +39,7 @@ margin_left = -223.5
 margin_top = -161.5
 margin_right = 223.5
 margin_bottom = 161.5
+rect_min_size = Vector2( 150, 52.5 )
 window_title = "Open a File"
 resizable = true
 mode = 0
@@ -53,6 +56,9 @@ margin_left = -225.5
 margin_top = -175.0
 margin_right = 225.5
 margin_bottom = 175.0
+
+[node name="SettingsModal" parent="." instance=ExtResource( 1 )]
+
 [connection signal="confirmed" from="CreateDialog" to="." method="_OnCreateDialogConfirmed"]
 [connection signal="dir_selected" from="FileDialog" to="." method="_OnFileDialogDirSelected"]
 [connection signal="file_selected" from="FileDialog" to="." method="_OnFileDialogFileSelected"]

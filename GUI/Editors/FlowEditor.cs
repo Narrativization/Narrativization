@@ -11,7 +11,7 @@ public class FlowEditor : GraphNodeEditor
     [Export]
     private PackedScene storyNode = GD.Load<PackedScene>("res://GUI/Nodes/StoryNode.tscn");
     [Export]
-    private PackedScene storyFlowNodeScene = GD.Load<PackedScene>("res://GUI/Nodes/StoryFlowNode.tscn");
+    private PackedScene storyFlowNodeScene = GD.Load<PackedScene>("res://GUI/Nodes/StoryFlowFragment.tscn");
 
 
     private FlowContextMenu contextMenu;

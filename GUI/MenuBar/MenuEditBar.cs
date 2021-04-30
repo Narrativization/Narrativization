@@ -17,7 +17,7 @@ public class MenuEditBar : HBoxContainer
     public override void _Ready()
     {
         editorButton = GetNode<Button>(editorNodePath);
-        editorButton.Connect("pressed", this, "_OnEditorPressed");
+        editorButton.Connect("gui_input", this, "_OnEditorGuiInput");
 
         manageMenu = GetNode<MenuButton>(manageNodePath);
         if (IsInstanceValid(manageMenu))
@@ -26,16 +26,27 @@ public class MenuEditBar : HBoxContainer
         }
     }
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
+    //  public override void _Process(float delta)
+    //  {
+    //      
+    //  }
 
-    public void _OnEditorPressed()
+    public void _OnEditorGuiInput(InputEvent inputEvent)
     {
-        Editors editors = GetTree().GetNodesInGroup("Editors")[0] as Editors;
-        editorButton.Text = editors.ChangeEditor();
+        if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.Pressed)
+        {
+            Editors editors = GetTree().GetNodesInGroup("Editors")[0] as Editors;
+            if (mouseEvent.ButtonIndex == (int)ButtonList.Left)
+            {
+                editorButton.Text = editors.NextEditor();
+            }
+            else if (mouseEvent.ButtonIndex == (int)ButtonList.Right)
+            {
+                editorButton.Text = editors.PreviousEditor();
+            }
+        }
+        base._GuiInput(inputEvent);
     }
 
     public void _OnManageMenuItemPressed(int _id)

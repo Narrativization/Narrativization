@@ -13,7 +13,8 @@
     - Theme[StoryInfo], Conflict[StoryInfo]...
 
 Storier uses Story as Project.
-Flow consists of flows and contains Entity & Assets. 
+Flow consists of flows/story fragments.
+Flows/story fragments contains Entity & Assets. 
 Entities consists of derived informations and contains Assets.
 Assets are pure informations such as images.  
 Every Flow and Entity templatable with changing their details.

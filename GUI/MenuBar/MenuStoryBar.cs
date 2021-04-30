@@ -44,7 +44,7 @@ public class MenuStoryBar : HBoxContainer
                 break;
             case 3: // Settings
                 GD.Print("Settings");
-                OS.ShellOpen(StoryManager.workspace);
+                ModalManager.modals.ShowSettingsModal();
                 break;
             case 4: // Help
                 GD.Print("Help");

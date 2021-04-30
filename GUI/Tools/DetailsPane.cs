@@ -22,11 +22,13 @@ public class DetailsPane : Panel
 
     public void _OnStoryOpened(Story story)
     {
+        if (!IsInstanceValid(story)) { return; }
         GetNode<RichTextLabel>("DetailsText").Text = story.StoryName;
     }
 
     public void _OnStoryElementOpened(StoryElement storyElement)
     {
+        if (!IsInstanceValid(storyElement)) { return; }
         GetNode<RichTextLabel>("DetailsText").Text = storyElement.Name;
     }
 

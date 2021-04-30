@@ -2,7 +2,7 @@
 
 [ext_resource path="res://GUI/Nodes/StoryFlowNode.cs" type="Script" id=1]
 
-[node name="StoryFlowNode" type="GraphNode"]
+[node name="StoryFlowFragment" type="GraphNode"]
 margin_right = 180.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 180, 80 )
@@ -18,14 +18,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Description" type="TextEdit" parent="."]
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
 margin_left = 16.0
 margin_top = 24.0
 margin_right = 164.0
-margin_bottom = 54.0
-rect_min_size = Vector2( 120, 30 )
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_bottom = 64.0
+rect_min_size = Vector2( 0, 40 )
+mouse_filter = 1
+scroll_active = false

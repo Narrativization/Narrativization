@@ -5,7 +5,7 @@ Roadmap include, [Future Versions](#Future-Versions) and [Released Versions](#Re
 ### v0.4
 Basic Flow management. Linear Act, Chapter or Quest flow creation.
 - [ ] Basic Flow Nodes and Flow Editor Nodes.
-- [ ] Better navigation management. (Navigator, Flow Editor, Flow title).
+- [x] Better navigation management. (Navigator, ~~Flow Editor,~~ Title Displayer).
 - [ ] StoryElement file improvements 
 
 ## Future Versions

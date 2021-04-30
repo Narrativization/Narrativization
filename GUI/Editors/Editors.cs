@@ -46,13 +46,25 @@ public class Editors : TabContainer
         }
     }
 
-    public string ChangeEditor()
+    public string NextEditor()
     {
         CurrentTab = (CurrentTab + 1) % GetTabCount();
+        ChangeEditor();
+        return CurrentEditor;
+    }
+    
+    public string PreviousEditor()
+    {
+        CurrentTab = (CurrentTab - 1 + GetTabCount()) % GetTabCount();
+        ChangeEditor();
+        return CurrentEditor;
+    }
+
+    private void ChangeEditor()
+    {
         // textEditor.Text = JSON.Print(StoryManager.CurrentStory.CurrentStoryElement.StoryElementData, "\t");
         textEditor.Text = "CharacterName: <CharacterName>";
         textEditor.AddKeywordColor("CharacterName", new Color(0, 0.5f, 0.5f));
         textEditor.AddColorRegion("<", ">", new Color(0, 1, 0));
-        return CurrentEditor;
     }
 }
