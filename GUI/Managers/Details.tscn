@@ -1,9 +1,30 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://GUI/Managers/Details.cs" type="Script" id=1]
 
 [node name="Details" type="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+rect_pivot_offset = Vector2( -523.116, -58.9191 )
 hint_tooltip = "Details"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuBar" type="MarginContainer" parent="."]
+anchor_right = 1.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+rect_clip_content = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DetailsText" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 25.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

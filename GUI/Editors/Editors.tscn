@@ -33,7 +33,7 @@ margin_bottom = -5.0
 [node name="FlowEditor" parent="Flow" instance=ExtResource( 1 )]
 scroll_offset = Vector2( -5, -5 )
 
-[node name="Property" type="Tabs" parent="."]
+[node name="Scene" type="Tabs" parent="."]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -41,6 +41,7 @@ margin_left = 5.0
 margin_top = 5.0
 margin_right = -5.0
 margin_bottom = -5.0
+hint_tooltip = "Similar to Visual Novel Display"
 
 [node name="Text" type="Tabs" parent="."]
 visible = false
@@ -59,3 +60,12 @@ minimap_draw = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Property" type="Tabs" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = -5.0
+margin_bottom = -5.0

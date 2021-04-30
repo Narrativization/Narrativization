@@ -9,7 +9,8 @@ namespace Storier
     public class StoryManager : Node    
     {
         // Singleton
-        private static StoryManager storyManager;
+        private static StoryManager _StoryManager;
+        public static StoryManager Self { get { return _StoryManager; } }
         public static Story CurrentStory { get; set; }
 
         public static string workspace = OS.GetSystemDir(OS.SystemDir.Documents) + "/Storier/";
@@ -19,9 +20,14 @@ namespace Storier
             {"Version", "v0.2"}
         }; 
 
+        [Signal]
+        public delegate void StoryOpened(Story story);
+        [Signal]
+        public delegate void StoryElementOpened(StoryElement storyElement);
+
         private StoryManager()
         {
-            storyManager = this;
+            _StoryManager = this;
         }
 
         // Create Story
@@ -29,9 +35,11 @@ namespace Storier
         {
             CloseAllStories(); // Single Story Workflow
             CurrentStory = new Story(name, description, directory);
-            storyManager.AddChild(CurrentStory);
+            _StoryManager.AddChild(CurrentStory);
             if (!(new Directory()).DirExists(directory)) { CurrentStory.CreateHierarchy(); } 
             SaveStory();
+            _StoryManager.EmitSignal("StoryOpened", CurrentStory);
+            CurrentStory.Connect("StoryElementOpened", _StoryManager, "_OnStoryElementOpened");
             return CurrentStory;
         }
 
@@ -89,11 +97,12 @@ namespace Storier
 
         public static void CloseAllStories()
         {
-            Godot.Collections.Array _stories = storyManager.GetChildren();
+            Godot.Collections.Array _stories = _StoryManager.GetChildren();
             for (int i = 0; i < _stories.Count; i++)
             {
                 if (_stories[i] is Story s)
                 {
+                    s.Disconnect("StoryElementOpened", _StoryManager, "_OnStoryElementOpened");
                     s.Free();
                 }
             }
@@ -149,6 +158,12 @@ namespace Storier
             Error err = configFile.Load(configFileName);
             if (err != Error.Ok) { GD.Print(err); }
             workspace = configFile.GetValue("Workspace", "Directory").ToString(); // Workscape
+        }
+
+        // Story Element Handler/Listener
+        private void _OnStoryElementOpened(StoryElement storyElement)
+        {
+            _StoryManager.EmitSignal("StoryElementOpened", storyElement);
         }
     }
 }

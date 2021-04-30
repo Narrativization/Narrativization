@@ -4,30 +4,29 @@ using Storier;
 
 public class FlowTitle : RichTextLabel
 {
-    [Export]
-    public string displayedFlow = "";
 
     public override void _Ready()
     {
         Connect("meta_clicked", this, "_OnMetaClicked");
-        displayedFlow = Text;
+        StoryManager.Self.Connect("StoryOpened", this, "_OnStoryOpened");
+        StoryManager.Self.Connect("StoryElementOpened", this, "_OnStoryElementOpened");
     }
 
-    public override void _Process(float delta)
-    {
-        if (IsInstanceValid(StoryManager.CurrentStory) && StoryManager.CurrentStory.StoryElementId != displayedFlow) // ~Replace with Signal
-        {
-            ChangeFlowTitle(StoryManager.CurrentStory.Name + StoryManager.CurrentStory.StoryElementId);
-            displayedFlow = StoryManager.CurrentStory.StoryElementId;
-            GD.Print("Opened Element: \"" + StoryManager.CurrentStory.StoryElementId + "\"");
-            Godot.Collections.Dictionary dictionary = new Godot.Collections.Dictionary();
-            dictionary = FileManager.DirectoryTree(StoryManager.CurrentStory.StoryBase + StoryManager.CurrentStory.StoryElementId);
-            // GD.Print(JSON.Print(dictionary, "\t"));
-        }
-        base._Process(delta);
-    } 
+    // public override void _Process(float delta)
+    // {
+    //     // ChangeTitle(); // Replaced with StoryOpened and StoryElementOpened
+    //     base._Process(delta);
+    // }
 
-    public void ChangeFlowTitle(string _flowName)
+    private void ChangeTitle()
+    {
+        if (IsInstanceValid(StoryManager.CurrentStory)) // ~Replace with Signal
+        {
+            TitleText(StoryManager.CurrentStory.CurrentStoryElementTitle);
+        }
+    }
+
+    private void TitleText(string _flowName)
     {
         string cFlow = "[center]";
         string fileName = "";
@@ -35,12 +34,24 @@ public class FlowTitle : RichTextLabel
 
         for (int i = 0; i < flowNames.Length; i++)
         {
-            fileName += flowNames[i] + "/"; 
+            fileName += flowNames[i] + "/";
             cFlow += ("[url=" + fileName + "]" + flowNames[i] + "[/url]");
             if (i != flowNames.Length - 1) { cFlow += " / "; }
         }
         cFlow += "[/center]";
         BbcodeText = cFlow;
+    }
+
+    public void _OnStoryOpened(Story story)
+    {
+        // GD.Print(story.StoryName);
+        ChangeTitle();
+    }
+
+    public void _OnStoryElementOpened(StoryElement storyElement)
+    {
+        // GD.Print(storyElement.Name);
+        ChangeTitle();
     }
 
     public void _OnMetaClicked(string _meta)

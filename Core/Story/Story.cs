@@ -18,19 +18,18 @@ namespace Storier
 
         // Story and Element Informations
         public string StoryBase { get { return StoryDirectory.GetBaseDir(); } } // Story Base Directory
-        public StoryElement CurrentStoryElement { get; set; } // Current Story Element
-
-        // public string DisplayTitle { get; set; } // Current Title | For Displaying Folder in Flow Editor 
+        private StoryElement _CurrentStoryElement { get; set; } // Current Story Element
+        public StoryElement CurrentStoryElement { get { return _CurrentStoryElement; } set{ _CurrentStoryElement = value; EmitSignal("StoryElementOpened", _CurrentStoryElement);  } } // Current Story Element Emitter
+        
+        public string CurrentStoryElementTitle { get { return StoryName + StoryElementId; } } // Current Title | For Displaying in Flow Editor 
 
         // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + StoryElementExtension
         public string StoryElementId { get { return IsInstanceValid(CurrentStoryElement) ? CurrentStoryElement.Id : ""; } } // Id of opened Relative File/Directory without extension [/Flow/Chapter]
         public string StoryElementExtension { get { return IsInstanceValid(CurrentStoryElement) ? CurrentStoryElement.StoryElementExtension : ""; } } // Extension of opened Relative File/Directory [.flow]
         public string StoryElementPath { get { return StoryBase + CurrentStoryElement.Id + CurrentStoryElement.StoryElementExtension; } } // Path of opened File ...[/Flow/Chapter]...
 
-        // private StoryElement _currentStoryElement { get; set; } // Current Story Element
-        // public StoryElement CurrentStoryElement { get { return _currentStoryElement; } set{ _currentStoryElement = value; EmitSignal("StoryElementUpdated", _currentStoryElement);  } } // Current Story Element
-        // [Signal]
-        // public delegate void StoryElementUpdated(StoryElement storyElement);
+        [Signal]
+        public delegate void StoryElementOpened(StoryElement storyElement);
 
         private Story() 
         {

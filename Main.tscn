@@ -42,12 +42,12 @@ split_offset = 400
 [node name="Outlines" parent="View/Docks/ToolPanels" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_bottom = 400.0
+margin_bottom = 480.0
 
 [node name="Details" parent="View/Docks/ToolPanels" instance=ExtResource( 5 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 412.0
+margin_top = 492.0
 margin_bottom = 575.0
 
 [node name="Editors" parent="View/Docks" instance=ExtResource( 3 )]

@@ -2,7 +2,7 @@
 [General Design](#General), [Technical Design](#Technical)
 
 ## General
-[Design](#Design), [Story Design](#Story-Design), [User Interface](#User-Interfaces), 
+[Story Design](#Story-Design), [User Interface](#User-Interfaces)
 
 ### Story Design
 
@@ -37,8 +37,8 @@ Some points(nodes or subflow) in the flow can be marked as keypoints([Plot](http
     - Flows
         - Act
             - Chapter
-                - Quest(~Cinamatic/Gameplay)
-                    - Dialogue
+        - Quest(~Cinamatic/Gameplay)
+            - Dialogue
     - Entities
         - Characters
             - Files
@@ -75,24 +75,25 @@ SnowFlake
 
 ### Views
 Tools
-- Editors : [Editing Files](#Editors)
-- Navigator(Outline) : File Structure/FolderTree
-- Details(Inspector) : Edit
-- Journey: Presentation like Visual Novel
+- Editors: [Editing Files](#Editors)
+- Navigator(Outline): File Structure/FolderTree
+- Details(Inspector): Edit Selected
+- Journey: Play, Presentation like Visual Novel
 - Idea, Notes: Fastly take Notes
 
 ### Editors
-Editors
-- Flow Editor (Graph-Node Editor)
-- Property Editor (Entity Editor)
-- Text Editor (Document Editor)
-- ~Sheet Editor (List/Tile-Data Editor)
-- Journey/Presentation Editor (Slide Editor)
+Editors work based on same data.
+- Flow Editor (Graph-Node Editor) -> Flow
+- Scene Editor (Visual Novel-Slide Editor) -> Flow
+- Text Editor (Document Editor) -> Story Element
+- Property Editor (Entity-File Editor) -> Entity
+- ~Sheet Editor (List/Tile-Data Editor) -> Multiple Story Element, Folders
 
 ### HotKeys
 Be UX focused!
 - CTRL + Arrows: Moving in the flow.
-- (ALT + Arrows), (Mouse Back, Forward): Moving between flows.(Editors)
+- CTRL + SHIFT + Arrows: Jumping in the flow.
+- ALT + Arrows, Mouse Back, Forward: Opening Previous and Next Edited Flows.
 - ~(CTRL + Tab), (CTRL + Shift + Tab): Moving in Nodes Slot.
 
 ### Import/Export
