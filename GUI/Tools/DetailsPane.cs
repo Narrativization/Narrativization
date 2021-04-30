@@ -2,7 +2,7 @@ using Godot;
 using System;
 using Storier;
 
-public class Details : Panel
+public class DetailsPane : Panel
 {
 
 

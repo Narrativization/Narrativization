@@ -2,7 +2,7 @@ using Godot;
 using System;
 using Storier;
 
-public class FlowTitle : RichTextLabel
+public class TitleDisplayer : RichTextLabel
 {
 
     public override void _Ready()

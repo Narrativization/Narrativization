@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://GUI/Managers/Details.cs" type="Script" id=1]
+[ext_resource path="res://GUI/Tools/DetailsPane.cs" type="Script" id=1]
 
-[node name="Details" type="Panel"]
+[node name="DetailsPane" type="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_pivot_offset = Vector2( -523.116, -58.9191 )

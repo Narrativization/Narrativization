@@ -3,7 +3,7 @@
 [ext_resource path="res://GUI/Tools/Navigator.cs" type="Script" id=1]
 [ext_resource path="res://GUI/Tools/OutlineMenu.cs" type="Script" id=2]
 
-[node name="Outlines" type="Panel"]
+[node name="OutlinesPane" type="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_min_size = Vector2( 0, 80 )
@@ -29,6 +29,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+refreshNodePath = NodePath("../../../Outlines/MenuBar/OutlineMenu/Refresh")
 
 [node name="Refresh" type="Button" parent="MenuBar/OutlineMenu"]
 margin_right = 60.0
