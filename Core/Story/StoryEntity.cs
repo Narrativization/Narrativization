@@ -3,34 +3,32 @@ using System;
 using Godot.Collections;
 // using GCollection = Godot.Collections; // ~Maybe?
 
-namespace Storier
-{
-    // Entity Defination
-    public class StoryEntity : StoryElement
-    {
-        protected StoryEntity() {} 
-        // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + StoryElementExtension
-        public StoryEntity(string path) : base(path)
-        {
-            StoryElementType = StoryElementTypes.Entity;
-            StoryElementExtension = ".entity";
-        }
-        public StoryEntity(string name, string description, string path) : base(name, description, path)
-        {
-            StoryElementType = StoryElementTypes.Entity;
-            StoryElementExtension = ".entity";
-        }
 
-        public override bool Reload()
-        {
-            // if (FileManager.LoadFile(ResourcePath + ResourceName + ".entity") == "")
-            // {
-            //     GD.Print(ResourcePath + ResourceName + ".entity" + " load failed!");
-            //     return; 
-            // }
-            // base.Reload();
-            return false;
-        }
+// Entity Defination
+public class StoryEntity : StoryElement
+{
+    protected StoryEntity() {} 
+    // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + StoryElementExtension
+    public StoryEntity(string path) : base(path)
+    {
+        StoryElementType = StoryElementTypes.Entity;
+        StoryElementExtension = ".entity";
+    }
+    public StoryEntity(string name, string description, string path) : base(name, description, path)
+    {
+        StoryElementType = StoryElementTypes.Entity;
+        StoryElementExtension = ".entity";
+    }
+
+    public override bool Reload()
+    {
+        // if (FileManager.LoadFile(ResourcePath + ResourceName + ".entity") == "")
+        // {
+        //     GD.Print(ResourcePath + ResourceName + ".entity" + " load failed!");
+        //     return; 
+        // }
+        // base.Reload();
+        return false;
     }
 }
 

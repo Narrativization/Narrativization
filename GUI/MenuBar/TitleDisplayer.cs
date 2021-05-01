@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using Storier;
 
 public class TitleDisplayer : RichTextLabel
 {

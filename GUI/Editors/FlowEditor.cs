@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using Godot.Collections;
-using Storier;
 
 public class FlowEditor : GraphNodeEditor
 {

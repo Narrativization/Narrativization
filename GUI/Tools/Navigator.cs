@@ -2,7 +2,6 @@ using Godot;
 using System;
 using System.Collections;
 using Godot.Collections;
-using Storier;
 
 public class Navigator : Tree
 {
