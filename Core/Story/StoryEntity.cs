@@ -15,6 +15,11 @@ namespace Storier
             StoryElementType = StoryElementTypes.Entity;
             StoryElementExtension = ".entity";
         }
+        public StoryEntity(string name, string description, string path) : base(name, description, path)
+        {
+            StoryElementType = StoryElementTypes.Entity;
+            StoryElementExtension = ".entity";
+        }
 
         public override bool Reload()
         {

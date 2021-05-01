@@ -3,6 +3,7 @@
 [ext_resource path="res://GUI/Modals/CreateStoryModal.cs" type="Script" id=1]
 
 [node name="CreateStoryModal" type="ConfirmationDialog"]
+visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -11,6 +12,7 @@ margin_left = -183.0
 margin_top = -140.0
 margin_right = 183.0
 margin_bottom = 140.0
+rect_min_size = Vector2( 150, 52.5 )
 window_title = "Create Story"
 script = ExtResource( 1 )
 __meta__ = {

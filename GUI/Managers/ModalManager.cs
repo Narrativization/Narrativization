@@ -8,40 +8,40 @@ public class ModalManager : Control
     [Export]
     private NodePath overlayNodePath = new NodePath("./BackgroundOverlay");
     [Export]
-    private NodePath createDialogNodePath = new NodePath("./CreateDialog");
+    private NodePath createDialogNodePath = new NodePath("./CreateStoryDialog");
     [Export]
     private NodePath fileDialogNodePath = new NodePath("./FileDialog");
     [Export]
-    private NodePath detailsDialogNodePath = new NodePath("./DetailsDialogue");
+    private NodePath CreatorModalNodePath = new NodePath("./CreatorModal");
     [Export]
     private NodePath settingsModalNodePath = new NodePath("./SettingsModal");
 
-    private static ModalManager _modals = null;  
-    public static ModalManager modals  
+    private static ModalManager _Modals = null;  
+    public static ModalManager Modals  
     {  
         get  
         {  
-            if (_modals == null)  
+            if (_Modals == null)  
             {  
                 GD.PushWarning("Modals wasn't found on scenes!");
             }  
-            return _modals;  
+            return _Modals;  
         }  
     }  
 
     public Panel overlay;
-    public CreateStoryModal createDialog;
+    public CreateStoryModal createStoryDialogue;
     public FileDialog fileDialog;
-    public DetailsModal detailsDialog;
+    public CreatorModal creatorModal;
     public AcceptDialog settingsModal;
     
     public override void _Ready()
     {
-        _modals = this;
+        _Modals = this;
         overlay = GetNode<Panel>(overlayNodePath);
-        createDialog = GetNode<CreateStoryModal>(createDialogNodePath);
+        createStoryDialogue = GetNode<CreateStoryModal>(createDialogNodePath);
         fileDialog = GetNode<FileDialog>(fileDialogNodePath);
-        detailsDialog = GetNode<DetailsModal>(detailsDialogNodePath);
+        creatorModal = GetNode<CreatorModal>(CreatorModalNodePath);
         settingsModal = GetNode<AcceptDialog>(settingsModalNodePath);
     }
 
@@ -61,14 +61,14 @@ public class ModalManager : Control
     public void ShowCreateModal()
     {
         overlay.Hide();
-        createDialog.ShowModal();
+        createStoryDialogue.ShowModal();
     }
     
-    public void ShowDetailsModal()
+    public void ShowCreatorModal(string creation)
     {
         overlay.Hide();
-        detailsDialog.ShowModal();
-        detailsDialog.InitModal();
+        creatorModal.InitModal(creation);
+        creatorModal.ShowModal();
     }
 
     public void ShowLoadModal()
@@ -108,9 +108,9 @@ public class ModalManager : Control
     public void _OnCreateDialogConfirmed()
     {
         GD.Print("Create Story");
-        createDialog.ValidateInfos();
-        StoryManager.CreateStory(createDialog.storyName.Text, createDialog.descriptionName.Text, createDialog.GetDir());
-        createDialog.ClearDialogue();
+        createStoryDialogue.ValidateInfos();
+        StoryManager.CreateStory(createStoryDialogue.storyName.Text, createStoryDialogue.descriptionName.Text, createStoryDialogue.GetDir());
+        createStoryDialogue.ClearDialogue();
     }
 
     

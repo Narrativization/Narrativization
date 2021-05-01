@@ -25,6 +25,8 @@ namespace Storier
         public delegate void StoryOpened(Story story);
         [Signal]
         public delegate void StoryElementOpened(StoryElement storyElement);
+        [Signal]
+        public delegate void StoryFragmentSelected(StoryFlowNode storyFlowNode);
 
         private StoryManager()
         {
@@ -59,6 +61,7 @@ namespace Storier
                 CurrentStory.StoryDirectory + CurrentStory.StoryName + ".storier", 
                 JSON.Print(storierData, "\t"));
             if (isSuccess) { PushRecentStory(); } 
+            if (IsInstanceValid(CurrentStory) && IsInstanceValid(CurrentStory.CurrentStoryElement)) { CurrentStory.CurrentStoryElement.Save(); }
             return isSuccess;
         }
 
@@ -165,6 +168,15 @@ namespace Storier
         private void _OnStoryElementOpened(StoryElement storyElement)
         {
             _StoryManager.EmitSignal("StoryElementOpened", storyElement);
+        }
+
+        // Story Element Handler/Listener
+        private void _OnNodeSelected(Node node)
+        {
+            if (node is StoryFlowNode storyFlowNode)
+            {
+                _StoryManager.EmitSignal("StoryFragmentSelected", storyFlowNode);
+            }
         }
     }
 }

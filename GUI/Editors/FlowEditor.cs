@@ -7,7 +7,7 @@ public class FlowEditor : GraphNodeEditor
 {
     // Exports
     [Export]
-    private NodePath flowContextMenuPath = new NodePath("./FlowContext");
+    private PackedScene flowContextMenuScene = GD.Load<PackedScene>("res://GUI/Contexts/FlowContextMenu.tscn");
     [Export]
     private PackedScene storyNode = GD.Load<PackedScene>("res://GUI/Nodes/StoryNode.tscn");
     [Export]
@@ -17,11 +17,10 @@ public class FlowEditor : GraphNodeEditor
     private FlowContextMenu contextMenu;
 
     public override void _Ready()
-    {        
-        base._Ready(); 
-        
+    {                
         // AddToGroup("FlowEditor");
-        contextMenu = GetNode<FlowContextMenu>("./FlowContext");
+        contextMenu = flowContextMenuScene.Instance<FlowContextMenu>();
+        AddChild(contextMenu);
 
         string recentStory = StoryManager.PopRecentStory();
         Directory dir = new Directory(); 
@@ -29,6 +28,9 @@ public class FlowEditor : GraphNodeEditor
         {
             AddChild(storyNode.Instance());
         }
+
+        Connect("node_selected", StoryManager.Self, "_OnNodeSelected");
+        base._Ready(); 
     }
 
 
@@ -40,17 +42,23 @@ public class FlowEditor : GraphNodeEditor
     public override void _GuiInput(InputEvent inputEvent)
     {
         // Flow Editor Inputs
-        if (inputEvent.IsActionPressed("Context"))
+        if (IsInstanceValid(StoryManager.CurrentStory) && // if story exist, show context menu 
+            inputEvent.IsActionPressed("Context"))
         {
             InputEventMouse mouse = inputEvent as InputEventMouse;
             contextMenu.SetPosition(mouse.GlobalPosition);
             contextMenu.ShowModal();
         }
-        else if (inputEvent.IsActionPressed("New"))
+        else if (IsInstanceValid(StoryManager.CurrentStory) && // if story exist, show context menu 
+            inputEvent.IsActionPressed("New"))
         {
             contextMenu.SetPosition(GetGlobalMousePosition());
             contextMenu.ShowModal();
             contextMenu.GrabFocus();
+        }
+        else if (inputEvent.IsActionPressed("Context") || inputEvent.IsActionPressed("New")) // No Story
+        {
+            ModalManager.Modals.ShowCreateModal();
         }
 
         if (inputEvent.IsActionPressed("Delete"))

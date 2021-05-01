@@ -155,7 +155,7 @@ public class Navigator : Tree
                 TreeItem treeItem = GetItemAtPosition(mouseEvent.Position);
                 string path = PathFromTree(treeItem);
                 GD.Print("Double Click: " + treeItem.GetText(0) + " -> \"" + path + "\"");
-                StoryManager.CurrentStory.CurrentStoryElement = StoryFlow.Load(StoryManager.CurrentStory.StoryBase + path);
+                StoryManager.CurrentStory.CurrentStoryElement = StoryElement.Load(StoryManager.CurrentStory.StoryBase + path);
                 GetTree().CallGroup("Editors", "EditStoryElement", StoryManager.CurrentStory.CurrentStoryElement);
             }
         }

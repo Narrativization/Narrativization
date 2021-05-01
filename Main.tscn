@@ -56,5 +56,4 @@ anchor_bottom = 0.0
 margin_right = 1024.0
 margin_bottom = 575.0
 
-[node name="ModalWindows" parent="." instance=ExtResource( 2 )]
-mouse_filter = 2
+[node name="ModalManager" parent="." instance=ExtResource( 2 )]

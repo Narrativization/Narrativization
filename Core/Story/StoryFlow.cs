@@ -17,6 +17,11 @@ namespace Storier
             StoryElementType = StoryElementTypes.Flow;
             StoryElementExtension = ".flow";
         }
+        public StoryFlow(string name, string description, string path) : base(name, description, path)
+        {
+            StoryElementType = StoryElementTypes.Flow;
+            StoryElementExtension = ".flow";
+        }
 
         public override bool Save()
         {

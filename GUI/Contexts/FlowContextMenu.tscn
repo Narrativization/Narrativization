@@ -6,7 +6,7 @@
 margin_right = 60.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 60, 80 )
-items = [ "Create Story", null, 0, false, false, 0, 0, null, "", false, "Create Entity", null, 0, false, false, 1, 0, null, "", false, "Create Flow", null, 0, false, false, 2, 0, null, "", false ]
+items = [ "Create Fragment", null, 0, false, false, 0, 0, null, "", false, "Create Character", null, 0, false, false, 1, 0, null, "", false, "Create Location", null, 0, false, false, 2, 0, null, "", false, "Create Flow", null, 0, false, false, 3, 0, null, "", false, "Create Entity", null, 0, false, false, 4, 0, null, "", false ]
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
