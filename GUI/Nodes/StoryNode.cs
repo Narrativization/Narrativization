@@ -14,7 +14,7 @@ public class StoryNode : GraphNode
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        recentStory = StoryManager.PopRecentStory();
+        recentStory = StorierManager.ReadRecentStory();
         Directory dir = new Directory(); 
         if (dir.FileExists(recentStory))
         {

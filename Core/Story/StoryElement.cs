@@ -16,23 +16,9 @@ public class StoryElement : Resource
     
     // Story Element Informations
     public StoryElementType StoryElementType { get; set; } = StoryElementType.Asset; 
-    public string StoryElementPath { get{ return ResourcePath; } set{ TakeOverPath(value); } } 
+    public string StoryElementPath { get{ return ResourcePath; } set{ TakeOverPath(value); } } // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + "." + StoryElementExtension[flow]
     public string StoryElementExtension { get { return StoryElementPath.Extension(); } } // Example ext: "ext" 
-    // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + "." + StoryElementExtension[flow]
-
-    public static StoryElement _CurrentStoryElement { get; set; } 
-    public static StoryElement CurrentStoryElement 
-    { 
-        get 
-        {
-            return _CurrentStoryElement;
-        } 
-        set
-        {
-            _CurrentStoryElement = value;
-        }
-    }
-
+    
     // public string Template { get { return StoryElementData["Template"]; } set { StoryElementData["Template"] = value; } }  // Template reference
     // public Dictionary<string, object> TemplateData { get; set; } = new Dictionary<string, object>();
 

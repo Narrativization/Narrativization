@@ -14,12 +14,9 @@ public class Story : Node
     public string StoryDescription { get { return StoryData["Description"]; } set { StoryData["Description"] = value; } } // Current Story Description
 
     // Story Informations
+    public string StoryPath { get { return StoryDirectory + StoryName + ".storier"; } } // Current Story Path
     public string StoryDirectory { get; set; } // Current Story Directory
     public string StoryBase { get { return StoryDirectory.GetBaseDir(); } } // Story Base Directory
-
-    // Title Displayer
-    private string _TitleDisplayerId { get; set; } // Id of Selected Outline 
-    public string TitleDisplayerId { get { return _TitleDisplayerId; } set { _TitleDisplayerId = StoryName + value; EmitSignal("TitleIdChanged", _TitleDisplayerId); } }  // Id of Selected Outline 
 
     // Story Element Informations
     private StoryElement _CurrentStoryElement { get; set; } // Current Story Element
@@ -35,9 +32,6 @@ public class Story : Node
     [Signal]
     public delegate void StoryElementOpened(StoryElement storyElement);
 
-    [Signal]
-    public delegate void TitleIdChanged(string titleId);
-
     private Story() 
     {
         StoryName = "Untitled Story";
@@ -49,6 +43,7 @@ public class Story : Node
         StoryName = name;
         StoryDescription = description;
         StoryDirectory = directory;
+        ValidateHierarchy(directory);
     }        
     public Story(string name, string description, string directory, string author, string copyright) 
     {
@@ -57,6 +52,7 @@ public class Story : Node
         StoryDirectory = directory;
         StoryData.Add("Author", author);
         StoryData.Add("Copyright", copyright);
+        ValidateHierarchy(directory);
     }
 
     public override void _Ready()
@@ -69,30 +65,13 @@ public class Story : Node
 //      
 //  }
 
-    public override void _Input(InputEvent inputEvent)
+    // Validate Story Directory
+    private void ValidateHierarchy(string directory)
     {
-        if (inputEvent.IsActionPressed("Help"))
-        {
-            GD.Print("Help");
-            // StoryEntity se = new StoryEntity(StoryBase + "/Entities/Characters/F1.entity");
-            // se.Save();
-            // GD.Print(StoryEntity.Load(StoryBase + "/Entities/Characters/F1.entity"));
-        }
-        else if (inputEvent.IsActionPressed("Fullscreen"))
-        {
-            GD.Print("Fullscreen");
-            OS.WindowFullscreen = !OS.WindowFullscreen;
-        }
-        if (inputEvent.IsActionPressed("Save"))
-        {
-            GD.Print("Save");
-            if (IsInstanceValid(CurrentStoryElement))
-            {
-                Editors editors = GetTree().GetNodesInGroup("Editors")[0] as Editors;
-                CurrentStoryElement.StoryElementData["Flows"] = JSON.Print(editors.flowEditor.SaveData(), "\t");
-                CurrentStoryElement.Save();
-            }
-        }
+        if (!(new Directory()).DirExists(directory)) 
+        { 
+            CreateHierarchy(); 
+        } 
     }
     
     // Create Folder/File Structure of project
@@ -107,7 +86,7 @@ public class Story : Node
             StoryBase + "/Entities/Locations/",
             // StoryBase + "/Entities/Items/",
             StoryBase + "/Assets/",
-            // StoryBase + "/Journeys/"
+            // StoryBase + "/Journeys/",
             // StoryBase + "/Templates/",
             // StoryBase + "/References/"
         };
@@ -144,22 +123,4 @@ Story Elements(Hierarchy) - File/Folder Structure
     - Journeys() -> config
     - Templates(.template) -> config, json, ~xml, tscn
     - References(.reference) -> config
-*/
-
-/*
-    Create a project file structure | .storier
-    {
-        Story: {
-            Name: "Storier",  // Title
-            Description: "Story Managing Software for Game Creators.",
-            Author: "Atakan Ateş",
-            Copyright: "Copyright © Atakan Ateş, All Rights Reserved!"
-        },
-        Storier: {
-            Version: "v<Major>.<Minor>"
-            // 
-        }
-    }
-    Additional Story Informations
-    + Directory
 */

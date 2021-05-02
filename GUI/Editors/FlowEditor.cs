@@ -21,14 +21,14 @@ public class FlowEditor : GraphNodeEditor
         contextMenu = flowContextMenuScene.Instance<FlowContextMenu>();
         AddChild(contextMenu);
 
-        string recentStory = StoryManager.PopRecentStory();
+        string recentStory = StorierManager.ReadRecentStory();
         Directory dir = new Directory(); 
         if (dir.FileExists(recentStory))
         {
             AddChild(storyNode.Instance());
         }
 
-        Connect("node_selected", StoryManager.Self, "_OnNodeSelected");
+        Connect("node_selected", this, "_OnNodeSelected");
         base._Ready(); 
     }
 
@@ -124,5 +124,11 @@ public class FlowEditor : GraphNodeEditor
     public void LoadData(Dictionary<string, string> loadData)
     {
         
+    }
+
+    public void _OnNodeSelected(Node node)
+    {
+        // StoryManager.Fragment
+        GD.Print(node.Name);
     }
 }

@@ -17,8 +17,8 @@ public class PreferencesList : ItemList
 
         workspaceDir = GetNode<LineEdit>(workspaceDirectory);
         userSettingsDir = GetNode<LineEdit>(userSettingsDirectory);
-        if (IsInstanceValid(workspaceDir)) { workspaceDir.Text = StoryManager.workspace; }
-        if (IsInstanceValid(userSettingsDir)) { workspaceDir.Text = StoryManager.workspace; }
+        if (IsInstanceValid(workspaceDir)) { workspaceDir.Text = StorierManager.workspace; }
+        if (IsInstanceValid(userSettingsDir)) { workspaceDir.Text = StorierManager.workspace; }
     }
 
 //  public override void _Process(float delta)
@@ -38,7 +38,7 @@ public class PreferencesList : ItemList
         }
     }
 
-    public void _OnOpenWorkspacePressed() { OS.ShellOpen(StoryManager.workspace); }
+    public void _OnOpenWorkspacePressed() { OS.ShellOpen(StorierManager.workspace); }
     public void _OnOpenUserSettingsPressed() { OS.ShellOpen(OS.GetUserDataDir()); }
 
 }

@@ -7,8 +7,7 @@ public class TitleDisplayer : RichTextLabel
     public override void _Ready()
     {
         Connect("meta_clicked", this, "_OnMetaClicked");
-        StoryManager.Self.Connect("StoryOpened", this, "_OnStoryOpened");
-        StoryManager.Self.Connect("StoryElementOpened", this, "_OnStoryElementOpened");
+        StoryManager.CurrentStoryManager.Connect("TitleIdChanged", this, "_OnTitleIdChanged");
     }
 
     // public override void _Process(float delta)
@@ -39,6 +38,11 @@ public class TitleDisplayer : RichTextLabel
         }
         cFlow += "[/center]";
         BbcodeText = cFlow;
+    }
+
+    public void _OnTitleIdChanged(string titleId)
+    {
+        ChangeTitle();
     }
 
     public void _OnStoryOpened(Story story)

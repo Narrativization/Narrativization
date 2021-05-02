@@ -25,14 +25,15 @@ public class Navigator : Tree
 
     public override void _Ready()
     {
+        // Navigator Group
+        AddToGroup("Navigator");
+        
         // Resize icons 16x16
         foreach (var iRes in iconResources)
         {
             ImageTexture imgTex = FileManager.ResizeImage(ResourceLoader.Load<Texture>(iRes.Value), 16, 16); 
             icons.Add(iRes.Key, (Texture)imgTex);
         }
-        // Navigator Group
-        AddToGroup("Navigator");
     }
 
 //  public override void _Process(float delta)
@@ -154,8 +155,8 @@ public class Navigator : Tree
                 TreeItem treeItem = GetItemAtPosition(mouseEvent.Position);
                 string path = PathFromTree(treeItem);
                 GD.Print("Double Click: " + treeItem.GetText(0) + " -> \"" + path + "\"");
-                StoryManager.CurrentStory.CurrentStoryElement = StoryElement.Load(StoryManager.CurrentStory.StoryBase + path);
-                GetTree().CallGroup("Editors", "EditStoryElement", StoryManager.CurrentStory.CurrentStoryElement);
+                // StoryManager.CurrentStory.CurrentStoryElement = StoryElement.Load(StoryManager.CurrentStory.StoryBase + path);
+                // GetTree().CallGroup("Editors", "EditStoryElement", StoryManager.CurrentStory.CurrentStoryElement);
             }
         }
     }

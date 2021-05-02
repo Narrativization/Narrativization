@@ -8,9 +8,9 @@ public class DetailsPane : Panel
 
     public override void _Ready()
     {
-        StoryManager.Self.Connect("StoryOpened", this, "_OnStoryOpened");
-        StoryManager.Self.Connect("StoryElementOpened", this, "_OnStoryElementOpened");
-        StoryManager.Self.Connect("StoryFragmentSelected", this, "_OnStoryFragmentSelected");
+        StoryManager.CurrentStoryManager.Connect("StoryChanged", this, "_OnStoryChanged");
+        StoryManager.CurrentStoryManager.Connect("StoryElementChanged", this, "_OnStoryElementChanged");
+        // StoryManager.CurrentStoryManager.Connect("StoryFragmentSelected", this, "_OnStoryFragmentSelected");
     }
 
     public override void _Process(float delta)
@@ -21,13 +21,13 @@ public class DetailsPane : Panel
         // }
     }
 
-    public void _OnStoryOpened(Story story)
+    public void _OnStoryChanged(Story story)
     {
         if (!IsInstanceValid(story)) { return; }
         GetNode<RichTextLabel>("DetailsText").Text = story.StoryName;
     }
 
-    public void _OnStoryElementOpened(StoryElement storyElement)
+    public void _OnStoryElementChanged(StoryElement storyElement)
     {
         if (!IsInstanceValid(storyElement)) { return; }
         GetNode<RichTextLabel>("DetailsText").Text = storyElement.StoryElementName;

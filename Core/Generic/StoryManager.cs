@@ -3,32 +3,111 @@ using System;
 using System.Collections;
 using Godot.Collections;
 
-// Managing Settings and recents of Stories | Singleton(AutoLoaded)
+// Managing Story, StoryElement, TitleId | Singleton(AutoLoaded)
 public class StoryManager : Node    
 {
-    // Singleton
-    private static StoryManager _StoryManager;
-    public static StoryManager Self { get { return _StoryManager; } }
-    public static Story CurrentStory { get; set; }
-
-    public static string workspace = OS.GetSystemDir(OS.SystemDir.Documents) + "/Storier/";
-    public static string userDataDirectory = OS.GetUserDataDir(); // "user://"
-    // Custom Story Data
-    public static Dictionary<string, string> StorierData { get; set; } = new Dictionary<string, string>()
+    // Story Manager
+    private static StoryManager _StoryManager { get; set; } // Story Manager Singleton
+    public static StoryManager CurrentStoryManager 
     {
-        {"Version", "v0.2"}
-    }; 
+        get { return _StoryManager; } 
+    } 
+
+    // Story
+    private static Story _Story { get; set; } // Currently Edited Story 
+    public static Story CurrentStory 
+    {
+        get { return _Story; } 
+        set 
+        {
+            _Story = value; 
+            _StoryManager.EmitSignal("StoryChanged", _Story); 
+            CurrentTitleId = "";
+        }
+    } 
+
+    // Story Element
+    private static StoryElement _StoryElement { get; set; } // Currently Edited Story Element
+    public static StoryElement CurrentStoryElement 
+    {
+        get { return _StoryElement; } 
+        set 
+        {
+            _StoryElement = value; 
+            _StoryManager.EmitSignal("StoryElementChanged", _StoryElement); 
+            CurrentTitleId = IsInstanceValid(_StoryElement) ? _StoryElement.StoryElementId : "";
+        }
+    } 
+
+    // Title Displayer
+    private static string _TitleId { get; set; } // Current Id of Selected/Editing Outline 
+    public static string CurrentTitleId 
+    { 
+        get { return _TitleId; } 
+        set 
+        { 
+            _TitleId = CurrentStory.StoryName + value; 
+            _StoryManager.EmitSignal("TitleIdChanged", _TitleId); 
+        } 
+    }
+
+    // // Story Fragment
+    // private static StoryElement _StoryFragment { get; set; } // Currently Edited Story Element
+    // public static StoryElement CurrentStoryFragment 
+    // {
+    //     get { return _StoryFragment; } 
+    //     set 
+    //     {
+    //         _StoryFragment = value; 
+    //         _StoryManager.EmitSignal("FragmentChanged", _StoryFragment); 
+    //     }
+    // } 
 
     [Signal]
-    public delegate void StoryOpened(Story story);
+    public delegate void StoryChanged(Story story);
     [Signal]
-    public delegate void StoryElementOpened(StoryElement storyElement);
+    public delegate void StoryElementChanged(StoryElement storyElement);
     [Signal]
-    public delegate void StoryFragmentSelected(StoryFlowNode storyFlowNode);
+    public delegate void TitleIdChanged(string titleId);
+    // [Signal]
+    // public delegate void FragmentChanged(string titleId);
 
     private StoryManager()
     {
         _StoryManager = this;
+    }
+    
+    public override void _Ready()
+    {
+
+    }
+
+//  public override void _Process(float delta)
+//  {
+//      
+//  }
+
+    public override void _Input(InputEvent inputEvent)
+    {
+        if (inputEvent.IsActionPressed("Save"))
+        {
+            GD.Print("Save");
+            if (IsInstanceValid(CurrentStory))
+            {
+                SaveStory();
+            }
+            if (IsInstanceValid(CurrentStoryElement))
+            {
+                CurrentStoryElement.Save();
+            }
+
+            // if (IsInstanceValid(CurrentStoryElement))
+            // {
+            //     Editors editors = GetTree().GetNodesInGroup("Editors")[0] as Editors;
+            //     CurrentStoryElement.StoryElementData["Flows"] = JSON.Print(editors.flowEditor.SaveData(), "\t");
+            //     CurrentStoryElement.Save();
+            // }
+        }
     }
 
     // Create Story
@@ -36,30 +115,22 @@ public class StoryManager : Node
     {
         CloseAllStories(); // Single Story Workflow
         CurrentStory = new Story(name, description, directory);
-        _StoryManager.AddChild(CurrentStory);
-        if (!(new Directory()).DirExists(directory)) { CurrentStory.CreateHierarchy(); } 
+        CurrentStoryManager.AddChild(CurrentStory);
         SaveStory();
-        _StoryManager.EmitSignal("StoryOpened", CurrentStory);
-        CurrentStory.Connect("StoryElementOpened", _StoryManager, "_OnStoryElementOpened");
+        CurrentStoryManager.EmitSignal("StoryChanged", CurrentStory);
         return CurrentStory;
     }
 
-    // Save Story
+    // Save Story (Only Story[.storier] File)
     public static bool SaveStory()
     {
-        Dictionary storierData = new Dictionary() {
-            {
-                "Story", CurrentStory.StoryData
-            },
-            {
-                "Storier", StorierData
-            }
+        Dictionary storierData = new Dictionary() 
+        {
+            { "Story", CurrentStory.StoryData },
+            { "Storier", StorierManager.StorierData }
         };
-        bool isSuccess = FileManager.SaveFile(
-            CurrentStory.StoryDirectory + CurrentStory.StoryName + ".storier", 
-            JSON.Print(storierData, "\t"));
-        if (isSuccess) { PushRecentStory(); } 
-        if (IsInstanceValid(CurrentStory) && IsInstanceValid(CurrentStory.CurrentStoryElement)) { CurrentStory.CurrentStoryElement.Save(); }
+        bool isSuccess = FileManager.SaveFile(CurrentStory.StoryPath, JSON.Print(storierData, "\t"));
+        if (isSuccess) { StorierManager.WriteRecentStory(); } 
         return isSuccess;
     }
 
@@ -89,9 +160,9 @@ public class StoryManager : Node
                 Dictionary storierDic = storyJson["Storier"] as Dictionary; 
                 Dictionary<string, string> storierInfos = new Dictionary<string, string>(storierDic);
                 string sVersion = storierInfos["Version"] as string; 
-                if (sVersion != StorierData["Version"]) { GD.Print(sVersion + " != " + StorierData["Version"] + "[Current] Storier Version!"); }
+                if (sVersion != StorierManager.StorierData["Version"]) { GD.Print(sVersion + " != " + StorierManager.StorierData["Version"] + "[Current] Storier Version!"); }
                 else { GD.Print("Same Storier Version!"); }
-                StorierData = storierInfos;
+                StorierManager.StorierData = storierInfos;
             }
         }
         return true;
@@ -104,87 +175,25 @@ public class StoryManager : Node
         {
             if (_stories[i] is Story s)
             {
-                s.Disconnect("StoryElementOpened", _StoryManager, "_OnStoryElementOpened");
                 s.Free();
             }
-        }
-    }
-
-    // Record Recently Story
-    public static void PushRecentStory()
-    {
-        string configFileName = userDataDirectory + "UserStories.ini";
-        ConfigFile configFile = new ConfigFile();
-        Directory dir = new Directory();
-        dir.MakeDirRecursive(configFileName.GetBaseDir());
-        configFile.SetValue("Stories", "RecentStory", CurrentStory.StoryDirectory + CurrentStory.StoryName + ".storier");
-        Error err = configFile.Save(configFileName);
-        if (err != Error.Ok) { GD.Print(err); }
-    }
-    
-    // Picking Recently Story
-    public static string PopRecentStory()
-    {
-        string configFileName = userDataDirectory + "UserStories.ini";
-        ConfigFile configFile = new ConfigFile();
-        Error err = configFile.Load(configFileName);
-        if (err != Error.Ok) { GD.Print(err); return ""; }
-        return configFile.GetValue("Stories", "RecentStory").ToString(); // RecentStory
-    }
-    
-    // // Return All Recently Story as String
-    // public static Array<string> PeekRecentStory()
-    // {
-    //     return new Array<string>();
-    // }
-
-    // !WARNING: Change Workspace isn't in use!
-
-    // Save Config file use as UserStories settings
-    public static void SaveUserConfig(string fileName = "UserStories")
-    {
-        string configFileName = userDataDirectory + fileName + ".ini";
-        ConfigFile configFile = new ConfigFile();
-        Directory dir = new Directory();
-        dir.MakeDirRecursive(configFileName.GetBaseDir());
-        configFile.SetValue("Workspace", "Directory", workspace);
-        Error err = configFile.Save(configFileName);
-        if (err != Error.Ok) { GD.Print(err); }
-    }
-
-    // Load Config file
-    public static void LoadUserConfig(string fileName = "UserStories")
-    {
-        string configFileName = userDataDirectory + fileName + ".ini";
-        ConfigFile configFile = new ConfigFile();
-        Error err = configFile.Load(configFileName);
-        if (err != Error.Ok) { GD.Print(err); }
-        workspace = configFile.GetValue("Workspace", "Directory").ToString(); // Workscape
-    }
-
-    // Story Element Handler/Listener
-    private void _OnStoryElementOpened(StoryElement storyElement)
-    {
-        _StoryManager.EmitSignal("StoryElementOpened", storyElement);
-    }
-
-    // Story Element Handler/Listener
-    private void _OnNodeSelected(Node node)
-    {
-        if (node is StoryFlowNode storyFlowNode)
-        {
-            _StoryManager.EmitSignal("StoryFragmentSelected", storyFlowNode);
         }
     }
 }
 
 /*
-    UserStories.ini
-
-    [Workspace]
-    Directory "" ; Empty is Documents
-
-    [Stories]
-    RecentStory Directory
-
+    Create a project file structure | .storier
+    {
+        Story: {
+            Name: "Storier",  // Title
+            Description: "Story Managing Software for Game Creators.",
+            Author: "Atakan Ateş",
+            Copyright: "Copyright © Atakan Ateş, All Rights Reserved!"
+            ...
+        },
+        Storier: {
+            ...
+            Version: "v<Major>.<Minor>"
+        }
+    }
 */
