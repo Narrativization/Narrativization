@@ -12,22 +12,31 @@ public class Story : Node
     // Story Data
     public string StoryName { get { return StoryData["Name"]; } set { Name = StoryData["Name"] = value; } } // Current Story Name
     public string StoryDescription { get { return StoryData["Description"]; } set { StoryData["Description"] = value; } } // Current Story Description
-    public string StoryDirectory { get; set; } // Current Story Directory | isn't stored in ".storier"
 
-    // Story and Element Informations
+    // Story Informations
+    public string StoryDirectory { get; set; } // Current Story Directory
     public string StoryBase { get { return StoryDirectory.GetBaseDir(); } } // Story Base Directory
+
+    // Title Displayer
+    private string _TitleDisplayerId { get; set; } // Id of Selected Outline 
+    public string TitleDisplayerId { get { return _TitleDisplayerId; } set { _TitleDisplayerId = StoryName + value; EmitSignal("TitleIdChanged", _TitleDisplayerId); } }  // Id of Selected Outline 
+
+    // Story Element Informations
     private StoryElement _CurrentStoryElement { get; set; } // Current Story Element
     public StoryElement CurrentStoryElement { get { return _CurrentStoryElement; } set{ _CurrentStoryElement = value; EmitSignal("StoryElementOpened", _CurrentStoryElement);  } } // Current Story Element Emitter
     
     public string CurrentStoryElementTitle { get { return StoryName + StoryElementId; } } // Current Title | For Displaying in Flow Editor 
 
-    // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + StoryElementExtension
-    public string StoryElementId { get { return IsInstanceValid(CurrentStoryElement) ? CurrentStoryElement.Id : ""; } } // Id of opened Relative File/Directory without extension [/Flow/Chapter]
+    // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + "." + StoryElementExtension[flow]
+    public string StoryElementId { get { return IsInstanceValid(CurrentStoryElement) ? CurrentStoryElement.StoryElementId : ""; } } // Id of opened Relative File/Directory without extension [/Flow/Chapter]
     public string StoryElementExtension { get { return IsInstanceValid(CurrentStoryElement) ? CurrentStoryElement.StoryElementExtension : ""; } } // Extension of opened Relative File/Directory [.flow]
-    public string StoryElementPath { get { return StoryBase + CurrentStoryElement.Id + CurrentStoryElement.StoryElementExtension; } } // Path of opened File ...[/Flow/Chapter]...
+    public string StoryElementPath { get { return StoryBase + CurrentStoryElement.StoryElementId + CurrentStoryElement.StoryElementExtension; } } // Path of opened File ...[/Flow/Chapter]...
 
     [Signal]
     public delegate void StoryElementOpened(StoryElement storyElement);
+
+    [Signal]
+    public delegate void TitleIdChanged(string titleId);
 
     private Story() 
     {
@@ -101,7 +110,7 @@ public class Story : Node
             // StoryBase + "/Journeys/"
             // StoryBase + "/Templates/",
             // StoryBase + "/References/"
-        }; // Preferences
+        };
         Directory dir = new Directory();
         for (int i = 0; i < defaultDirs.Count; i++)
         {

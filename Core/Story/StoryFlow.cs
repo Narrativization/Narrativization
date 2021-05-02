@@ -12,13 +12,11 @@ public class StoryFlow : StoryElement
     // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + StoryElementExtension
     public StoryFlow(string path) : base(path)
     {
-        StoryElementType = StoryElementTypes.Flow;
-        StoryElementExtension = ".flow";
+        StoryElementType = StoryElementType.Flow;
     }
     public StoryFlow(string name, string description, string path) : base(name, description, path)
     {
-        StoryElementType = StoryElementTypes.Flow;
-        StoryElementExtension = ".flow";
+        StoryElementType = StoryElementType.Flow;
     }
 
     public override bool Save()

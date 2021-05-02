@@ -92,7 +92,7 @@ margin_bottom = 27.0
 hint_tooltip = "Name"
 size_flags_horizontal = 3
 align = 1
-placeholder_text = "Story Element Name"
+placeholder_text = "Name"
 
 [node name="DescriptionBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 margin_top = 120.0
@@ -125,4 +125,4 @@ hint_tooltip = "Tags
 Use with Comma(,)"
 size_flags_horizontal = 3
 align = 1
-placeholder_text = "Story Element Tags"
+placeholder_text = "Tags"

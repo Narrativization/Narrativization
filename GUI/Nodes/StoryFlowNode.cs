@@ -27,8 +27,8 @@ public class StoryFlowNode : FlowGraphNode
         storyFlow = _storyFlow;
         if (IsInstanceValid(storyFlow))
         {
-            Title = (storyFlow.Name != "") ? storyFlow.Name : "Story Flow";
-            HintTooltip = storyFlow.Id;
+            Title = (storyFlow.StoryElementName != "") ? storyFlow.StoryElementName : "Story Flow";
+            HintTooltip = storyFlow.StoryElementId;
         }
         return storyFlow;
     }

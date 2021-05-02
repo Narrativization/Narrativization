@@ -30,7 +30,7 @@ public class DetailsPane : Panel
     public void _OnStoryElementOpened(StoryElement storyElement)
     {
         if (!IsInstanceValid(storyElement)) { return; }
-        GetNode<RichTextLabel>("DetailsText").Text = storyElement.Name;
+        GetNode<RichTextLabel>("DetailsText").Text = storyElement.StoryElementName;
         if (storyElement is StoryFlow storyFlow)
         {
             editors = GetTree().GetNodesInGroup("Editors")[0] as Editors;

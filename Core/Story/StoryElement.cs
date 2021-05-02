@@ -2,57 +2,65 @@ using Godot;
 using System;
 using Godot.Collections;
 
-
-public enum StoryElementTypes
-{
-    Flow, Entity, Asset // ~ ,Reference, Template
-}
-
-// Base Class of Story Elements
+// Story Elements / Narrative Elements
 public class StoryElement : Resource
 {
     // Custom Story Element Data
     public Dictionary<string, string> StoryElementData { get; set; } = new Dictionary<string, string>();
 
     // Story Element Data 
-    public string Id { get { return StoryElementData["Id"]; } set { ResourceName = StoryElementData["Id"] = value; } } // Example: /Entity/Character/MyChar | Relative path to project(<ProjectName>.storier)
-    public string Name { get { return StoryElementData["Name"]; } set { ResourceName = StoryElementData["Name"] = value; } } // Example: MyChar | Uses ResourceName 
-    public string Description { get { return StoryElementData["Description"]; } set { StoryElementData["Description"] = value; } }  // Example: Character Example
+    public string StoryElementId { get { return StoryElementData["Id"]; } set { StoryElementData["Id"] = value; } } // Example: /Entity/Character/MyChar | Relative path to project(<ProjectName>.storier)
+    public string StoryElementName { get { return StoryElementData["Name"]; } set { ResourceName = StoryElementData["Name"] = value; } } // Example: MyChar | Uses ResourceName 
+    public string StoryElementDescription { get { return StoryElementData["Description"]; } set { StoryElementData["Description"] = value; } }  // Example: Character Example
+    public string StoryElementTag { get { return StoryElementData["Tag"]; } set { StoryElementData["Tag"] = value; } }  // Example: Awesome Person
     
+    // Story Element Informations
+    public StoryElementType StoryElementType { get; set; } = StoryElementType.Asset; 
+    public string StoryElementPath { get{ return ResourcePath; } set{ TakeOverPath(value); } } 
+    public string StoryElementExtension { get { return StoryElementPath.Extension(); } } // Example ext: "ext" 
+    // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + "." + StoryElementExtension[flow]
+
+    public static StoryElement _CurrentStoryElement { get; set; } 
+    public static StoryElement CurrentStoryElement 
+    { 
+        get 
+        {
+            return _CurrentStoryElement;
+        } 
+        set
+        {
+            _CurrentStoryElement = value;
+        }
+    }
+
     // public string Template { get { return StoryElementData["Template"]; } set { StoryElementData["Template"] = value; } }  // Template reference
     // public Dictionary<string, object> TemplateData { get; set; } = new Dictionary<string, object>();
 
-    // Story Element Informations
-    public StoryElementTypes StoryElementType { get; set; } = StoryElementTypes.Asset; 
-    public string StoryElementExtension { get; set; } = ".asset"; // Example ext: ".ext" 
-
     protected StoryElement() {}
-    // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + StoryElementExtension
-    public StoryElement(string path) // _path means to Full Path
+    public StoryElement(string path)
     {
         if (!path.StartsWith(StoryManager.CurrentStory.StoryBase)) { GD.PushWarning("Story Element isn't in Workspace!\n" + path); return; }
-        Id = path.Replace(StoryManager.CurrentStory.StoryBase, "").Replace("." + path.Extension(), "");
-        Name = path.GetFile().Replace("." + path.Extension(), "");
-        StoryElementExtension = "." + path.Extension();
-        TakeOverPath(path);
+        StoryElementId = path.Replace(StoryManager.CurrentStory.StoryBase, "").Replace("." + path.Extension(), "");
+        StoryElementName = path.GetFile().Replace("." + path.Extension(), "");
+        StoryElementPath = path;
+        
     }
     public StoryElement(string name, string description, string path)
     {
         if (!path.StartsWith(StoryManager.CurrentStory.StoryBase)) { GD.PushWarning("Story Element isn't in Workspace!\n" + path); return; }
-        Id = path.Replace(StoryManager.CurrentStory.StoryBase, "").Replace("." + path.Extension(), "");
-        Name = name;
-        Description = description;
-        StoryElementExtension = "." + path.Extension();
-        TakeOverPath(path);
+        StoryElementId = path.Replace(StoryManager.CurrentStory.StoryBase, "").Replace("." + path.Extension(), "");
+        StoryElementName = name;
+        StoryElementDescription = description;
+        StoryElementPath = path;
     }
 
     // Replace/Move Story Element | Not ready for use -> Move to File Manager?
     private Error Move(string destination)
     {
         Directory dir = new Directory();
-        Error errCopy = dir.Copy(ResourcePath, destination);
+        Error errCopy = dir.Copy(StoryElementPath, destination);
         if (errCopy != Error.Ok) { return errCopy; }
-        Error errDelete = dir.Remove(ResourcePath);
+        Error errDelete = dir.Remove(StoryElementPath);
         if (errDelete != Error.Ok) { return errDelete; }
         return Error.Ok;
     }
@@ -60,15 +68,15 @@ public class StoryElement : Resource
     // Change Story Element Id(Relative Path) 
     public Error ReId(string id)
     {
-        string _destination = StoryManager.CurrentStory.StoryBase + Id + StoryElementExtension;
-        Id = Id.Replace(Name, id);
+        string _destination = StoryManager.CurrentStory.StoryBase + StoryElementId + StoryElementExtension;
+        StoryElementId = StoryElementId.Replace(StoryElementName, id);
         Error err = Move(_destination);
-        TakeOverPath(_destination);
+        StoryElementPath = _destination;
         return err; // Error.Ok;
     }   
 
     // Saving Story Element | ~Maybe create Resource Format Saver/Loader
-    public virtual bool Save() { return FileManager.SaveFile(ResourcePath, JSON.Print(StoryElementData)); } // ~Save text
+    public virtual bool Save() { return FileManager.SaveFile(StoryElementPath, JSON.Print(StoryElementData)); } // ~Save text
     // Reloading Story Element
     public virtual bool Reload() { return false; }
     // Import Story Element
@@ -94,20 +102,71 @@ public class StoryElement : Resource
 
 
 /*
-Story Element Informations
+Story Element/Entity Informations
 {
     Id: "", 
     Name: "", 
     Description: "",
-    Template: "",
-    Data: {
+    Tag: "",
+    ~Template: "",
+    ~Content: {
         ...
     }
 }
 
-StoryElement General Informations (All time included to Property/Details Modal)
-Id, Name, Description, Template 
+++
+
+StoryElement General Informations (All time included)
+Id, Name, Description, ~Template 
 StoryElement Template Informations (After selected template)
-Data
+~Content
+
+
+--------------
+
+
+Story Flow Informations
+[Story Element]
+{
+    Id: "", 
+    Name: "", 
+    Description: "",
+    Tag: "",
+    ~Template: "",
+    ~Content: {
+        ...
+    }
+}
+
+[Story Flow]
+Fragments: {
+    Fragment0: {
+        Content: "..."
+        Reference: "/Flows/Chapter2"
+    }
+}
+Nodes: {
+    Node0: {
+        Offset: (0,0),
+        Slot: "",
+        Previous: "",
+        Next: "Node1",
+        Fragment: Fragment0
+    }
+    Node1: {
+        Offset: (0,0),
+        Slot: "",
+        Previous: "Node0",
+        Next: "",
+        Fragment: Fragment0
+    }
+}
+
+++ 
+
+~Fragment Stored Data
+~Nodes Displayed Positions/Offsets
+
+~Combine Node and Fragment
 
 */
