@@ -25,7 +25,12 @@ public class CreatorModal : ConfirmationDialog
     private TextEdit descriptionEdit;
     private LineEdit tagEdit;
 
-    private string StoryElementExtension = ""; 
+    // StoryElement
+    private string _suffix = ""; 
+    private string _extension = ""; 
+
+    // Visual
+    private Color _fontColor;
 
     public override void _Ready()
     {
@@ -36,11 +41,14 @@ public class CreatorModal : ConfirmationDialog
         descriptionEdit = GetNode<TextEdit>(descriptionNodePath);
         tagEdit = GetNode<LineEdit>(tagNodePath);
 
-        idBaseEdit.Connect("text_changed", this, "_OnIdChanged");
-        idBaseEdit.Connect("text_entered", this, "_OnIdChanged");
+        idBaseEdit.Connect("text_changed", this, "_OnIdBaseChanged");
+        idBaseEdit.Connect("text_entered", this, "_OnIdBaseChanged");
 
-        idNameEdit.Connect("text_changed", this, "_OnIdChanged");
-        idNameEdit.Connect("text_entered", this, "_OnIdChanged");
+        idNameEdit.Connect("text_changed", this, "_OnIdNameChanged");
+        idNameEdit.Connect("text_entered", this, "_OnIdNameChanged");
+        idNameEdit.Connect("focus_exited", this, "_OnIdNameFocusExited");
+        
+        _fontColor = idNameEdit.GetColor("font_color", "LineEdit");
 
         Connect("confirmed", this, "_OnConfirmed");
     }
@@ -57,25 +65,25 @@ public class CreatorModal : ConfirmationDialog
         {
             case "Character":
                 idBaseEdit.Text = "/Entities/Characters/";
-                StoryElementExtension = "entity";
+                _extension = "entity";
                 break;
             case "Location":
                 idBaseEdit.Text = "/Entities/Locations/";
-                StoryElementExtension = "entity";
+                _extension = "entity";
                 break;
             case "Flow":
                 idBaseEdit.Text = "/Flows/";
-                StoryElementExtension = "flow";
+                _extension = "flow";
                 break;
             case "Entity":
                 idBaseEdit.Text = "/Entities/";
-                StoryElementExtension = "entity";
+                _extension = "entity";
                 break;
             default:
                 break;
         }
         ResetParams();
-        _OnIdChanged("");
+        IdChanged();
     }
 
     public void ResetParams()
@@ -84,17 +92,60 @@ public class CreatorModal : ConfirmationDialog
         nameEdit.Text = "";
         descriptionEdit.Text = "";
         tagEdit.Text = "";
+        idNameEdit.AddColorOverride("font_color", _fontColor);
+        _suffix = "";
+    }
+
+    public void IdChanged()
+    {
+        idEdit.Text = idBaseEdit.Text + idNameEdit.Text + _suffix;
     }
 
     public void _OnConfirmed()
     {
-        StoryEntity storyEntity = new StoryEntity(StoryManager.CurrentStory.StoryBase + idEdit.Text + "." + StoryElementExtension); 
-        storyEntity.Save();
+        StoryElement storyElement = new StoryElement(StoryManager.CurrentStory.StoryBase + idEdit.Text + "." + _extension); 
+        storyElement.Save();
+        StoryManager.CurrentStoryElement = storyElement;
     }
 
-    public void _OnIdChanged(string newText)
+    public void _OnIdBaseChanged(string newText)
     {
-        idEdit.Text = idBaseEdit.Text + idNameEdit.Text;
+        IdChanged();
     }
 
+    public void _OnIdNameChanged(string newText)
+    {
+        IdChanged();
+        
+        string possibleIdPath = StoryManager.CurrentStory.StoryBase + idEdit.Text + "." + _extension;
+        Directory directory = new Directory();
+        if (directory.FileExists(possibleIdPath))
+        {
+            idNameEdit.AddColorOverride("font_color", new Color(1, 0, 0)); // idNameEdit.Set("custom_colors/font_color", new Color(1, 0, 0));
+            bool exist = directory.FileExists(possibleIdPath);
+            int suffixNumber = 2;
+            while (exist)
+            {
+                _suffix = suffixNumber.ToString();
+                IdChanged();
+                possibleIdPath = StoryManager.CurrentStory.StoryBase + idEdit.Text + "." + _extension;
+                exist = directory.FileExists(possibleIdPath);
+                suffixNumber++;
+            }
+        }
+        else
+        {
+            _suffix = "";
+            idNameEdit.AddColorOverride("font_color", _fontColor);
+        }
+        IdChanged();
+    }
+
+    public void _OnIdNameFocusExited()
+    {
+        idNameEdit.Text += _suffix; 
+        _suffix = "";
+        idNameEdit.AddColorOverride("font_color", _fontColor);
+        IdChanged();
+    }
 }

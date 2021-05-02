@@ -23,22 +23,37 @@ public class StoryElement : Resource
     // public Dictionary<string, object> TemplateData { get; set; } = new Dictionary<string, object>();
 
     protected StoryElement() {}
-    public StoryElement(string path)
-    {
-        if (!path.StartsWith(StoryManager.CurrentStory.StoryBase)) { GD.PushWarning("Story Element isn't in Workspace!\n" + path); return; }
-        StoryElementId = path.Replace(StoryManager.CurrentStory.StoryBase, "").Replace("." + path.Extension(), "");
-        StoryElementName = path.GetFile().Replace("." + path.Extension(), "");
-        StoryElementPath = path;
+    // Load Story Element
+    // public StoryElement(string id)
+    // {
         
-    }
-    public StoryElement(string name, string description, string path)
+    // }
+    // Create Story Element
+    public StoryElement(string path, string name = "", string description = "") // path: fullPath
     {
         if (!path.StartsWith(StoryManager.CurrentStory.StoryBase)) { GD.PushWarning("Story Element isn't in Workspace!\n" + path); return; }
         StoryElementId = path.Replace(StoryManager.CurrentStory.StoryBase, "").Replace("." + path.Extension(), "");
-        StoryElementName = name;
-        StoryElementDescription = description;
+        StoryElementName = name; 
+        StoryElementDescription = description; 
         StoryElementPath = path;
     }
+
+    // public StoryElement(string path)
+    // {
+    //     if (!path.StartsWith(StoryManager.CurrentStory.StoryBase)) { GD.PushWarning("Story Element isn't in Workspace!\n" + path); return; }
+    //     StoryElementId = path.Replace(StoryManager.CurrentStory.StoryBase, "").Replace("." + path.Extension(), "");
+    //     StoryElementName = path.GetFile().Replace("." + path.Extension(), "");
+    //     StoryElementPath = path;
+        
+    // }
+    // public StoryElement(string name, string description, string path)
+    // {
+    //     if (!path.StartsWith(StoryManager.CurrentStory.StoryBase)) { GD.PushWarning("Story Element isn't in Workspace!\n" + path); return; }
+    //     StoryElementId = path.Replace(StoryManager.CurrentStory.StoryBase, "").Replace("." + path.Extension(), "");
+    //     StoryElementName = name;
+    //     StoryElementDescription = description;
+    //     StoryElementPath = path;
+    // }
 
     // Replace/Move Story Element | Not ready for use -> Move to File Manager?
     private Error Move(string destination)

@@ -29,7 +29,6 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-refreshNodePath = NodePath("../../../Outlines/MenuBar/OutlineMenu/Refresh")
 
 [node name="Refresh" type="Button" parent="MenuBar/OutlineMenu"]
 margin_right = 60.0

@@ -48,7 +48,6 @@ current_dir = "/Oyun Sanat/Godot/Projects/Storier"
 current_path = "/Oyun Sanat/Godot/Projects/Storier/"
 
 [node name="CreatorModal" parent="." instance=ExtResource( 3 )]
-visible = false
 
 [node name="SettingsModal" parent="." instance=ExtResource( 4 )]
 

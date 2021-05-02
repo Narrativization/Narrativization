@@ -38,8 +38,8 @@ public class StoryFlowNode : FlowGraphNode
         // base.OpenNode();
         if (IsInstanceValid(storyFlow))
         {
-            StoryManager.CurrentStory.CurrentStoryElement = storyFlow;
-            GetTree().CallGroup("Editors", "EditStoryElement", StoryManager.CurrentStory.CurrentStoryElement);
+            StoryManager.CurrentStoryElement = storyFlow;
+            GetTree().CallGroup("Editors", "EditStoryElement", StoryManager.CurrentStoryElement);
         }
     }
 

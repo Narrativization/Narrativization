@@ -40,7 +40,7 @@ public class StoryManager : Node
     } 
 
     // Title Displayer
-    private static string _TitleId { get; set; } // Current Id of Selected/Editing Outline 
+    private static string _TitleId { get; set; } = ""; // Current Id of Selected/Editing Outline 
     public static string CurrentTitleId 
     { 
         get { return _TitleId; } 
@@ -63,12 +63,19 @@ public class StoryManager : Node
     //     }
     // } 
 
+    
+    [Signal]
+    public delegate void TitleIdChanged(string titleId);
+    [Signal]
+    public delegate void StoryCreated(Story story);
     [Signal]
     public delegate void StoryChanged(Story story);
     [Signal]
-    public delegate void StoryElementChanged(StoryElement storyElement);
+    public delegate void StoryElementCreated(StoryElement storyElement);
     [Signal]
-    public delegate void TitleIdChanged(string titleId);
+    public delegate void StoryElementChanged(StoryElement storyElement);
+    // [Signal]
+    // public delegate void FragmentCreated(string titleId);
     // [Signal]
     // public delegate void FragmentChanged(string titleId);
 

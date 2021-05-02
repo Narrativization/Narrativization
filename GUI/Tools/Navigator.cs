@@ -41,6 +41,25 @@ public class Navigator : Tree
 //      
 //  }
 
+    public override void _GuiInput(InputEvent inputEvent)
+    {
+        if (inputEvent is InputEventMouseButton mouseEvent)
+        {
+            if (mouseEvent.Doubleclick && IsInstanceValid(GetItemAtPosition(mouseEvent.Position)))
+            {
+                TreeItem treeItem = GetItemAtPosition(mouseEvent.Position);
+                string path = PathFromTree(treeItem);
+                GD.Print("Double Click: " + treeItem.GetText(0) + " -> \"" + path + "\"");
+                StoryManager.CurrentStoryElement = StoryElement.Load(StoryManager.CurrentStory.StoryBase + path);
+                GetTree().CallGroup("Editors", "EditStoryElement", StoryManager.CurrentStoryElement);
+            }
+        }
+        if (inputEvent.IsActionPressed("Help"))
+        {
+            GD.Print(StoryManager.CurrentStory.LookHierarchy());
+        }
+    }
+
     public void Refresh()
     {
         if(IsInstanceValid(StoryManager.CurrentStory))
@@ -85,7 +104,7 @@ public class Navigator : Tree
                 // {
                 //     TreeItem treeChild = CreateItemWithIcon(0, "> Empty", icons["XSquare"], treeItem);
                 // }
-                treeItem.Collapsed = true;
+                treeItem.Collapsed = false;
             }
             else
             {
@@ -144,21 +163,6 @@ public class Navigator : Tree
         ||  (_parent.GetText(0) == "Entities" && (
             _str =="Characters" || _str =="Locations"// || _str ==""
         )));
-    }
-
-    public override void _GuiInput(InputEvent inputEvent)
-    {
-        if (inputEvent is InputEventMouseButton mouseEvent)
-        {
-            if (mouseEvent.Doubleclick && IsInstanceValid(GetItemAtPosition(mouseEvent.Position)))
-            {
-                TreeItem treeItem = GetItemAtPosition(mouseEvent.Position);
-                string path = PathFromTree(treeItem);
-                GD.Print("Double Click: " + treeItem.GetText(0) + " -> \"" + path + "\"");
-                // StoryManager.CurrentStory.CurrentStoryElement = StoryElement.Load(StoryManager.CurrentStory.StoryBase + path);
-                // GetTree().CallGroup("Editors", "EditStoryElement", StoryManager.CurrentStory.CurrentStoryElement);
-            }
-        }
     }
 
     private string PathFromTree(TreeItem treeItem)

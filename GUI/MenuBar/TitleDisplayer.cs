@@ -16,14 +16,6 @@ public class TitleDisplayer : RichTextLabel
     //     base._Process(delta);
     // }
 
-    private void ChangeTitle()
-    {
-        if (IsInstanceValid(StoryManager.CurrentStory)) // ~Replace with Signal
-        {
-            TitleText(StoryManager.CurrentStory.CurrentStoryElementTitle);
-        }
-    }
-
     private void TitleText(string _flowName)
     {
         string cFlow = "[center]";
@@ -42,19 +34,7 @@ public class TitleDisplayer : RichTextLabel
 
     public void _OnTitleIdChanged(string titleId)
     {
-        ChangeTitle();
-    }
-
-    public void _OnStoryOpened(Story story)
-    {
-        // GD.Print(story.StoryName);
-        ChangeTitle();
-    }
-
-    public void _OnStoryElementOpened(StoryElement storyElement)
-    {
-        // GD.Print(storyElement.Name);
-        ChangeTitle();
+        TitleText(StoryManager.CurrentTitleId);
     }
 
     public void _OnMetaClicked(string _meta)

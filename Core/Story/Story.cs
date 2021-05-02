@@ -18,20 +18,6 @@ public class Story : Node
     public string StoryDirectory { get; set; } // Current Story Directory
     public string StoryBase { get { return StoryDirectory.GetBaseDir(); } } // Story Base Directory
 
-    // Story Element Informations
-    private StoryElement _CurrentStoryElement { get; set; } // Current Story Element
-    public StoryElement CurrentStoryElement { get { return _CurrentStoryElement; } set{ _CurrentStoryElement = value; EmitSignal("StoryElementOpened", _CurrentStoryElement);  } } // Current Story Element Emitter
-    
-    public string CurrentStoryElementTitle { get { return StoryName + StoryElementId; } } // Current Title | For Displaying in Flow Editor 
-
-    // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + "." + StoryElementExtension[flow]
-    public string StoryElementId { get { return IsInstanceValid(CurrentStoryElement) ? CurrentStoryElement.StoryElementId : ""; } } // Id of opened Relative File/Directory without extension [/Flow/Chapter]
-    public string StoryElementExtension { get { return IsInstanceValid(CurrentStoryElement) ? CurrentStoryElement.StoryElementExtension : ""; } } // Extension of opened Relative File/Directory [.flow]
-    public string StoryElementPath { get { return StoryBase + CurrentStoryElement.StoryElementId + CurrentStoryElement.StoryElementExtension; } } // Path of opened File ...[/Flow/Chapter]...
-
-    [Signal]
-    public delegate void StoryElementOpened(StoryElement storyElement);
-
     private Story() 
     {
         StoryName = "Untitled Story";
@@ -70,6 +56,7 @@ public class Story : Node
     {
         if (!(new Directory()).DirExists(directory)) 
         { 
+            StoryManager.CurrentStoryManager.EmitSignal("StoryCreated", StoryManager.CurrentStory);
             CreateHierarchy(); 
         } 
     }
@@ -95,11 +82,15 @@ public class Story : Node
         {
             dir.MakeDirRecursive(defaultDirs[i]);
         }
+    }
 
-        // StoryFlow defaultStory = new StoryFlow(StoryBase + "/Flows/Starter.flow");
-        // StoryManager.StorierData.Add("Starter", "/Flows/Starter.flow");
-        // defaultStory.Save();
-        // CurrentStoryElement = defaultStory;
+    // ~Open Default/Recent Flow
+    public void CreateDefaultFlow()
+    {
+        StoryElement defaultStory = new StoryElement(StoryBase + "/Flows/Starter.flow");
+        defaultStory.Save();
+        StorierManager.StorierData.Add("Starter", "/Flows/Starter.flow");
+        StoryManager.CurrentStoryElement = defaultStory;
     }
 
     public Dictionary LookHierarchy()
