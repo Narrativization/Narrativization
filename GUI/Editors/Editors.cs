@@ -38,10 +38,10 @@ public class Editors : TabContainer
     public void EditStoryElement(StoryElement storyElement)
     {
         editedStoryElements.Add(storyElement);
-        if (storyElement is StoryFlow storyFlow)
+        if (storyElement is StoryFlow)
         {
             flowEditor.Reset();
-            flowEditor.LoadData(storyFlow.StoryFlowData);
+            // flowEditor.LoadData(storyElement.StoryFlowData);
         }
     }
 

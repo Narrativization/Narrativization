@@ -31,7 +31,7 @@ public class DetailsPane : Panel
     {
         if (!IsInstanceValid(storyElement)) { return; }
         GetNode<RichTextLabel>("DetailsText").Text = storyElement.StoryElementName;
-        if (storyElement is StoryFlow storyFlow)
+        if (storyElement is StoryFlow)
         {
             editors = GetTree().GetNodesInGroup("Editors")[0] as Editors;
             editors.flowEditor.Connect("node_selected", this, "_OnStoryFragmentSelected");
@@ -41,7 +41,7 @@ public class DetailsPane : Panel
     public void _OnStoryFragmentSelected(StoryFlowNode flowNode)
     {
         if (!IsInstanceValid(flowNode)) { return; }
-        GetNode<RichTextLabel>("DetailsText").Text = flowNode.FragmentId;
+        GetNode<RichTextLabel>("DetailsText").Text = "" +flowNode.FragmentId;
     }
 
 }

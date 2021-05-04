@@ -8,12 +8,11 @@ public class StoryFragment : Godot.Object
     // Flow Fragment Index
     public static int FragmentIndex { get; set; } = 0;
 
-    public string FragmentId { get; set; } = "Fragment" + FragmentIndex++; // Unique Fragment(Node) Id
+    // Flow Fragment Id
+    public int FragmentId { get; set; } = FragmentIndex++; // Unique Fragment Id
     
-    // Fragment Data Id? // 
-
     // Custom Fragment Data
-    public Dictionary<string, string> FragmentData { get; set; } = new Dictionary<string, string>(); 
+    public Dictionary<string, object> FragmentData { get; set; } = new Dictionary<string, object>(); 
     
     public Vector2 Slots { get; set; } = new Vector2(-1, -1); // Left & Right Slot ~
     

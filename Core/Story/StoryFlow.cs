@@ -1,45 +1,53 @@
 using Godot;
 using System;
 using Godot.Collections;
+using Array = Godot.Collections.Array;
 
 // Flow Definations
 public class StoryFlow : StoryElement
 {
     // Custom Story Element Data
-    public Dictionary<string, string> StoryFlowData { get; set; } = new Dictionary<string, string>();
+    public Array StoryFlowFragments { get; set; } = new Array();
+    public Array StoryFlowNodes { get; set; } = new Array();
+    public Array StoryFlowConnections { get; set; } = new Array();
 
     protected StoryFlow() {} 
-    // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + StoryElementExtension
-    public StoryFlow(string path) : base(path)
-    {
-        StoryElementType = StoryElementType.Flow;
-    }
-    public StoryFlow(string name, string description, string path) : base(name, description, path)
-    {
-        StoryElementType = StoryElementType.Flow;
+    public StoryFlow(string path, string name = "", string description = "") : base(path, name, description) 
+    { 
+        
     }
 
     public override bool Save()
     {
+        bool isSuccess = base.Save();
         ConfigFile configFile = new ConfigFile();
         configFile.SetValue("StoryElement", "Data", StoryElementData);
-        configFile.SetValue("Flow", "Data", StoryFlowData);
+        configFile.SetValue("StoryFlow", "Fragments", StoryFlowFragments);
+        configFile.SetValue("StoryFlow", "Nodes", StoryFlowNodes);
+        configFile.SetValue("StoryFlow", "Connections", StoryFlowConnections);
         Error err = configFile.Save(ResourcePath);
         if (err != Error.Ok) { GD.Print(err); return false; }
-        return true;
+        return isSuccess;
     }
 
-    // Loading Story Element
-    public static new StoryFlow Load(string path) 
-    { 
-        StoryFlow loaded = new StoryFlow(path);
+    protected override bool Load()
+    {
+        bool isSuccess = false;
         ConfigFile configFile = new ConfigFile();
-        Error err = configFile.Load(path);
-        if (err != Error.Ok) { GD.Print(err); return null; }
+        Error err = configFile.Load(StoryElementPath);
+        if (err != Error.Ok) { GD.Print(err); return false; }
         Dictionary elementDictionary = configFile.GetValue("StoryElement", "Data") as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
-        loaded.StoryElementData = new Dictionary<string, string>(elementDictionary);
-        Dictionary flowDictionary = configFile.GetValue("Flow", "Data") as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
-        loaded.StoryFlowData = new Dictionary<string, string>(flowDictionary);
-        return loaded; 
+        StoryElementData = new Dictionary<string, string>(elementDictionary);
+        Array fragmentDictionary = configFile.GetValue("StoryFlow", "Fragments") as Array;  // Godot Problem: "as Dictionary<string, string>" return null
+        StoryFlowFragments = new Array(fragmentDictionary);
+        Array nodeDictionary = configFile.GetValue("StoryFlow", "Nodes") as Array;  // Godot Problem: "as Dictionary<string, string>" return null
+        StoryFlowNodes = new Array(nodeDictionary);
+        Array connectionDictionary = configFile.GetValue("StoryFlow", "Connections") as Array;  // Godot Problem: "as Dictionary<string, string>" return null
+        StoryFlowConnections = new Array(connectionDictionary);
+        return isSuccess;
     }
+
+
+
+    
 }

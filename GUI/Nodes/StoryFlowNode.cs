@@ -5,11 +5,11 @@ using System;
 public class StoryFlowNode : FlowGraphNode
 {
     [Export]
-    public StoryFlow storyFlow;
+    public StoryElement storyFlow;
 
     public override void _Ready()
     {
-        
+        base._Ready();
     }
 
     //  public override void _Process(float delta)
@@ -22,7 +22,7 @@ public class StoryFlowNode : FlowGraphNode
         base._GuiInput(inputEvent);
     } 
     
-    public StoryFlow ReferenceStoryFlow(StoryFlow _storyFlow)
+    public StoryElement ReferenceStoryFlow(StoryElement _storyFlow)
     {
         storyFlow = _storyFlow;
         if (IsInstanceValid(storyFlow))

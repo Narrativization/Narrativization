@@ -91,6 +91,23 @@ public class FlowEditor : GraphNodeEditor
                 GD.Print(flowGraphNode.Name);
             }
         }
+
+        if (inputEvent.IsActionPressed("Help"))
+        {
+            GD.Print("Editor Help");
+            Godot.Collections.Array allNodes = GetChildren();
+            Godot.Collections.Array graphNodes = new Godot.Collections.Array();
+            for (int i = 0; i < allNodes.Count; i++)
+            {
+                if (allNodes[i] is GraphNode graphNode)
+                {
+                    graphNodes.Add(graphNode);
+                }
+            }
+            GD.Print(graphNodes);
+            GD.Print(GetConnectionList());
+        }
+        
         base._GuiInput(inputEvent);
     }
 
@@ -100,7 +117,7 @@ public class FlowEditor : GraphNodeEditor
         GD.Print("Create Story Flow Node");
         StoryFlowNode storyFlowNode = storyFlowNodeScene.Instance() as StoryFlowNode;
         // storyFlowNode.InitNode("/Flows/Chapter" + ind++); // StoryFlow.Load(StoryManager.CurrentStory.StoryBase + path)
-        StoryFlow storyFlow = storyFlowNode.ReferenceStoryFlow(new StoryFlow(StoryManager.CurrentStory.StoryBase + "/Flows/Chapter" + ind++ + ".flow"));
+        StoryElement storyFlow = storyFlowNode.ReferenceStoryFlow(new StoryElement(StoryManager.CurrentStory.StoryBase + "/Flows/Chapter" + ind++ + ".flow"));
         AddChild(storyFlowNode);
         storyFlowNode.Offset = ScrollOffset + GetLocalMousePosition() - (storyFlowNode.RectSize/2);
         return true;
@@ -114,17 +131,17 @@ public class FlowEditor : GraphNodeEditor
         {
             if (graphNodes[i] is FlowGraphNode flowNode)
             {
-                saveData.Add(flowNode.FragmentId, "");  // flowNode.flowData
+                saveData.Add(flowNode.FragmentId+"", "");  // flowNode.flowData
                 // saveData.Add(flowNode.FragmentId, flowNode.Offset);  // flowNode.flowData
             }
         }
         return saveData;
     }
 
-    public void LoadData(Dictionary<string, string> loadData)
-    {
+    // public void LoadData(Dictionary<string, string> loadData)
+    // {
         
-    }
+    // }
 
     public void _OnNodeSelected(Node node)
     {

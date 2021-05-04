@@ -56,7 +56,7 @@ public class Story : Node
     {
         if (!(new Directory()).DirExists(directory)) 
         { 
-            StoryManager.CurrentStoryManager.EmitSignal("StoryCreated", StoryManager.CurrentStory);
+            StoryManager.CurrentStoryManager.EmitSignal("StoryCreated", this);
             CreateHierarchy(); 
         } 
     }
