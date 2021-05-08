@@ -15,8 +15,8 @@ public class Editors : TabContainer
     // Properties
     public string CurrentEditor { get { return GetTabTitle(CurrentTab); } }
 
-    public FlowEditor flowEditor;
-    public TextEdit textEditor;
+    public static FlowEditor flowEditor;
+    public static TextEdit textEditor;
 
     public Godot.Collections.Array<StoryElement> editedStoryElements = new Godot.Collections.Array<StoryElement>();
     public StoryElement currentStoryElement;

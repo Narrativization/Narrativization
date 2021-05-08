@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using Godot.Collections;
-using GArray = Godot.Collections.Array;
+using Array = Godot.Collections.Array;
 
 // Basic Flow Controls for GraphEdit(Without Storier)
 public class GraphNodeEditor : GraphEdit
@@ -278,7 +278,7 @@ public class GraphNodeEditor : GraphEdit
     }
     
     // Reset GraphEditor
-    public void Reset() { DeleteAll(); FlowGraphNode.Reset(); }
+    public void Reset() { DeleteAll(); FlowGraphNode.Reset(); StoryFragment.Reset(); }
 
     // Centered to given GraphNode
     public void FocusNode(GraphNode _node)
@@ -323,6 +323,43 @@ public class GraphNodeEditor : GraphEdit
             }
         }
         return rights;
+    }
+
+
+    public bool CreateFlowNode(string nodeType = "res://GUI/Nodes/StoryFlowFragment.tscn")
+    {
+        GD.Print("Create Story Flow Node");
+        PackedScene storyFlowNodeScene = GD.Load<PackedScene>(nodeType);
+        FlowGraphNode flowNode = storyFlowNodeScene.Instance() as FlowGraphNode;
+        flowNode.NodeFragment = new StoryFragment();
+        AddChild(flowNode);
+        flowNode.Offset = ScrollOffset + GetLocalMousePosition() - (flowNode.RectSize/2);
+        return true;
+    }
+
+    public bool CreateFlowNode(Dictionary<string, object> nodeData)
+    {
+        GD.Print("Create Story Flow Node");
+        PackedScene storyFlowNodeScene = GD.Load<PackedScene>(nodeData["Type"] as string);
+        FlowGraphNode flowNode = storyFlowNodeScene.Instance() as FlowGraphNode;
+        AddChild(flowNode);
+        flowNode.NodeData = nodeData; 
+        return true;
+    }
+
+    // All Nodes
+    public Godot.Collections.Array GetAllNodes()
+    {
+        Godot.Collections.Array childrenNodes = GetChildren();
+        Godot.Collections.Array allNodes = new Array();
+        for (int i = 0; i < childrenNodes.Count; i++)
+        {
+            if (childrenNodes[i] is GraphNode graphNode)
+            {
+                allNodes.Add(graphNode);
+            }
+        }
+        return allNodes;
     }
 
     // Get selected nodes | Return selected GraphNodes
@@ -409,15 +446,13 @@ public class GraphNodeEditor : GraphEdit
     // Delete/Removes All Nodes | Delete All GraphNodes
     public void DeleteAll()
     {
-        Godot.Collections.Array graphNodes = GetChildren();
+        Godot.Collections.Array graphNodes = GetAllNodes();
         for (int i = 0; i < graphNodes.Count; i++)
         {
             if (graphNodes[i] is GraphNode graphNode)
             {
-                if (graphNode.Selected)
-                {
-                    graphNode.QueueFree();
-                }
+                graphNode.Name = "Deleted" + graphNode.Name;
+                graphNode.QueueFree();
             }
         }
     }

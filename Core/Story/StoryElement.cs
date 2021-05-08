@@ -17,23 +17,6 @@ public class StoryElement : Resource
     public string StoryElementPath { get{ return ResourcePath; } set{ TakeOverPath(value); } } // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + "." + StoryElementExtension[flow]
     public string StoryElementExtension { get { return StoryElementPath.Extension(); } } // Example ext: "ext" 
 
-    // Reference Data
-    // public string StoryElementTag { get { return StoryElementData["Tag"]; } set { StoryElementData["Tag"] = value; } }  // Example: Awesome Person
-
-    // private StoryElementType _StoryElementType { get; set; }
-    // public StoryElementType StoryElementType 
-    // { 
-    //     get
-    //     {
-    //         if (StoryElementId.StartsWith("/Flows/")) { _StoryElementType = StoryElementType.Flow; }
-    //         else if (StoryElementId.StartsWith("/Entities/")) { _StoryElementType = StoryElementType.Entity; }
-    //         else if (StoryElementId.StartsWith("/Assets/")) { _StoryElementType = StoryElementType.Asset; }
-    //         else if (StoryElementId.StartsWith("/References/")) { _StoryElementType = StoryElementType.Reference; }
-    //         else { _StoryElementType = StoryElementType.Asset; }
-    //         return _StoryElementType;
-    //     }
-    // }
-
     protected StoryElement() {}
     // Create Story Element
     public StoryElement(string path, string name = "", string description = "") // path: fullPath
@@ -60,18 +43,6 @@ public class StoryElement : Resource
         }
         StoryManager.CurrentStoryManager.EmitSignal("StoryElementChanged", this);
     }
-
-    // public static string StoryElementType(StoryElement storyElement)
-    // {
-    //     string storyElementId = storyElement.StoryElementId;
-    //     string storyElementType = "";
-    //     if (storyElementId.StartsWith("/Flows/")) { storyElementType = "Flow"; }
-    //     else if (storyElementId.StartsWith("/Entities/")) { storyElementType = "Entity"; }
-    //     else if (storyElementId.StartsWith("/Assets/")) { storyElementType = "Asset"; }
-    //     else if (storyElementId.StartsWith("/References/")) { storyElementType = "Reference"; }
-    //     else { storyElementType = "Asset"; }
-    //     return storyElementType;
-    // }
 
     // Saving Story Element | ~Maybe create Resource Format Saver/Loader
     public virtual bool Save() 
@@ -101,50 +72,6 @@ public class StoryElement : Resource
     public void Import() { }
     // Export Story Element
     public void Export() { } // ~List of Character(csv), Single File(json)
-
-    // // Loading Story Element
-    // public static StoryElement Load(string path) 
-    // { 
-    //     StoryElement loaded = new StoryElement(path);
-    //     JSONParseResult jsonObject = JSON.Parse(FileManager.LoadFile(path));
-    //     if(jsonObject.Error != 0) { GD.Print("Error:", jsonObject.ErrorLine); return null; } 
-    //     else
-    //     {
-    //         Dictionary elementDictionary = jsonObject.Result as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
-    //         loaded.StoryElementData = new Dictionary<string, string>(elementDictionary);
-    //         // GD.Print("Story Element Data:\n" + JSON.Print(loaded.StoryElementData, "\t"));
-    //     }
-    //     return loaded; 
-    // }
-
-    // ----------------------Flow---------------------------
-    
-
-    // public override bool Save()
-    // {
-    //     ConfigFile configFile = new ConfigFile();
-    //     configFile.SetValue("StoryElement", "Data", StoryElementData);
-    //     configFile.SetValue("Flow", "Data", StoryFlowData);
-    //     Error err = configFile.Save(ResourcePath);
-    //     if (err != Error.Ok) { GD.Print(err); return false; }
-    //     return true;
-    // }
-
-    // // Loading Story Element
-    // public static new StoryFlow Load(string path) 
-    // { 
-    //     StoryFlow loaded = new StoryFlow(path);
-    //     ConfigFile configFile = new ConfigFile();
-    //     Error err = configFile.Load(path);
-    //     if (err != Error.Ok) { GD.Print(err); return null; }
-    //     Dictionary elementDictionary = configFile.GetValue("StoryElement", "Data") as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
-    //     loaded.StoryElementData = new Dictionary<string, string>(elementDictionary);
-    //     Dictionary flowDictionary = configFile.GetValue("Flow", "Data") as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
-    //     loaded.StoryFlowData = new Dictionary<string, string>(flowDictionary);
-    //     return loaded; 
-    // }
-
-
 
     // ----------------------Old---------------------------
 

@@ -7,9 +7,55 @@ using Array = Godot.Collections.Array;
 public class StoryFlow : StoryElement
 {
     // Custom Story Element Data
-    public Array StoryFlowFragments { get; set; } = new Array();
-    public Array StoryFlowNodes { get; set; } = new Array();
-    public Array StoryFlowConnections { get; set; } = new Array();
+    public Array<Dictionary<string, object>> StoryFlowFragments 
+    { 
+        get { return StoryFragment.FragmentDatas; } 
+        set { StoryFragment.Reset(); StoryFragment.FragmentDatas = value; } 
+    }
+
+    public Array StoryFlowNodes 
+    { 
+        get
+        {
+            Godot.Collections.Array allNodes = Editors.flowEditor.GetAllNodes();
+            Godot.Collections.Array flowNodes = new Array();
+            for (int i = 0; i < allNodes.Count; i++)
+            {
+                if (allNodes[i] is FlowGraphNode flowNode)
+                {
+                    GD.Print(flowNode);
+                    flowNodes.Add(flowNode.NodeData);
+                }
+            }
+            return flowNodes;
+        } 
+        set
+        {
+            for (int i = 0; i < value.Count; i++)
+            {
+                Dictionary loadedData = value[i] as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
+                Dictionary<string, object> nodeData = new Dictionary<string, object>(loadedData); 
+                Editors.flowEditor.CreateFlowNode(nodeData);
+            }
+        } 
+    }
+    
+    public Array StoryFlowConnections 
+    { 
+        get
+        { 
+            return Editors.flowEditor.GetConnectionList(); 
+        }
+        set
+        {
+            for (int i = 0; i < value.Count; i++)
+            {
+                Dictionary loadedData = value[i] as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
+                Dictionary<string, string> connection = new Dictionary<string, string>(loadedData);
+                Editors.flowEditor.ConnectNode(connection["from"], connection["from_port"].ToInt(), connection["to"], connection["to_port"].ToInt());
+            }
+        }
+    }
 
     protected StoryFlow() {} 
     public StoryFlow(string path, string name = "", string description = "") : base(path, name, description) 
@@ -36,14 +82,14 @@ public class StoryFlow : StoryElement
         ConfigFile configFile = new ConfigFile();
         Error err = configFile.Load(StoryElementPath);
         if (err != Error.Ok) { GD.Print(err); return false; }
-        Dictionary elementDictionary = configFile.GetValue("StoryElement", "Data") as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
-        StoryElementData = new Dictionary<string, string>(elementDictionary);
-        Array fragmentDictionary = configFile.GetValue("StoryFlow", "Fragments") as Array;  // Godot Problem: "as Dictionary<string, string>" return null
-        StoryFlowFragments = new Array(fragmentDictionary);
-        Array nodeDictionary = configFile.GetValue("StoryFlow", "Nodes") as Array;  // Godot Problem: "as Dictionary<string, string>" return null
-        StoryFlowNodes = new Array(nodeDictionary);
-        Array connectionDictionary = configFile.GetValue("StoryFlow", "Connections") as Array;  // Godot Problem: "as Dictionary<string, string>" return null
-        StoryFlowConnections = new Array(connectionDictionary);
+        Dictionary loadedData = configFile.GetValue("StoryElement", "Data") as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
+        StoryElementData = new Dictionary<string, string>(loadedData);
+        Array loadedFragments = configFile.GetValue("StoryFlow", "Fragments") as Array;
+        StoryFlowFragments = new Array<Dictionary<string, object>>(loadedFragments);
+        Array loadedNodes = configFile.GetValue("StoryFlow", "Nodes") as Array;
+        StoryFlowNodes = new Array(loadedNodes);
+        Array loadedConnections = configFile.GetValue("StoryFlow", "Connections") as Array; 
+        StoryFlowConnections = new Array(loadedConnections);
         return isSuccess;
     }
 

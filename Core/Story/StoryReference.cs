@@ -9,6 +9,9 @@ public class StoryReference : StoryElement
     // Custom Story Element Data
     public Array StoryReferenceData { get; set; } = new Array();
 
+    // Reference Data
+    // public string StoryElementTag { get { return StoryElementData["Tag"]; } set { StoryElementData["Tag"] = value; } }  // Example: Awesome Person
+
     protected StoryReference() {} 
     public StoryReference(string path, string name = "", string description = "") : base(path, name, description) 
     { 

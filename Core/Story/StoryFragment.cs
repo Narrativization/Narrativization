@@ -1,26 +1,69 @@
 using Godot;
 using System;
 using Godot.Collections;
+using Array = Godot.Collections.Array;
 
-// Story Flow Fragment
+// Story Flow Fragment | Informations of Nodes Contained
 public class StoryFragment : Godot.Object
 {
-    // Flow Fragment Index
-    public static int FragmentIndex { get; set; } = 0;
+    // Generic Fragment Index
+    public static int GenericIdIndex { get; set; } = 0; // Uid, Nid -> Unique or Node id
+    public static Array<StoryFragment> StoryFragments = new Array<StoryFragment>(); // All Created Story Fragment For Current Story
 
-    // Flow Fragment Id
-    public int FragmentId { get; set; } = FragmentIndex++; // Unique Fragment Id
+    public static Array<Dictionary<string, object>> FragmentDatas 
+    { 
+        get
+        {
+            Array<Dictionary<string, object>> _fragmentDatas = new Array<Dictionary<string, object>>();
+            for (int i = 0; i < StoryFragments.Count; i++)
+            {
+                _fragmentDatas.Add(StoryFragments[i].FragmentData);
+            }
+            return _fragmentDatas;
+        } 
+        set
+        {
+            for (int i = 0; i < value.Count; i++)
+            {
+                new StoryFragment(i, value[i]);
+            }
+        } 
+    }
+
+    // Flow Fragment 
+    public int FragmentId { get; set; } = GenericIdIndex++; // Fragment Id
     
-    // Custom Fragment Data
-    public Dictionary<string, object> FragmentData { get; set; } = new Dictionary<string, object>(); 
-    
-    public Vector2 Slots { get; set; } = new Vector2(-1, -1); // Left & Right Slot ~
-    
-    public Vector2 Offset { get; set; } = new Vector2(0, 0);
-    
+    public string FragmentContent {get { return FragmentData["Content"] as string; } set { FragmentData["Content"] = value; } } // Content
     public string ReferenceId { get; set; } = ""; // Referenced Story Element Id (/Flow/...)
 
-    public string FragmentContent = "";
+    // Custom Fragment Data
+    public Dictionary<string, object> FragmentData { get; set; } = new Dictionary<string, object>()
+    {
+        { "Content", ""}
+    }; 
 
+    public StoryFragment() 
+    {
+        StoryFragments.Add(this);
+    }
+
+    public StoryFragment(int index, Dictionary<string, object> fragmentData) 
+    {
+        GenericIdIndex = index + 1;
+        FragmentId = index;
+        FragmentData = fragmentData;
+        StoryFragments.Add(this);
+    }
+
+    public static StoryFragment GetStoryFragment(int index)
+    {
+        return StoryFragments[index];
+    }
+    
+    // Reset StoryFragment
+    public static void Reset() { GenericIdIndex = 0; StoryFragments = new Array<StoryFragment>(); }
+    
+    
+    // public Vector2 Slots { get; set; } = new Vector2(-1, -1); // Left & Right Slot ~
 
 }

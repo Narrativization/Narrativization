@@ -9,8 +9,6 @@ public class FlowEditor : GraphNodeEditor
     private PackedScene flowContextMenuScene = GD.Load<PackedScene>("res://GUI/Contexts/FlowContextMenu.tscn");
     [Export]
     private PackedScene storyNode = GD.Load<PackedScene>("res://GUI/Nodes/StoryNode.tscn");
-    [Export]
-    private PackedScene storyFlowNodeScene = GD.Load<PackedScene>("res://GUI/Nodes/StoryFlowFragment.tscn");
 
 
     private FlowContextMenu contextMenu;
@@ -111,18 +109,6 @@ public class FlowEditor : GraphNodeEditor
         base._GuiInput(inputEvent);
     }
 
-    int ind = 1;
-    public bool CreateFlowNode()
-    {
-        GD.Print("Create Story Flow Node");
-        StoryFlowNode storyFlowNode = storyFlowNodeScene.Instance() as StoryFlowNode;
-        // storyFlowNode.InitNode("/Flows/Chapter" + ind++); // StoryFlow.Load(StoryManager.CurrentStory.StoryBase + path)
-        StoryElement storyFlow = storyFlowNode.ReferenceStoryFlow(new StoryElement(StoryManager.CurrentStory.StoryBase + "/Flows/Chapter" + ind++ + ".flow"));
-        AddChild(storyFlowNode);
-        storyFlowNode.Offset = ScrollOffset + GetLocalMousePosition() - (storyFlowNode.RectSize/2);
-        return true;
-    }
-
     public Dictionary<string, string> SaveData()
     {
         Dictionary<string, string> saveData = new Dictionary<string, string>();
@@ -131,7 +117,7 @@ public class FlowEditor : GraphNodeEditor
         {
             if (graphNodes[i] is FlowGraphNode flowNode)
             {
-                saveData.Add(flowNode.FragmentId+"", "");  // flowNode.flowData
+                saveData.Add(flowNode.NodeFragmentId+"", "");  // flowNode.flowData
                 // saveData.Add(flowNode.FragmentId, flowNode.Offset);  // flowNode.flowData
             }
         }

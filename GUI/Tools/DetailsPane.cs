@@ -33,15 +33,15 @@ public class DetailsPane : Panel
         GetNode<RichTextLabel>("DetailsText").Text = storyElement.StoryElementName;
         if (storyElement is StoryFlow)
         {
-            editors = GetTree().GetNodesInGroup("Editors")[0] as Editors;
-            editors.flowEditor.Connect("node_selected", this, "_OnStoryFragmentSelected");
+            // editors = GetTree().GetNodesInGroup("Editors")[0] as Editors;
+            Editors.flowEditor.Connect("node_selected", this, "_OnStoryFragmentSelected");
         }
     }
 
     public void _OnStoryFragmentSelected(StoryFlowNode flowNode)
     {
         if (!IsInstanceValid(flowNode)) { return; }
-        GetNode<RichTextLabel>("DetailsText").Text = "" +flowNode.FragmentId;
+        GetNode<RichTextLabel>("DetailsText").Text = "" + JSON.Print(flowNode.NodeData, "\t");
     }
 
 }

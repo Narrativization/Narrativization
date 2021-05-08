@@ -50,8 +50,8 @@ public class Navigator : Tree
                 TreeItem treeItem = GetItemAtPosition(mouseEvent.Position);
                 string path = PathFromTree(treeItem);
                 GD.Print("Double Click: " + treeItem.GetText(0) + " -> \"" + path + "\"");
-                // StoryManager.CurrentStoryElement = StoryElement.Load(StoryManager.CurrentStory.StoryBase + path);
-                // GetTree().CallGroup("Editors", "EditStoryElement", StoryManager.CurrentStoryElement);
+                Editors.flowEditor.Reset();
+                StoryManager.CurrentStoryElement = new StoryFlow(StoryManager.CurrentStory.StoryBase + path);
             }
         }
         if (inputEvent.IsActionPressed("Help"))
