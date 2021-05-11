@@ -84,6 +84,18 @@ public class Story : Node
         }
     }
 
+    public static StoryElement CreateStoryElement(string path)
+    {
+        StoryElement storyElement;
+        string idPath = path.Replace(StoryManager.CurrentStory.StoryBase, ""); // Remove Story Base
+        if (idPath.StartsWith("/Flows/")) { storyElement = new StoryFlow(path); }
+        else if (idPath.StartsWith("/Entities/")) { storyElement = new StoryEntity(path); }
+        else if (idPath.StartsWith("/Assets/")) { storyElement = new StoryAsset(path); }
+        else if (idPath.StartsWith("/References/")) { storyElement = new StoryElement(path); }
+        else { storyElement = new StoryAsset(path); }
+        return storyElement;
+    }
+
     // ~Open Default/Recent Flow
     public void CreateDefaultFlow()
     {

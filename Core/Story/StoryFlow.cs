@@ -17,7 +17,7 @@ public class StoryFlow : StoryElement
     { 
         get
         {
-            Godot.Collections.Array allNodes = Editors.flowEditor.GetAllNodes();
+            Godot.Collections.Array<GraphNode> allNodes = Editors.flowEditor.GetAllNodes();
             Godot.Collections.Array flowNodes = new Array();
             for (int i = 0; i < allNodes.Count; i++)
             {

@@ -57,32 +57,11 @@ public class FlowEditor : FlowGraphEditor
         {
             ModalManager.Modals.ShowCreateModal();
         }
-
-        if (inputEvent.IsActionPressed("Delete"))
-        {
-            GD.Print("Delete Selected Nodes");
-            DeleteSelected();
-        }    
-
-        if (inputEvent.IsActionPressed("Duplicate"))
-        {
-            GD.Print("Duplicate Selected Nodes");
-            DuplicateSelected();
-        }   
-
-        if (inputEvent.IsActionPressed("Backward"))
-        {
-            GD.Print("Previous Flow");
-        }
-        else if (inputEvent.IsActionPressed("Forward"))
-        {
-            GD.Print("Next Flow");
-        }
         
         if (inputEvent.IsActionPressed("Open"))
         {
             GD.Print("Open");
-            Godot.Collections.Array selected = GetSelected();
+            Godot.Collections.Array<GraphNode> selected = GetSelectedNodes();
             if (selected.Count == 1 && selected[0] is FlowGraphNode flowGraphNode)
             {
                 flowGraphNode.OpenNode();

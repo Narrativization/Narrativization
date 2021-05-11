@@ -47,6 +47,8 @@ public class MenuStoryBar : HBoxContainer
                 break;
             case 4: // Help
                 GD.Print("Help");
+                GD.Print("Roadmap");
+                GD.Print(FileManager.LoadFile("res://Roadmap.md"));
                 break;
             case 5: // Quit
                 GetTree().Quit();

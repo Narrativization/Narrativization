@@ -104,13 +104,7 @@ public class CreatorModal : ConfirmationDialog
     public void _OnConfirmed()
     {
         string path = StoryManager.CurrentStory.StoryBase + idEdit.Text + "." + _extension;
-        string idPath = idEdit.Text;
-        StoryElement storyElement;
-        if (idPath.StartsWith("/Flows/")) { storyElement = new StoryFlow(path); GD.Print("Flowssss"); }
-        else if (idPath.StartsWith("/Entities/")) { storyElement = new StoryEntity(path); }
-        else if (idPath.StartsWith("/Assets/")) { storyElement = new StoryAsset(path); }
-        else if (idPath.StartsWith("/References/")) { storyElement = new StoryElement(path); }
-        else { storyElement = new StoryAsset(path); }
+        StoryElement storyElement = Story.CreateStoryElement(path);
         storyElement.Save();
         StoryManager.CurrentStoryElement = storyElement;
     }
