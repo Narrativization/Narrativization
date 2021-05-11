@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 // Generic Flow Node
-public class StoryFlowNode : FlowGraphNode
+public class FlowNode : FlowGraphNode
 {
     [Export]
     public StoryElement storyFlow;

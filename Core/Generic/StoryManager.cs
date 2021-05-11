@@ -107,13 +107,6 @@ public class StoryManager : Node
             {
                 CurrentStoryElement.Save();
             }
-
-            // if (IsInstanceValid(CurrentStoryElement))
-            // {
-            //     Editors editors = GetTree().GetNodesInGroup("Editors")[0] as Editors;
-            //     CurrentStoryElement.StoryElementData["Flows"] = JSON.Print(editors.flowEditor.SaveData(), "\t");
-            //     CurrentStoryElement.Save();
-            // }
         }
     }
 
@@ -192,7 +185,7 @@ public class StoryManager : Node
     Create a project file structure | .storier
     {
         Story: {
-            Name: "Storier",  // Title
+            Name: "Storier",
             Description: "Story Managing Software for Game Creators.",
             Author: "Atakan Ateş",
             Copyright: "Copyright © Atakan Ateş, All Rights Reserved!"

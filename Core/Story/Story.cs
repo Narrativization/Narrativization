@@ -106,11 +106,11 @@ public class Story : Node
 Story Elements(Hierarchy) - File/Folder Structure
 - Story(.storier) -> json
     - Flows(.flow) -> config
-    - Entities(.entity) -> json
+    - Entities(.entity) -> config
         - Characters
         - Locations
         - ~Items
-    - Assets -> png, jpg, txt, csv... 
+    - Assets -> config, png, jpg, txt, csv... 
     - Journeys() -> config
     - Templates(.template) -> config, json, ~xml, tscn
     - References(.reference) -> config

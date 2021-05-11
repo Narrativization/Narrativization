@@ -24,6 +24,8 @@ public class CreateStoryModal : ConfirmationDialog
         descriptionName = GetNode<LineEdit>(descriptionNodePath);
         authorName = GetNode<LineEdit>(authorNodePath);
         copyrightName = GetNode<LineEdit>(copyrightNodePath);
+
+        Connect("confirmed", this, "_OnCreateDialogConfirmed");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -65,6 +67,17 @@ public class CreateStoryModal : ConfirmationDialog
         descriptionName.Text = "";
         authorName.Text = "";
         copyrightName.Text = "";
+    }
+
+    public void _OnCreateDialogConfirmed()
+    {
+        GD.Print("Create Story");
+        ValidateInfos();
+        Story story = StoryManager.CreateStory(storyName.Text, descriptionName.Text, GetDir());
+        story.StoryData["Author"] = authorName.Text;
+        story.StoryData["Copyright"] = copyrightName.Text;
+        StoryManager.SaveStory();
+        ClearDialogue();
     }
 
 }

@@ -2,8 +2,8 @@ using Godot;
 using System;
 using Godot.Collections;
 
-// Create(or rename) FlowNode -> Generic Flow editor Node
-public class StoryNode : GraphNode
+// Story Node
+public class StoryNode : FlowGraphNode
 {
     [Export] // Export(Dictionary, string, NodePath)
     private Array<NodePath> editables = new Array<NodePath>(); // NodePath: JSON.Direction  

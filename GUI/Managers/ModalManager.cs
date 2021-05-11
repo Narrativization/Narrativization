@@ -103,14 +103,4 @@ public class ModalManager : Control
         GD.Print("Load Story");
         StoryManager.LoadStory(path);
     }
-
-    public void _OnCreateDialogConfirmed()
-    {
-        GD.Print("Create Story");
-        createStoryDialogue.ValidateInfos();
-        StoryManager.CreateStory(createStoryDialogue.storyName.Text, createStoryDialogue.descriptionName.Text, createStoryDialogue.GetDir());
-        createStoryDialogue.ClearDialogue();
-    }
-
-    
 }

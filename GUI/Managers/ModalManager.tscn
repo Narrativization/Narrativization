@@ -51,6 +51,5 @@ current_path = "/Oyun Sanat/Godot/Projects/Storier/"
 
 [node name="SettingsModal" parent="." instance=ExtResource( 4 )]
 
-[connection signal="confirmed" from="CreateStoryDialog" to="." method="_OnCreateDialogConfirmed"]
 [connection signal="dir_selected" from="FileDialog" to="." method="_OnFileDialogDirSelected"]
 [connection signal="file_selected" from="FileDialog" to="." method="_OnFileDialogFileSelected"]

@@ -4,7 +4,7 @@ using Godot.Collections;
 using Array = Godot.Collections.Array;
 
 // Basic Flow Controls for GraphEdit(Without Storier)
-public class GraphNodeEditor : GraphEdit
+public class FlowGraphEditor : GraphEdit
 {
     [Export]
     public float zoomSpeed = 1.0f;
@@ -326,7 +326,7 @@ public class GraphNodeEditor : GraphEdit
     }
 
 
-    public bool CreateFlowNode(string nodeType = "res://GUI/Nodes/StoryFlowFragment.tscn")
+    public bool CreateFlowNode(string nodeType = "res://GUI/Nodes/FlowNode.tscn")
     {
         GD.Print("Create Story Flow Node");
         PackedScene storyFlowNodeScene = GD.Load<PackedScene>(nodeType);
@@ -438,6 +438,19 @@ public class GraphNodeEditor : GraphEdit
         {
             if (selectedNodes[i] is GraphNode selectedNode)
             {
+                /* // Disconnect Left Slot/Port | Also implement Right Slot -> Fix Error
+                Godot.Collections.Array connectionList = GetConnectionList();
+                for (int j = 0; j < connectionList.Count; j++)
+                {
+                    if (connectionList[i] is Dictionary connection)
+                    {
+                        if ((connection["from"] != null && connection["to"] != null)
+                            && selectedNode.Equals(GetNode<GraphNode>("./" + connection["to"])))
+                        {
+                            DisconnectNode((string)connection["from"], (int)connection["from_port"], (string)connection["to"], (int)connection["to_port"]);
+                        }
+                    }
+                }*/
                 selectedNode.QueueFree();
             }
         }

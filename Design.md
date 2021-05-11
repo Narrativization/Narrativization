@@ -12,12 +12,14 @@
     - Setting[Entity/Locations]
     - Theme[StoryInfo], Conflict[StoryInfo]...
 
+---
+
 Storier uses Story as Project.
 Flow consists of flows/story fragments.
 Flows/story fragments contains Entity & Assets. 
 Entities consists of derived informations and contains Assets.
 Assets are pure informations such as images.  
-Every Flow and Entity templatable with changing their details.
+~~Every Flow and Entity templatable with changing their details.~~
 Some points(nodes or subflow) in the flow can be marked as keypoints([Plot](https://en.wikipedia.org/wiki/Plot_(narrative))).
 
 #### Basic Folder Structure
@@ -120,38 +122,12 @@ Workspace & Settings Folder
 ### Hierarchy Formats
 - Story(.storier) -> json
     - Flows(.flow) -> config
-    - Entities(.entity) -> json, ~config(Internationalization)
-    - Assets -> png, jpg, txt, csv... 
+    - Entities(.entity) -> config
+    - Assets -> config, png, jpg, txt, csv... 
     - Journeys() -> config
     - Templates(.template) -> config, json, ~xml
     - References(.reference) -> config
     - .Export -> json/csv(Entities)
-
-Story
-    - Story Elements (Flow, Entity, Assets, ...)
-        - Files
-        - SubFolders
-            - Files
-
-
-### Entity Format
-Entity Example(.entity) -> .json
-{
-    Id: "", 
-    Name: "", 
-    Description: "",
-    Template: "",
-    Data/Information/Content/Paper/Page: {
-        ...
-    }
-}
-
-StoryElement General Informations(Common)
-Id, Name, Description, Template 
-StoryElement Template Informations
-Data
-
-~Aspect, Emotions, 
 
 ### Story Element
 Path = ... /Flow/Chapter1 .flow
@@ -159,5 +135,20 @@ Path = ... /Flow/Chapter1 .flow
 - /Flow/Chapter1 -> Id
 - flow -> Extension
 
+#### Config Format
+[StoryElement]
+
+{
+    Name: "", 
+    Description: ""
+}
+
+[StoryElementType]
+
+Data: ...
+
+### Extra
 Template Defination
 Name : Value ~:Type
+
+~Aspect, Emotions

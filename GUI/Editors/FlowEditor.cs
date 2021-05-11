@@ -2,7 +2,7 @@ using Godot;
 using System;
 using Godot.Collections;
 
-public class FlowEditor : GraphNodeEditor
+public class FlowEditor : FlowGraphEditor
 {
     // Exports
     [Export]

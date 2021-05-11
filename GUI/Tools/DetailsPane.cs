@@ -4,8 +4,6 @@ using System;
 public class DetailsPane : Panel
 {
     
-    private Editors editors;
-
     public override void _Ready()
     {
         StoryManager.CurrentStoryManager.Connect("StoryChanged", this, "_OnStoryChanged");
@@ -33,12 +31,14 @@ public class DetailsPane : Panel
         GetNode<RichTextLabel>("DetailsText").Text = storyElement.StoryElementName;
         if (storyElement is StoryFlow)
         {
-            // editors = GetTree().GetNodesInGroup("Editors")[0] as Editors;
-            Editors.flowEditor.Connect("node_selected", this, "_OnStoryFragmentSelected");
+            if (!Editors.flowEditor.IsConnected("node_selected", this, "_OnStoryFragmentSelected"))
+            {
+                Editors.flowEditor.Connect("node_selected", this, "_OnStoryFragmentSelected");
+            }
         }
     }
 
-    public void _OnStoryFragmentSelected(StoryFlowNode flowNode)
+    public void _OnStoryFragmentSelected(FlowNode flowNode)
     {
         if (!IsInstanceValid(flowNode)) { return; }
         GetNode<RichTextLabel>("DetailsText").Text = "" + JSON.Print(flowNode.NodeData, "\t");
