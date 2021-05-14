@@ -20,8 +20,8 @@ public class FlowNode : FlowGraphNode
     public override void _GuiInput(InputEvent inputEvent)
     {
         base._GuiInput(inputEvent);
-    } 
-    
+    }
+
     public StoryElement ReferenceStoryFlow(StoryElement _storyFlow)
     {
         storyFlow = _storyFlow;

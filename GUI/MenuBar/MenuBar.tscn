@@ -49,6 +49,7 @@ __meta__ = {
 margin_left = 49.0
 margin_right = 95.0
 margin_bottom = 25.0
+hint_tooltip = "Toggle Tools"
 text = "Tools"
 flat = true
 __meta__ = {
@@ -121,6 +122,7 @@ __meta__ = {
 [node name="Editor" type="Button" parent="EditBar"]
 margin_right = 42.0
 margin_bottom = 25.0
+hint_tooltip = "Change Editor"
 text = "Flow"
 flat = true
 __meta__ = {

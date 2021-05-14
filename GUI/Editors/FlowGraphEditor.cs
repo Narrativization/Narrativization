@@ -106,7 +106,7 @@ public class FlowGraphEditor : GraphEdit
             DuplicateSelected();
         }   
         
-        if (inputEvent.IsActionPressed("JumpLeft")) // CTRL + Shift + Left Arrow | Get Nearlest(Left) Graph Node
+        if (inputEvent.IsActionPressed("JumpLeft")) // CTRL + Shift + Left Arrow | Get Directional Nearlest(Left) Graph Node
         {
             GD.Print("JumpLeft");
             JumpNode("Left");
@@ -126,7 +126,7 @@ public class FlowGraphEditor : GraphEdit
             GD.Print("JumpDown");
             JumpNode("Down");
         }
-        else if (inputEvent.IsActionPressed("AnyLeft")) // CTRL + Shift + Left Arrow | Get Nearlest(Left) Graph Node
+        else if (inputEvent.IsActionPressed("AnyLeft")) // Alt + Shift + Left Arrow | Get Any Nearlest(Left) Graph Node
         {
             GD.Print("AnyLeft");
             JumpAnyNode("Left");
@@ -416,10 +416,10 @@ public class FlowGraphEditor : GraphEdit
     {
         GD.Print("Create Story Flow Node");
         PackedScene storyFlowNodeScene = GD.Load<PackedScene>(nodeType);
-        FlowGraphNode flowNode = storyFlowNodeScene.Instance() as FlowGraphNode;
-        flowNode.NodeFragment = new StoryFragment();
-        AddChild(flowNode);
-        flowNode.Offset = ScrollOffset + GetLocalMousePosition() - (flowNode.RectSize/2);
+        FlowGraphNode flowGraphNode = storyFlowNodeScene.Instance() as FlowGraphNode;
+        flowGraphNode.CreateFlowNode(nodeType);
+        AddChild(flowGraphNode);
+        flowGraphNode.Offset = ScrollOffset + GetLocalMousePosition() - (flowGraphNode.RectSize/2);
         return true;
     }
 
@@ -427,9 +427,9 @@ public class FlowGraphEditor : GraphEdit
     {
         GD.Print("Create Story Flow Node");
         PackedScene storyFlowNodeScene = GD.Load<PackedScene>(nodeData["Type"] as string);
-        FlowGraphNode flowNode = storyFlowNodeScene.Instance() as FlowGraphNode;
-        AddChild(flowNode);
-        flowNode.NodeData = nodeData; 
+        FlowGraphNode flowGraphNode = storyFlowNodeScene.Instance() as FlowGraphNode;
+        flowGraphNode.CreateFlowNode(nodeData);
+        AddChild(flowGraphNode);
         return true;
     }
 

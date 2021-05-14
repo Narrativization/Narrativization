@@ -15,7 +15,6 @@ public class FlowEditor : FlowGraphEditor
 
     public override void _Ready()
     {                
-        // AddToGroup("FlowEditor");
         contextMenu = flowContextMenuScene.Instance<FlowContextMenu>();
         AddChild(contextMenu);
 
@@ -27,9 +26,9 @@ public class FlowEditor : FlowGraphEditor
         }
 
         Connect("node_selected", this, "_OnNodeSelected");
+        Connect("node_unselected", this, "_OnNodeUnselected");
         base._Ready(); 
     }
-
 
     //  public override void _Process(float delta)
     //  {
@@ -88,29 +87,16 @@ public class FlowEditor : FlowGraphEditor
         base._GuiInput(inputEvent);
     }
 
-    public Dictionary<string, string> SaveData()
-    {
-        Dictionary<string, string> saveData = new Dictionary<string, string>();
-        Godot.Collections.Array graphNodes = GetChildren();
-        for (int i = 0; i < graphNodes.Count; i++)
-        {
-            if (graphNodes[i] is FlowGraphNode flowNode)
-            {
-                saveData.Add(flowNode.NodeFragmentId+"", "");  // flowNode.flowData
-                // saveData.Add(flowNode.FragmentId, flowNode.Offset);  // flowNode.flowData
-            }
-        }
-        return saveData;
-    }
-
-    // public void LoadData(Dictionary<string, string> loadData)
-    // {
-        
-    // }
-
     public void _OnNodeSelected(Node node)
     {
-        // StoryManager.Fragment
-        GD.Print(node.Name);
+        StoryManager.CurrentFlowNode = node as FlowGraphNode;
+    }
+
+    public void _OnNodeUnselected(Node node)
+    {
+        if (StoryManager.CurrentFlowNode == node as FlowGraphNode)
+        {
+            StoryManager.CurrentFlowNode = null;
+        }
     }
 }

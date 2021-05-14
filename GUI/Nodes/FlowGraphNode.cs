@@ -21,7 +21,7 @@ public class FlowGraphNode : GraphNode
     // Graph Node Display Informations
     public int NodeFragmentId { get; set; } // Fragment Id/Index
     public string NodeName { get { return Name; } set { Name = value; } } 
-    public string NodeType { get { return Filename; } set { Filename = value; } } // ~Set Value
+    public string NodeType { get { return Filename; } set { Filename = value; } }
     public string NodeTitle { get { return Title; } set { Title = value; } }
     public Vector2 NodeOffset { get { return Offset; } set { Offset = value; } }
 
@@ -72,6 +72,10 @@ public class FlowGraphNode : GraphNode
             }
         }
     }
+
+    // Create Flow Graph Node
+    public virtual void CreateFlowNode(string nodeType) { NodeFragment = new StoryFragment(); }
+    public virtual void CreateFlowNode(Dictionary<string, object> nodeData) { NodeData = nodeData; }
 
     // Reset GenericIdIndex from GraphEditor
     public static void Reset() { GenericIdIndex = 0; }

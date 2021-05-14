@@ -51,17 +51,17 @@ public class StoryManager : Node
         } 
     }
 
-    // // Story Fragment
-    // private static StoryElement _StoryFragment { get; set; } // Currently Edited Story Element
-    // public static StoryElement CurrentStoryFragment 
-    // {
-    //     get { return _StoryFragment; } 
-    //     set 
-    //     {
-    //         _StoryFragment = value; 
-    //         _StoryManager.EmitSignal("FragmentChanged", _StoryFragment); 
-    //     }
-    // } 
+    // Story Flow Node
+    private static FlowGraphNode _FlowNode { get; set; }
+    public static FlowGraphNode CurrentFlowNode 
+    {
+        get { return _FlowNode; } 
+        set 
+        {
+            _FlowNode = value; 
+            _StoryManager.EmitSignal("FlowNodeChanged", _FlowNode); 
+        }
+    } 
 
     
     [Signal]
@@ -74,10 +74,10 @@ public class StoryManager : Node
     public delegate void StoryElementCreated(StoryElement storyElement);
     [Signal]
     public delegate void StoryElementChanged(StoryElement storyElement);
-    // [Signal]
-    // public delegate void FragmentCreated(string titleId);
-    // [Signal]
-    // public delegate void FragmentChanged(string titleId);
+    [Signal]
+    public delegate void FlowNodeCreated(FlowGraphNode flowNode);
+    [Signal]
+    public delegate void FlowNodeChanged(FlowGraphNode flowNode);
 
     private StoryManager()
     {

@@ -31,7 +31,6 @@ margin_right = -5.0
 margin_bottom = -5.0
 
 [node name="FlowEditor" parent="Flow" instance=ExtResource( 1 )]
-scroll_offset = Vector2( -5, -5 )
 
 [node name="Scene" type="Tabs" parent="."]
 visible = false
