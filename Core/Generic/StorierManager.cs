@@ -16,7 +16,7 @@ public class StorierManager : Node
     // Custom Storier Data
     public static Dictionary<string, string> StorierData { get; set; } = new Dictionary<string, string>()
     {
-        {"Version", "v0.3"}
+        {"Version", "v0.4"}
     }; 
     
 
@@ -78,7 +78,7 @@ public class StorierManager : Node
     // Save Config file use as UserStories settings
     public static void SaveUserConfig(string fileName = "UserSettings")
     {
-        string configFileName = StorierManager.userDataDirectory + fileName + ".ini";
+        string configFileName = StorierManager.userDataDirectory + fileName + ".cfg";
         ConfigFile configFile = new ConfigFile();
         Directory dir = new Directory();
         dir.MakeDirRecursive(configFileName.GetBaseDir());
@@ -90,7 +90,7 @@ public class StorierManager : Node
     // Load Config file
     public static void LoadUserConfig(string fileName = "UserSettings")
     {
-        string configFileName = StorierManager.userDataDirectory + fileName + ".ini";
+        string configFileName = StorierManager.userDataDirectory + fileName + ".cfg";
         ConfigFile configFile = new ConfigFile();
         Error err = configFile.Load(configFileName);
         if (err != Error.Ok) { GD.Print(err); }
@@ -107,7 +107,7 @@ public class StorierManager : Node
 
     ---
 
-    UserSettings.ini
+    UserSettings.cfg
     
     [Workspace]
     Directory "" ; Empty is Documents

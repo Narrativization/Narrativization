@@ -71,7 +71,6 @@ Some points(nodes or subflow) in the flow can be marked as keypoints([Plot](http
         - Links(href, :, ->)
 
 Also can consist of flows such as Universe, Timeline. 
-SnowFlake
 
 ## User Interfaces
 [General Design](#General)
@@ -103,31 +102,29 @@ Be UX focused!
 Multi and Single File Save(or Export)
 Game Engine integrated import/exports
 
-### Narrative Structure
+### Inspirations
 Good for creating causation; also ***Hero's Journey***, ***Three Act Structure*** etc. 
 [Narrative Structures](https://en.wikipedia.org/wiki/Narrative_structure)
 [Inspiration Helper](https://en.wikipedia.org/wiki/The_Thirty-Six_Dramatic_Situations)
-
-### Others
-Flow Samples: Cinematic/Gameplay
+SnowFlake, Dan Harmon's Story Circle
 
 ## Technical
 [Design](#Design)
 
 Workspace & Settings Folder
-- Default project folder: ***"~/Documents/Storier"***
+- Default project folder: ***"~/Documents/Storier/"***
 - User(Recent) Stories: ***"user://UserStories.ini"*** 
 - User Settings(Data): ***"user://UserSettings.cfg"*** 
 
 ### Hierarchy Formats
-- Story(.storier) -> json
-    - Flows(.flow) -> config
-    - Entities(.entity) -> config
-    - Assets -> config, png, jpg, txt, csv... 
-    - Journeys() -> config
-    - Templates(.template) -> config, json, ~xml
-    - References(.reference) -> config
-    - .Export -> json/csv(Entities)
+- Story(.storier)               -> json
+    - Flows(.flow)              -> config
+    - Entities(.entity)         -> config
+    - Assets(.asset)            -> config, png, jpg, txt, csv... 
+    - Journeys(.journey)        -> config
+    - Templates(.template)      -> tscn, config
+    - References(.reference)    -> config
+    - .Export -> config, json, csv(Entities)
 
 ### Story Element
 Path = ... /Flow/Chapter1 .flow
@@ -141,6 +138,7 @@ Path = ... /Flow/Chapter1 .flow
 {
     Name: "", 
     Description: ""
+    ...
 }
 
 [StoryElementType]
