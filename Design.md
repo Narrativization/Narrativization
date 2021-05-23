@@ -88,7 +88,7 @@ Tools
 Editors work based on same data.
 - Flow Editor (Graph-Node Editor) -> Flow
 - Scene Editor (Visual Novel-Slide Editor) -> Flow
-- Text Editor (Document Editor) -> Story Element
+- Script Editor (Document-Text Editor) -> Story Element
 - Property Editor (Entity-File Editor) -> Entity
 - ~Sheet Editor (List/Tile-Data Editor) -> Multiple Story Element, Folders
 

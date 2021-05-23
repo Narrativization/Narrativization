@@ -3,6 +3,14 @@ using System;
 using Godot.Collections;
 using Array = Godot.Collections.Array;
 
+// Fragment Type
+public enum FragmentType
+{
+    Flow,           // Default Fragment             | Name, Description, Content
+    Action,         // Scenario like Action         | Name, Content
+    Dialogue        // Scenario like Dialogue       | Name, Entity(Character), Parenthetical, Dialogue
+}
+
 // Story Flow Fragment | Informations of Nodes Contained
 public class StoryFragment : Godot.Object
 {
@@ -32,14 +40,18 @@ public class StoryFragment : Godot.Object
 
     // Flow Fragment 
     public int FragmentId { get; set; } = GenericIdIndex++; // Fragment Id
-    
-    public string FragmentContent {get { return FragmentData["Content"] as string; } set { FragmentData["Content"] = value; } } // Content
+    // Fragment Data
+    public FragmentType FragmentType { get { return (FragmentType)FragmentData["Type"]; } set { FragmentData["Type"] = value; } }
+    public string FragmentName { get { return FragmentData["Name"] as string; } set { FragmentData["Name"] = value; } }
+
+    public string FragmentContent { get { return FragmentData["Content"] as string; } set { FragmentData["Content"] = value; } } // Content
     public string ReferenceId { get; set; } = ""; // Referenced Story Element Id (/Flow/...)
 
     // Custom Fragment Data
     public Dictionary<string, object> FragmentData { get; set; } = new Dictionary<string, object>()
     {
-        { "Content", ""}
+        { "Type", FragmentType.Flow},
+        { "Name", ""}
     }; 
 
     public StoryFragment() 

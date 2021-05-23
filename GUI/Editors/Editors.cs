@@ -10,13 +10,13 @@ public class Editors : TabContainer
     // [Export]
     // private NodePath propertyEditorNodePath = new NodePath("./Property");
     [Export]
-    private NodePath textEditorNodePath = new NodePath("./Text/TextEditor");
+    private NodePath scriptEditorNodePath = new NodePath("./Script/ScriptEditor");
 
     // Properties
     public string CurrentEditor { get { return GetTabTitle(CurrentTab); } }
 
     public static FlowEditor flowEditor;
-    public static TextEdit textEditor;
+    public static TextEdit scriptEditor;
 
     public Godot.Collections.Array<StoryElement> editedStoryElements = new Godot.Collections.Array<StoryElement>();
     public StoryElement currentStoryElement;
@@ -26,7 +26,7 @@ public class Editors : TabContainer
     {
         AddToGroup("Editors");
         flowEditor = GetNode<FlowEditor>(flowEditorNodePath);
-        textEditor = GetNode<TextEdit>(textEditorNodePath);
+        scriptEditor = GetNode<TextEdit>(scriptEditorNodePath);
     }
 
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -62,8 +62,8 @@ public class Editors : TabContainer
     private void ChangeEditor()
     {
         // textEditor.Text = JSON.Print(StoryManager.CurrentStory.CurrentStoryElement.StoryElementData, "\t");
-        textEditor.Text = "CharacterName: <CharacterName>";
-        textEditor.AddKeywordColor("CharacterName", new Color(0, 0.5f, 0.5f));
-        textEditor.AddColorRegion("<", ">", new Color(0, 1, 0));
+        scriptEditor.Text = "CharacterName: <CharacterName>";
+        scriptEditor.AddKeywordColor("CharacterName", new Color(0, 0.5f, 0.5f));
+        scriptEditor.AddColorRegion("<", ">", new Color(0, 1, 0));
     }
 }

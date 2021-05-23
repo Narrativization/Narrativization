@@ -6,11 +6,10 @@ using Godot.Collections;
 public class FlowGraphNode : GraphNode
 {
     // Flow Fragment Id
-    public static int GenericIdIndex { get; set; } = 0; // Uid, Nid -> Unique or Node id
+    public static int GenericIdIndex { get; set; } = 0; // Node id Index
 
     [Export]
-    public int NodeId { get; set; } = GenericIdIndex++; // Node Id
-
+    public int NodeId { get; set; } = GenericIdIndex++; // Node Id(Noid)
 
     public StoryFragment NodeFragment 
     { 
@@ -25,7 +24,6 @@ public class FlowGraphNode : GraphNode
     public string NodeTitle { get { return Title; } set { Title = value; } }
     public Vector2 NodeOffset { get { return Offset; } set { Offset = value; } }
 
-
     // Custom Node Data
     public Dictionary<string, object> NodeData 
     { 
@@ -33,11 +31,11 @@ public class FlowGraphNode : GraphNode
         {
             return new Dictionary<string, object>()
             {
-                { "FragmentId", NodeFragmentId }, // Fragment Identifier
-                { "Name", NodeName },         // Node Identifier
-                { "Type", NodeType },     // Identify to Displayed Node
-                { "Title", NodeTitle },       // Top Text of Node
-                { "Offset", NodeOffset },      // Location of Node
+                { "FragmentId", NodeFragmentId },   // Fragment Identifier
+                { "Name", NodeName },               // Node Identifier
+                { "Type", NodeType },               // Identify to Displayed Node
+                { "Title", NodeTitle },             // Top Text of Node
+                { "Offset", NodeOffset },           // Location of Node
             };
         } 
         set
@@ -50,9 +48,14 @@ public class FlowGraphNode : GraphNode
         }
     } 
 
-    public override void _Ready()
+    public FlowGraphNode()
     {
         NodeName = "FlowNode" + NodeId;
+    }
+
+    public override void _Ready()
+    {
+
     }
 
 //  public override void _Process(float delta)
@@ -70,11 +73,17 @@ public class FlowGraphNode : GraphNode
             {
                 OpenNode();
             }
+            if (IsInstanceValid(StoryManager.CurrentStory) && // if story exist, show context menu 
+                inputEvent.IsActionPressed("Context"))
+            {
+                GD.Print("NODED!");
+                AcceptEvent();
+            }
         }
     }
 
     // Create Flow Graph Node
-    public virtual void CreateFlowNode(string nodeType) { NodeFragment = new StoryFragment(); }
+    public virtual void CreateFlowNode(string nodeType) { NodeName = "FlowNode" + NodeId; NodeFragment = new StoryFragment(); }
     public virtual void CreateFlowNode(Dictionary<string, object> nodeData) { NodeData = nodeData; }
 
     // Reset GenericIdIndex from GraphEditor
@@ -95,11 +104,12 @@ Nodes
 [
     0: 
     {
-        // FragmentId,
-        Offset,
-        Slots, 
-        Rights,
-        ~Type? -> Hub, Jump etc.
+        FragmentId,
+        Name, // Connection Identifier
+        Title,
+        Offset, 
+        // Ports, // Slots 
+        Type? -> Hub, Jump etc.
     },
     1: 
     {
@@ -107,6 +117,10 @@ Nodes
     }
 ]
 
-
+Connections
+[
+    {from, from_port, to, to_port},
+    ...
+]
 
 */

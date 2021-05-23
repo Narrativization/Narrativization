@@ -13,7 +13,7 @@ public class StoryElement : Resource
     public string StoryElementDescription { get { return StoryElementData["Description"]; } set { StoryElementData["Description"] = value; } }  // Example: Character Example
     
     // Story Element Informations
-    public string StoryElementId { get; set; } // Example: /Entity/Character/MyChar | Relative path to project(<ProjectName>.storier)
+    public string StoryElementId { get; set; } // Example: /Entity/Character/MyChar | Relative path to project(<ProjectName>.storier) | StoryElementId(Seid)
     public string StoryElementPath { get{ return ResourcePath; } set{ TakeOverPath(value); } } // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + "." + StoryElementExtension[flow]
     public string StoryElementExtension { get { return StoryElementPath.Extension(); } } // Example ext: "ext" 
 

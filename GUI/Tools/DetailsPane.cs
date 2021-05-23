@@ -33,6 +33,40 @@ public class DetailsPane : Panel
 
     public void CreateFragmentDetails(FlowGraphNode flowNode)
     {
+        DeleteFragmentDetails();
+        if (!IsInstanceValid(flowNode) || !IsInstanceValid(flowNode.NodeFragment)) { return; }
+        StoryFragment fragment = flowNode.NodeFragment;
+        foreach (var nodeData in fragment.FragmentData)
+        {
+            // GD.Print("NodeDetail: " + nodeData.Value.GetType());
+            if (nodeData.Value.GetType() == typeof(String))
+            {
+                LineEdit lineEdit = DetailString((string)nodeData.Value, nodeData.Key, fragmentDetails);
+                lineEdit.Editable = false;
+            }
+            else if (nodeData.Value.GetType() == typeof(int))
+            {
+                SpinBox spinBox = DetailInt((int)nodeData.Value, nodeData.Key, fragmentDetails);
+                spinBox.Editable = false;
+            }
+            else if (nodeData.Value.GetType() == typeof(Vector2))
+            {
+                Vector2 vector2 = (Vector2)nodeData.Value;
+                HBoxContainer hBox = DetailVector2(vector2, nodeData.Key, fragmentDetails);
+                foreach (SpinBox spinBox in hBox.GetChildren())
+                {
+                    spinBox.Editable = false;
+                }
+            }
+            else if (nodeData.Value.GetType() == typeof(Enum))
+            {
+                // Create Enum Dropdown
+            }
+        }
+    }
+
+    public void DeleteFragmentDetails()
+    {
         foreach (Node n in fragmentDetails.GetChildren())
         {
             n.Name += "Deleted";
@@ -139,6 +173,7 @@ public class DetailsPane : Panel
         if(IsInstanceValid(DraggedFlowNode)) { DraggedFlowNode.Disconnect("dragged", this, "_OnFlowNodeDragged"); } 
         DraggedFlowNode = flowNode;
         flowNode.Connect("dragged", this, "_OnFlowNodeDragged");
+        if (flowNode is FlowNode) { CreateFragmentDetails(flowNode); }
         CreateNodeDetails(flowNode);
     }
 

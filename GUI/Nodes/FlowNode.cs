@@ -6,6 +6,8 @@ public class FlowNode : FlowGraphNode
 {
     [Export]
     public StoryElement storyFlow;
+        
+    public FlowNode() : base() { }
 
     public override void _Ready()
     {

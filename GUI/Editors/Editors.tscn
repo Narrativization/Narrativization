@@ -31,6 +31,7 @@ margin_right = -5.0
 margin_bottom = -5.0
 
 [node name="FlowEditor" parent="Flow" instance=ExtResource( 1 )]
+scroll_offset = Vector2( -5, -5 )
 
 [node name="Scene" type="Tabs" parent="."]
 visible = false
@@ -42,7 +43,7 @@ margin_right = -5.0
 margin_bottom = -5.0
 hint_tooltip = "Similar to Visual Novel Display"
 
-[node name="Text" type="Tabs" parent="."]
+[node name="Script" type="Tabs" parent="."]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -51,7 +52,7 @@ margin_top = 5.0
 margin_right = -5.0
 margin_bottom = -5.0
 
-[node name="TextEditor" type="TextEdit" parent="Text"]
+[node name="ScriptEditor" type="TextEdit" parent="Script"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 syntax_highlighting = true
