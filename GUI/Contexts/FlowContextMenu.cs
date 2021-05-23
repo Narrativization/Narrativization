@@ -18,7 +18,6 @@ public class FlowContextMenu : PopupMenu
             case 0: // Create Fragment
                 GD.Print("Create Fragment");
                 GetParent<FlowEditor>().CreateFlowNode();
-                // ModalManager.modals.ShowCreateModal();
                 break;
             case 1: // Create Character
                 GD.Print("Create Character");

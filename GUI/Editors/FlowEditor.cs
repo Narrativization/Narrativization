@@ -27,6 +27,8 @@ public class FlowEditor : FlowGraphEditor
 
         Connect("node_selected", this, "_OnNodeSelected");
         Connect("node_unselected", this, "_OnNodeUnselected");
+        Connect("_begin_node_move", this, "_OnBeginNodeMove");
+        // Connect("_end_node_move", this, "_OnEndNodeMove");
         base._Ready(); 
     }
 
@@ -99,4 +101,12 @@ public class FlowEditor : FlowGraphEditor
             StoryManager.CurrentFlowNode = null;
         }
     }
+
+    public void _OnBeginNodeMove()
+    {
+        TitleDisplayer displayer = GetTree().GetNodesInGroup("SeidDisplayer")[0] as TitleDisplayer;
+        if (IsInstanceValid(displayer)) { displayer.isModified = true; displayer.UpdateTitle(); }
+    }
+
+    public void _OnEndNodeMove() {  }
 }

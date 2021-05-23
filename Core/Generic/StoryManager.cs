@@ -106,6 +106,7 @@ public class StoryManager : Node
             if (IsInstanceValid(CurrentStoryElement))
             {
                 CurrentStoryElement.Save();
+                _StoryManager.EmitSignal("StoryElementChanged", _StoryElement); 
             }
         }
     }

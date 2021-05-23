@@ -15,7 +15,7 @@ public enum FragmentType
 public class StoryFragment : Godot.Object
 {
     // Generic Fragment Index
-    public static int GenericIdIndex { get; set; } = 0; // Uid, Nid -> Unique or Node id
+    public static int GenericIdIndex { get; set; } = 0; // Fragment id Index
     public static Array<StoryFragment> StoryFragments = new Array<StoryFragment>(); // All Created Story Fragment For Current Story
 
     public static Array<Dictionary<string, object>> FragmentDatas 
@@ -43,9 +43,10 @@ public class StoryFragment : Godot.Object
     // Fragment Data
     public FragmentType FragmentType { get { return (FragmentType)FragmentData["Type"]; } set { FragmentData["Type"] = value; } }
     public string FragmentName { get { return FragmentData["Name"] as string; } set { FragmentData["Name"] = value; } }
-
+    public string FragmentDescription { get { return FragmentData["Description"] as string; } set { FragmentData["Description"] = value; } }
     public string FragmentContent { get { return FragmentData["Content"] as string; } set { FragmentData["Content"] = value; } } // Content
-    public string ReferenceId { get; set; } = ""; // Referenced Story Element Id (/Flow/...)
+    
+    public string ReferenceSeid { get; set; } = ""; // Referenced Story Element Id (/Flow/...)
 
     // Custom Fragment Data
     public Dictionary<string, object> FragmentData { get; set; } = new Dictionary<string, object>()
