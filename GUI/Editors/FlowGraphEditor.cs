@@ -158,7 +158,7 @@ public class FlowGraphEditor : GraphEdit
                     FocusNode(lefts[0]);
                     UnselectAllNodes();
                     lefts[0].Selected = true;
-                    StoryManager.CurrentFlowNode = lefts[0] as FlowGraphNode;
+                    EmitSignal("node_selected", lefts[0]);
                 }
             }
         }
@@ -174,7 +174,7 @@ public class FlowGraphEditor : GraphEdit
                     FocusNode(rights[0]);
                     UnselectAllNodes();
                     rights[0].Selected = true;
-                    StoryManager.CurrentFlowNode = rights[0] as FlowGraphNode;
+                    EmitSignal("node_selected", rights[0]);
                 } 
             }
         }
@@ -201,7 +201,7 @@ public class FlowGraphEditor : GraphEdit
                 FocusNode(upNode);
                 UnselectAllNodes();
                 upNode.Selected = true;
-                StoryManager.CurrentFlowNode = upNode as FlowGraphNode;
+                EmitSignal("node_selected", upNode);
             }
         }
         else if (inputEvent.IsActionPressed("MoveDown"))
@@ -227,7 +227,7 @@ public class FlowGraphEditor : GraphEdit
                 FocusNode(downNode);
                 UnselectAllNodes();
                 downNode.Selected = true;
-                StoryManager.CurrentFlowNode = downNode as FlowGraphNode;
+                EmitSignal("node_selected", downNode);
             }
         }
 
@@ -340,7 +340,7 @@ public class FlowGraphEditor : GraphEdit
             FocusNode(jumpNode);
             UnselectAllNodes();
             jumpNode.Selected = true;
-            StoryManager.CurrentFlowNode = jumpNode as FlowGraphNode;
+            EmitSignal("node_selected", jumpNode);
         }
     }
 
@@ -377,7 +377,7 @@ public class FlowGraphEditor : GraphEdit
             FocusNode(jumpNode);
             UnselectAllNodes();
             jumpNode.Selected = true;
-            StoryManager.CurrentFlowNode = jumpNode as FlowGraphNode;
+            EmitSignal("node_selected", jumpNode);
         }
     }
 
@@ -415,7 +415,6 @@ public class FlowGraphEditor : GraphEdit
     {
         RemoveLeftSlotConnections(graphNode);
         RemoveRightSlotConnections(graphNode);
-
     }
 
     public bool CreateFlowNode(string nodeType = "res://GUI/Nodes/FlowNode.tscn")
