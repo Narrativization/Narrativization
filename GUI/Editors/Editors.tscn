@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://GUI/Editors/FlowEditor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://GUI/Editors/Editors.cs" type="Script" id=2]
+[ext_resource path="res://GUI/Editors/PropertyEditor.tscn" type="PackedScene" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 5.0
@@ -69,3 +70,5 @@ margin_left = 5.0
 margin_top = 5.0
 margin_right = -5.0
 margin_bottom = -5.0
+
+[node name="PropertyEditor" parent="Property" instance=ExtResource( 3 )]
