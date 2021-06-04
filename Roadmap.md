@@ -18,7 +18,7 @@ UI/UX Improvements, Better Modals and Tabs.
 New Featured Software
 
 ### v2.0
-Split Screen(Pane) or Multi Window Viewport, Full Featured Journey(Like a visual novel which includes map and etc.), Stat manager(Game Design Combat side), Create from Template(Editable), Storyline(Git-Timeline) Display, Typist(Screenwriter/Screenplay), Create Non-linear Text Format
+Split Screen(Pane) or Multi Window Viewport, Full Featured Journey(Like a visual novel which includes map and etc.), Stat manager(Game Design Combat side), Create from Template(Editable Nodes and Properties), Storyline(Git-Timeline) Display, Typist(Screenwriter/Screenplay), Create Non-linear Text Format
 
 ### Unversioned
 Multi-User editing, ~Dockable ModalWindows

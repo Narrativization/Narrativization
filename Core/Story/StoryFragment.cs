@@ -9,6 +9,8 @@ public enum FragmentType
     Flow,           // Default Fragment             | Name, Description, Content
     Action,         // Scenario like Action         | Name, Content
     Dialogue        // Scenario like Dialogue       | Name, Entity(Character), Parenthetical, Dialogue
+    // SceneHeading // Scenario like Scene Heading
+    // Transition   // Scenario like Scene Transition
 }
 
 // Story Flow Fragment | Informations of Nodes Contained
@@ -80,3 +82,27 @@ public class StoryFragment : Godot.Object
     // public Vector2 Slots { get; set; } = new Vector2(-1, -1); // Left & Right Slot ~
 
 }
+
+/*
+
+Currently not in use!
+~Templatable
+[Dialogue]
+Data: {
+    Name: ""
+    Character: ""
+    Parenthetical: ""
+    Dialogue: ""
+}
+Block: "/Template/Block/..."
+Node: "/Template/Nodes/..."
+
+
+
+*/
+
+/*
+Unique Id
+Guid guid = Guid.NewGuid();
+GD.Print(guid);
+*/

@@ -8,7 +8,7 @@ public class Editors : TabContainer
     [Export]
     private NodePath flowEditorNodePath = new NodePath("./Flow/FlowEditor");
     [Export]
-    private NodePath sceneEditorNodePath = new NodePath("./Scene");
+    private NodePath sceneEditorNodePath = new NodePath("./Scene/SceneEditor");
     [Export]
     private NodePath scriptEditorNodePath = new NodePath("./Script/ScriptEditor");
     [Export]
@@ -18,7 +18,7 @@ public class Editors : TabContainer
     public string CurrentEditor { get { return GetTabTitle(CurrentTab); } }
 
     public static FlowEditor flowEditor;
-    // public static TextEdit sceneEditor;
+    public static SceneEditor sceneEditor;
     public static TextEdit scriptEditor;
     public static PropertyEditor propertyEditor;
 
@@ -30,7 +30,7 @@ public class Editors : TabContainer
     {
         AddToGroup("Editors");
         flowEditor = GetNode<FlowEditor>(flowEditorNodePath);
-        // sceneEditor = GetNode<TextEdit>(sceneEditorNodePath);
+        sceneEditor = GetNode<SceneEditor>(sceneEditorNodePath);
         scriptEditor = GetNode<TextEdit>(scriptEditorNodePath);
         propertyEditor = GetNode<PropertyEditor>(propertyEditorNodePath);
     }
@@ -71,38 +71,43 @@ public class Editors : TabContainer
         switch (CurrentEditor)
         {
             case "Flow":
+                InitFlow();
                 break;
             case "Scene":
+                InitScene();
                 break;
             case "Script":
-                UpdateScript();
+                InitScript();
                 break;
             case "Property":
-                UpdateProperty();
+                InitProperty();
                 break;
             default:
                 break;
         }
     }
 
-    private void UpdateFlow()
+    private void InitFlow()
     {
 
     }
 
-    private void UpdateScene()
+    private void InitScene()
     {
-
+        if (flowEditor.GetSelectedNodes().Count > 0)
+        {
+            sceneEditor.StartFromNode(flowEditor.GetSelectedNodes()[0]);
+        }
     }
 
-    private void UpdateScript()
+    private void InitScript()
     {
         scriptEditor.Text = "CharacterName: <CharacterName>";
         scriptEditor.AddKeywordColor("CharacterName", new Color(0, 0.5f, 0.5f));
         scriptEditor.AddColorRegion("<", ">", new Color(0, 1, 0));
     }
 
-    private void UpdateProperty()
+    private void InitProperty()
     {
         propertyEditor.CreateProperties();
     }

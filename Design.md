@@ -106,7 +106,7 @@ Game Engine integrated import/exports
 Good for creating causation; also ***Hero's Journey***, ***Three Act Structure*** etc. 
 [Narrative Structures](https://en.wikipedia.org/wiki/Narrative_structure)
 [Inspiration Helper](https://en.wikipedia.org/wiki/The_Thirty-Six_Dramatic_Situations)
-SnowFlake, Dan Harmon's Story Circle
+SnowFlake, Story Structure Circle
 
 ## Technical
 [Design](#Design)
@@ -148,5 +148,7 @@ Data: ...
 ### Extra
 Template Defination
 Name : Value ~:Type
+Story <- Scene <- Sequence <- Shot
 
+Scene Clapper, Take, Stage
 ~Aspect, Emotions

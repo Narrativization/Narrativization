@@ -1,6 +1,13 @@
 using Godot;
 using System;
 
+public enum FlowState
+{
+    Begin,      // Start
+    Progress,   // Process
+    End         // Finish
+}
+
 // Generic Flow Node
 public class FlowNode : FlowGraphNode
 {
@@ -75,5 +82,8 @@ Flow Fragment
     Offset
     Slots(Connections)
 }
+
+Begin/Start - Progress - End
+
 */
 

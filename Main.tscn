@@ -29,30 +29,34 @@ __meta__ = {
 [node name="Docks" type="HSplitContainer" parent="View"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-dragger_visibility = 2
+split_offset = 200
 script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ToolPanels" type="VSplitContainer" parent="View/Docks"]
+margin_right = 200.0
 margin_bottom = 575.0
 split_offset = 200
 
 [node name="Outlines" parent="View/Docks/ToolPanels" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
+margin_right = 200.0
 margin_bottom = 280.0
 
 [node name="Details" parent="View/Docks/ToolPanels" instance=ExtResource( 5 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 292.0
+margin_right = 200.0
 margin_bottom = 575.0
 
 [node name="Editors" parent="View/Docks" instance=ExtResource( 3 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
+margin_left = 212.0
 margin_right = 1024.0
 margin_bottom = 575.0
 

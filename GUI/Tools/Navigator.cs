@@ -34,6 +34,7 @@ public class Navigator : Tree
             ImageTexture imgTex = FileManager.ResizeImage(ResourceLoader.Load<Texture>(iRes.Value), 16, 16); 
             icons.Add(iRes.Key, (Texture)imgTex);
         }
+        Refresh();
     }
 
 //  public override void _Process(float delta)
