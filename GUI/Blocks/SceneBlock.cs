@@ -38,6 +38,8 @@ public class SceneBlock : Panel
         speakerEdit = GetNode<LineEdit>(speakerNodePath);
         idNameEdit = GetNode<Label>(idNameNodePath);
         contentEdit = GetNode<TextEdit>(contentNodePath);
+
+        speakerEdit.Visible = false;
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.

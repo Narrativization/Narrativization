@@ -9,17 +9,17 @@ public class FlowGraphNode : GraphNode
     public static int GenericIdIndex { get; set; } = 0; // Node id Index
 
     [Export]
-    public int NodeId { get; set; } = GenericIdIndex++; // Node Id(Noid)
+    public int NodeIndex { get; set; } = GenericIdIndex++; // Node Id(Noid)
 
     public StoryFragment NodeFragment 
     { 
-        get { return StoryFragment.StoryFragments[NodeFragmentId]; } 
-        set { NodeFragmentId = value.FragmentId; } 
+        get { return StoryFragment.StoryFragments[NodeFragmentIndex]; } 
+        set { NodeFragmentIndex = value.FragmentIndex; } 
     } // Fragment
 
     // Graph Node Display Informations
-    public int NodeFragmentId { get; set; } // Fragment Id/Index
-    public string NodeName { get { return Name; } set { Name = value; } } 
+    public int NodeFragmentIndex { get; set; } // Fragment Id/Index
+    public string NodeId { get { return Name; } set { Name = value; } } 
     public string NodeType { get { return Filename; } set { Filename = value; } }
     public string NodeTitle { get { return Title; } set { Title = value; } }
     public Vector2 NodeOffset { get { return Offset; } set { Offset = value; } }
@@ -31,17 +31,17 @@ public class FlowGraphNode : GraphNode
         {
             return new Dictionary<string, object>()
             {
-                { "FragmentId", NodeFragmentId },   // Fragment Identifier
-                { "Name", NodeName },               // Node Identifier
+                { "Fragment", NodeFragmentIndex },  // Fragment Identifier
+                { "Id", NodeId },                   // Node Identifier
                 { "Type", NodeType },               // Identify to Displayed Node
-                { "Title", NodeTitle },             // Top Text of Node
+                { "Title", NodeTitle },             // Top Text of Node | Editable
                 { "Offset", NodeOffset },           // Location of Node
             };
         } 
         set
         {
-            NodeFragmentId = (int)value["FragmentId"];
-            NodeName = value["Name"] as string;
+            NodeFragmentIndex = (int)value["Fragment"];
+            NodeId = value["Id"] as string;
             NodeType = value["Type"] as string;
             NodeTitle = value["Title"] as string;
             NodeOffset = (Vector2)value["Offset"];
@@ -50,7 +50,7 @@ public class FlowGraphNode : GraphNode
 
     public FlowGraphNode()
     {
-        NodeName = "FlowNode" + NodeId;
+        NodeId = "FlowNode" + NodeIndex;
     }
 
     public override void _Ready()
@@ -83,7 +83,7 @@ public class FlowGraphNode : GraphNode
     }
 
     // Create Flow Graph Node
-    public virtual void CreateFlowNode(string nodeType) { NodeName = "FlowNode" + NodeId; NodeFragment = new StoryFragment(); }
+    public virtual void CreateFlowNode(string nodeType) { NodeId = "FlowNode" + NodeIndex; NodeFragment = new StoryFragment(); }
     public virtual void CreateFlowNode(Dictionary<string, object> nodeData) { NodeData = nodeData; }
 
     // Reset GenericIdIndex from GraphEditor

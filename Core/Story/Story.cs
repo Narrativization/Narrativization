@@ -107,8 +107,14 @@ public class Story : Node
 
     public Dictionary LookHierarchy()
     {
-        GD.Print(JSON.Print(FileManager.DirectoryTree(StoryDirectory), "\t"));
-        return FileManager.DirectoryTree(StoryDirectory);
+        GD.Print(JSON.Print(FileManager.DirectoryTreeAsDictionary(StoryDirectory), "\t"));
+        return FileManager.DirectoryTreeAsDictionary(StoryDirectory);
+    }
+
+    public Array GetDirectoryTree()
+    {
+        GD.Print(FileManager.DirectoryTreeAsArray(StoryDirectory));
+        return FileManager.DirectoryTreeAsArray(StoryDirectory);
     }
 
 }

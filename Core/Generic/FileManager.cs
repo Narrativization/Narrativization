@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using Godot.Collections;
+using Array = Godot.Collections.Array;
 
 // File system managing like Save/Load, Search, Directory Structure etc.
 public static class FileManager
@@ -110,14 +111,15 @@ public static class FileManager
         }
     }
 
-    public static Dictionary DirectoryTree(string fileName)
+    // Example -> 0: "/Flow/Flow1.flow"
+    public static Array DirectoryTreeAsArray(string fileName)
     {
-        Dictionary dictionary = new Dictionary(){};
-        dictionary = DirectoryTreeWalker(fileName, dictionary);
-        return dictionary;
+        Array treeArray = new Array(){}; 
+        treeArray = DirectoryTreeWalkerAsArray(fileName, fileName, treeArray);
+        return treeArray;
     }
 
-    private static Dictionary DirectoryTreeWalker(string fileName, Dictionary dictionary)
+    private static Array DirectoryTreeWalkerAsArray(string fileName, string baseFileName, Array tree)
     {
         Directory dir = new Directory();
         if (dir.Open(fileName) == Error.Ok)
@@ -128,7 +130,40 @@ public static class FileManager
             {
                 if (dir.CurrentIsDir())
                 {
-                    dictionary.Add(fName, DirectoryTreeWalker(fileName + "/" + fName, new Dictionary()));
+                    tree.Add(fileName.Replace(baseFileName, "") + "/" + fName + "/");
+                    tree += DirectoryTreeWalkerAsArray(fileName + "/" + fName, baseFileName, new Array());
+                }
+                else
+                {
+                    tree.Add(fileName.Replace(baseFileName, "") + "/" + fName);
+                }
+                fName = dir.GetNext();
+            }
+            dir.ListDirEnd();
+        }
+        return tree;
+    }
+
+    // { Flows: { Flow:flow }}
+    public static Dictionary DirectoryTreeAsDictionary(string fileName)
+    {
+        Dictionary dictionary = new Dictionary(){};
+        dictionary = DirectoryTreeWalkerAsDictionary(fileName, dictionary);
+        return dictionary;
+    }
+
+    private static Dictionary DirectoryTreeWalkerAsDictionary(string fileName, Dictionary dictionary)
+    {
+        Directory dir = new Directory();
+        if (dir.Open(fileName) == Error.Ok)
+        {
+            dir.ListDirBegin(true, true);
+            string fName = dir.GetNext();
+            while (fName != "")
+            {
+                if (dir.CurrentIsDir())
+                {
+                    dictionary.Add(fName, DirectoryTreeWalkerAsDictionary(fileName + "/" + fName, new Dictionary()));
                 }
                 else
                 {
@@ -152,7 +187,7 @@ public static class FileManager
             {
                 if (dir.CurrentIsDir())
                 {
-                    dictionary.Add(fName.BaseName(), DirectoryTreeWalker(fileName + "/" + fName, new Dictionary()));
+                    dictionary.Add(fName.BaseName(), DirectoryTreeWalkerAsDictionary(fileName + "/" + fName, new Dictionary()));
                 }
                 else
                 {

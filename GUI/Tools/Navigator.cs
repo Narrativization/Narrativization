@@ -2,14 +2,17 @@ using Godot;
 using System;
 using System.Collections;
 using Godot.Collections;
+using Array = Godot.Collections.Array;
 
 public class Navigator : Tree
 {
     // Tree's Root
     private TreeItem root;
+    private Dictionary<string, TreeItem> tree = new Dictionary<string, TreeItem>(); // Seid:TreeItem
 
     private Dictionary<string, string> iconResources = new Dictionary<string, string>()
     {
+        {"Story", "res://ThirdParty/FeatherIcons/book-open.svg"},
         {"Folder", "res://ThirdParty/FeatherIcons/folder.svg"},
         {"File", "res://ThirdParty/FeatherIcons/file.svg"},
         {"XSquare", "res://ThirdParty/FeatherIcons/x-square.svg"},
@@ -49,32 +52,123 @@ public class Navigator : Tree
             if (mouseEvent.Doubleclick && IsInstanceValid(GetItemAtPosition(mouseEvent.Position)))
             {
                 TreeItem treeItem = GetItemAtPosition(mouseEvent.Position);
-                string path = PathFromTree(treeItem);
-                GD.Print("Double Click: " + treeItem.GetText(0) + " -> \"" + path + "\"");
+                // string path = PathFromTree(treeItem);
+                GD.Print("Double Click: " + treeItem.GetText(0) + " -> \"" + treeItem.GetTooltip(0) + "\"");
                 Editors.flowEditor.Reset();
-                StoryManager.CurrentStoryElement = Story.CreateStoryElement(StoryManager.CurrentStory.StoryBase + path);
+                // StoryManager.CurrentStoryElement = Story.CreateStoryElement(StoryManager.CurrentStory.StoryBase + path);
             }
-        }
-        if (inputEvent.IsActionPressed("Help"))
-        {
-            GD.Print(StoryManager.CurrentStory.LookHierarchy());
         }
     }
 
     public void Refresh()
     {
+        Clear();
+        tree.Clear();
+        
         if(IsInstanceValid(StoryManager.CurrentStory))
         {
-            CreateTree(StoryManager.CurrentStory.LookHierarchy(), StoryManager.CurrentStory.StoryName);
+            CreateTree(StoryManager.CurrentStory.GetDirectoryTree(), StoryManager.CurrentStory.StoryName);
+            // CreateTree(StoryManager.CurrentStory.LookHierarchy(), StoryManager.CurrentStory.StoryName);
         }
         else
         {
-            Clear();
             root = CreateItem();
             root.SetText(0,"Open Project!");
         }
     }
 
+    // Create Tree From TreeArray ["/.../", "/.../.../"]
+    public void CreateTree(Array fileTree, string rootName)
+    {
+        root = CreateDefaultTreeItem(rootName, "/");
+
+        foreach (string fileTreeItem in fileTree)
+        {
+            // if (fileTreeItem.Extension() == "storier") { continue; } // Ignore Project File
+            if (fileTreeItem.GetFile() == "") // Folder
+            {
+                string parentDir = fileTreeItem.Left(fileTreeItem.GetBaseDir().LastIndexOf('/')) + '/';
+                string itemName = fileTreeItem.Right(fileTreeItem.GetBaseDir().LastIndexOf('/')).Trim('/');
+
+                if (tree.TryGetValue(parentDir, out TreeItem parentItem)) // SubFolder, Every Story Element child of Root('/')
+                {
+                    CreateDefaultTreeItem(itemName, fileTreeItem, parentItem);
+                }
+                else
+                {
+                    GD.Print(itemName + " Folder can't created!");
+                }
+            }
+            else // File
+            {
+                string parentDir = fileTreeItem.GetBaseDir() + '/';
+                string itemName = fileTreeItem.GetFile().Replace("." + fileTreeItem.Extension(), "");
+
+                if (tree.TryGetValue(parentDir, out TreeItem parentItem)) // SubFile, Every Story Element child of Root('/')
+                {
+                    CreateDefaultTreeItem(itemName, fileTreeItem, parentItem);
+                }
+                else
+                {
+                    GD.Print(itemName + " File can't created!");
+                }
+            }
+        }
+    }
+
+    private TreeItem CreateDefaultTreeItem(string itemName, string relativePath, TreeItem parent = null)
+    {
+        TreeItem treeItem = CreateTreeItem(0, itemName, SelectItemIcon(relativePath, parent), parent);
+        treeItem.SetTooltip(0, relativePath);
+        treeItem.Set("StoryElementId", relativePath);
+        tree.Add(relativePath, treeItem);
+        return treeItem;
+    }
+
+    private TreeItem CreateTreeItem(int column, string text, Texture icon, TreeItem parent = null)
+    {
+        TreeItem treeItem = CreateItem(parent);
+        treeItem.SetText(column, text);
+        if (IsInstanceValid(icon)) treeItem.SetIcon(column, icon);
+        return treeItem;
+    }
+    
+    private Texture SelectItemIcon(string relativePath, TreeItem parent)
+    {   
+        Texture selected = icons["Folder"];
+
+        switch (relativePath)
+        {
+            case "/":
+                selected = icons["Story"];
+                break;
+            case "/Flows/":
+                selected = icons["Flows"];
+                break;
+            case "/Entities/":
+                selected = icons["Entities"];
+                break;
+            case "/Assets/":
+                selected = icons["Assets"];
+                break;
+            case "/References/":
+                selected = icons["References"];
+                break;
+            case "/Entities/Characters/":
+                selected = icons["Characters"];
+                break;
+            case "/Entities/Locations/":
+                selected = icons["Locations"];
+                break;
+            default:
+                if (relativePath.GetFile() != "") { selected = icons["File"]; }
+                else { selected = icons["Folder"]; }
+                break;
+        }
+        return selected;
+    }
+
+    // Dictionary
     public void CreateTree(Dictionary dictionary, string rootName)
     {
         Clear();
@@ -114,7 +208,7 @@ public class Navigator : Tree
         }
     }
 
-    private TreeItem CreateItemWithIcon(int column, string text, Texture icon,  TreeItem parent = null)
+    private TreeItem CreateItemWithIcon(int column, string text, Texture icon, TreeItem parent = null)
     {
         TreeItem treeItem = CreateItem(parent);
         treeItem.SetText(column, text);
@@ -122,15 +216,15 @@ public class Navigator : Tree
         return treeItem;
     }
     
-    private Texture SelectIcon(string _str, TreeItem _parent)
+    private Texture SelectIcon(string idBase, TreeItem parent)
     {   
         Texture selected = icons["Folder"];
-        if (!IsPredefined(_str, _parent))
+        if (!IsPredefined(idBase, parent))
         {
             return selected; 
         }
         
-        switch (_str)
+        switch (idBase)
         {
             case "Flows":
                 selected = icons["Flows"];

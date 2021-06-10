@@ -169,7 +169,7 @@ public class DetailsPane : Panel
 
     public void _OnFlowNodeChanged(FlowGraphNode flowNode)
     {
-        if (!IsInstanceValid(flowNode)) { return; }
+        if (!IsInstanceValid(flowNode)) { DeleteFragmentDetails(); DeleteNodeDetails(); return; }
         if(IsInstanceValid(DraggedFlowNode)) { DraggedFlowNode.Disconnect("dragged", this, "_OnFlowNodeDragged"); } 
         DraggedFlowNode = flowNode;
         flowNode.Connect("dragged", this, "_OnFlowNodeDragged");

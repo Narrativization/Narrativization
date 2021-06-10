@@ -44,6 +44,14 @@ public class MenuEditBar : HBoxContainer
             {
                 editorButton.Text = editors.PreviousEditor();
             }
+            else if (mouseEvent.ButtonIndex == (int)ButtonList.WheelDown)
+            {
+                editorButton.Text = editors.NextEditor();
+            }
+            else if (mouseEvent.ButtonIndex == (int)ButtonList.WheelUp)
+            {
+                editorButton.Text = editors.PreviousEditor();
+            }
         }
         base._GuiInput(inputEvent);
     }

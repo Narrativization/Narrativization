@@ -3,7 +3,7 @@
 [ext_resource path="res://ThirdParty/Lora/Lora-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://GUI/Blocks/SceneBlock.cs" type="Script" id=2]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=3]
 size = 20
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
@@ -48,7 +48,7 @@ margin_right = 270.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 40, 20 )
 size_flags_vertical = 5
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 3 )
 text = "Speaker"
 align = 1
 
