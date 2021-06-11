@@ -3,11 +3,19 @@
 [ext_resource path="res://GUI/Contexts/FlowContextMenu.cs" type="Script" id=1]
 
 [node name="FlowContext" type="PopupMenu"]
-margin_right = 60.0
-margin_bottom = 80.0
-rect_min_size = Vector2( 60, 80 )
-items = [ "Create Fragment", null, 0, false, false, 0, 0, null, "", false, "Create Character", null, 0, false, false, 1, 0, null, "", false, "Create Location", null, 0, false, false, 2, 0, null, "", false, "Create Flow", null, 0, false, false, 3, 0, null, "", false, "Create Entity", null, 0, false, false, 4, 0, null, "", false ]
+margin_right = 125.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 60, 40 )
+items = [ "Create Fragment", null, 0, false, false, 0, 0, null, "", false ]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CreatorContext" type="PopupMenu" parent="."]
+margin_right = 20.0
+margin_bottom = 20.0
+items = [ "Flow", null, 0, false, false, 0, 0, null, "", false, "Character", null, 0, false, false, 1, 0, null, "", false, "Location", null, 0, false, false, 2, 0, null, "", false, "Entity", null, 0, false, false, 3, 0, null, "", false ]
 __meta__ = {
 "_edit_use_anchors_": false
 }

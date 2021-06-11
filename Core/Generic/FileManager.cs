@@ -76,14 +76,43 @@ public static class FileManager
             }
             else
             {
-                GD.PushError("Delete File Error Code: " + err);
+                GD.Print("Delete File Error Code: " + err);
             }
         }
         else
         {
-            GD.PushError("DeleteFile fileName is null!");
+            GD.Print("DeleteFile fileName is null!");
         }
         return false;
+    }
+    
+    public static void DeleteRecursively(string fileName)
+    {
+        Directory directory = new Directory();
+        Error err = directory.Open(fileName);
+        if (err == Error.Ok)
+        {
+            // List directory content
+            directory.ListDirBegin(true);
+            string fName = directory.GetNext();
+            while (fName != "")
+            {
+                if (directory.CurrentIsDir())
+                {
+                    DeleteRecursively(fileName + "/" + fName);
+                }
+                else
+                {
+                    directory.Remove(fName);
+                }
+                fName = directory.GetNext();
+            }
+            directory.Remove(fileName);
+        }
+        else
+        {
+            GD.Print("DeleteRecursive Error: " + err);
+        }
     }
 
     public static void ReadCsvFile(string fileName)

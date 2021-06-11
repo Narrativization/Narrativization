@@ -105,16 +105,16 @@ public class Story : Node
         StoryManager.CurrentStoryElement = defaultStory;
     }
 
-    public Dictionary LookHierarchy()
-    {
-        GD.Print(JSON.Print(FileManager.DirectoryTreeAsDictionary(StoryDirectory), "\t"));
-        return FileManager.DirectoryTreeAsDictionary(StoryDirectory);
-    }
-
     public Array GetDirectoryTree()
     {
         GD.Print(FileManager.DirectoryTreeAsArray(StoryDirectory));
         return FileManager.DirectoryTreeAsArray(StoryDirectory);
+    }
+
+    public Dictionary GetDirectoryTreeAsDictionary()
+    {
+        GD.Print(JSON.Print(FileManager.DirectoryTreeAsDictionary(StoryDirectory), "\t"));
+        return FileManager.DirectoryTreeAsDictionary(StoryDirectory);
     }
 
 }

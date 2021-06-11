@@ -125,6 +125,7 @@ Workspace & Settings Folder
     - Templates(.template)      -> tscn, config
     - References(.reference)    -> config
     - .Export -> config, json, csv(Entities)
+    ~StoryElement(.storyel) 
 
 ### Story Element
 Path = ... /Flow/Chapter1 .flow
