@@ -8,7 +8,7 @@ public class SceneBlock : Panel
     [Export]
     private NodePath idNameNodePath = new NodePath("./Heading/IdName");
     [Export]
-    private NodePath contentNodePath = new NodePath("./Content");
+    private NodePath contentNodePath = new NodePath("./Contents/Content");
 
     public LineEdit speakerEdit;
     public Label idNameEdit;

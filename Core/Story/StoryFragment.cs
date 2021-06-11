@@ -58,6 +58,28 @@ public class StoryFragment : Godot.Object
         { "Description", ""},
     }; 
 
+    /*
+    // Fragment Data
+    public Dictionary<string, object> FragmentData 
+    { 
+        get
+        {
+            return new Dictionary<string, object>()
+            {
+                { "Type", FragmentType },                   // Type of Fragment
+                { "Name", FragmentName },                   // Fragment Name
+                { "Description", FragmentDescription },     // Description
+            };
+        } 
+        set
+        {
+            FragmentType = (FragmentType)value["Type"];
+            FragmentName = value["Name"] as string;
+            FragmentDescription = value["Description"] as string;
+        }
+    } 
+    */
+
     public StoryFragment() 
     {
         StoryFragments.Add(this);
@@ -78,7 +100,6 @@ public class StoryFragment : Godot.Object
     
     // Reset StoryFragment
     public static void Reset() { GenericIdIndex = 0; StoryFragments = new Array<StoryFragment>(); }
-    
     
     // public Vector2 Slots { get; set; } = new Vector2(-1, -1); // Left & Right Slot ~
 
