@@ -89,14 +89,37 @@ public class FlowEditor : FlowGraphEditor
         base._GuiInput(inputEvent);
     }
 
+    public override void Reset() { base.Reset(); StoryFragment.Reset(); }
+
+    public bool CreateFlowNode(string nodeType = "res://GUI/Nodes/FlowNode.tscn")
+    {
+        GD.Print("Create Story Flow Node");
+        PackedScene storyFlowNodeScene = GD.Load<PackedScene>(nodeType);
+        FlowNode flowGraphNode = storyFlowNodeScene.Instance() as FlowNode;
+        flowGraphNode.CreateFlowNode(nodeType);
+        AddChild(flowGraphNode);
+        flowGraphNode.Offset = ScrollOffset + GetLocalMousePosition() - (flowGraphNode.RectSize/2);
+        return true;
+    }
+
+    public bool CreateFlowNode(Dictionary<string, object> nodeData)
+    {
+        GD.Print("Create Story Flow Node");
+        PackedScene storyFlowNodeScene = GD.Load<PackedScene>(nodeData["Type"] as string);
+        FlowNode flowGraphNode = storyFlowNodeScene.Instance() as FlowNode;
+        flowGraphNode.CreateFlowNode(nodeData);
+        AddChild(flowGraphNode);
+        return true;
+    }
+
     public void _OnNodeSelected(Node node)
     {
-        StoryManager.CurrentFlowNode = node as FlowGraphNode;
+        StoryManager.CurrentFlowNode = node as FlowNode;
     }
 
     public void _OnNodeUnselected(Node node)
     {
-        if (StoryManager.CurrentFlowNode == node as FlowGraphNode)
+        if (StoryManager.CurrentFlowNode == node as FlowNode)
         {
             StoryManager.CurrentFlowNode = null;
         }

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Godot.Collections;
 
 public enum FlowState
 {
@@ -11,8 +12,40 @@ public enum FlowState
 // Generic Flow Node
 public class FlowNode : FlowGraphNode
 {
-    [Export]
-    public StoryElement storyFlow;
+
+    public StoryFragment NodeFragment 
+    { 
+        get { return StoryFragment.StoryFragments[NodeFragmentIndex]; } 
+        set { NodeFragmentIndex = value.FragmentIndex; } 
+    } // Fragment
+
+    public int NodeFragmentIndex { get; set; } // Fragment Id/Index
+
+    // Custom Node Data
+    public Dictionary<string, object> NodeData 
+    { 
+        get
+        {
+            return new Dictionary<string, object>()
+            {
+                { "Fragment", NodeFragmentIndex },  // Fragment Identifier
+                { "Id", NodeId },                   // Node Identifier
+                { "Type", NodeType },               // Identify to Displayed Node
+                { "Title", NodeTitle },             // Top Text of Node | Editable
+                { "Offset", NodeOffset },           // Location of Node
+            };
+        } 
+        set
+        {
+            NodeFragmentIndex = (int)value["Fragment"];
+            NodeId = value["Id"] as string;
+            NodeType = value["Type"] as string;
+            NodeTitle = value["Title"] as string;
+            NodeOffset = (Vector2)value["Offset"];
+        }
+    } 
+
+
         
     public FlowNode() : base() { }
 
@@ -31,6 +64,23 @@ public class FlowNode : FlowGraphNode
         base._GuiInput(inputEvent);
     }
 
+    // Create Flow Node
+    public void CreateFlowNode(string nodeType) { NodeId = "FlowNode" + NodeIndex; NodeFragment = new StoryFragment(); }
+    public void CreateFlowNode(Dictionary<string, object> nodeData) { NodeData = nodeData; }
+
+    public override void OpenNode()
+    {
+        base.OpenNode();
+        GD.Print("Open Node");
+    }
+
+    public override void ContextNode()
+    {
+        base.ContextNode();
+        GD.Print("Node Context");
+    }
+
+    /*
     public StoryElement ReferenceStoryFlow(StoryElement _storyFlow)
     {
         storyFlow = _storyFlow;
@@ -51,39 +101,18 @@ public class FlowNode : FlowGraphNode
             GetTree().CallGroup("Editors", "EditStoryElement", StoryManager.CurrentStoryElement);
         }
     }
-
-    // InitNode
+    */
 
 }
 
 /*
-    // When resize, resize description text area
-    public void _OnStoryFlowNodeResizeRequest(Vector2 newMinSize)
-    {
-        RectSize = newMinSize;
-        int botMargin = 50;
-        if (newMinSize.y - botMargin < textDefaultMinSize.y)
-        {
-            GetChild<TextEdit>(0).RectMinSize = new Vector2(GetChild<TextEdit>(0).RectMinSize.x, textDefaultMinSize.y);
-        }
-        else
-        {
-            GetChild<TextEdit>(0).RectMinSize = new Vector2(GetChild<TextEdit>(0).RectMinSize.x, newMinSize.y - botMargin);
-        }
-    }
-*/
-
-/*
-Flow Fragment
+Flow Node
 {
-    FragmentId
+    Fragment
+    Id
+    Type
     Title
-    ReferenceFlow
     Offset
-    Slots(Connections)
 }
-
-Begin/Start - Progress - End
-
+~Slots(Connections)
 */
-

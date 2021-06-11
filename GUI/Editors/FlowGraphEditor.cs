@@ -260,7 +260,7 @@ public class FlowGraphEditor : GraphEdit
     }
     
     // Reset GraphEditor
-    public void Reset() { DeleteAll(); FlowGraphNode.Reset(); StoryFragment.Reset(); }
+    public virtual void Reset() { DeleteAll(); FlowGraphNode.Reset(); }
 
     // Centered to given GraphNode
     public void FocusNode(GraphNode node)
@@ -417,27 +417,6 @@ public class FlowGraphEditor : GraphEdit
         RemoveRightSlotConnections(graphNode);
     }
 
-    public bool CreateFlowNode(string nodeType = "res://GUI/Nodes/FlowNode.tscn")
-    {
-        GD.Print("Create Story Flow Node");
-        PackedScene storyFlowNodeScene = GD.Load<PackedScene>(nodeType);
-        FlowGraphNode flowGraphNode = storyFlowNodeScene.Instance() as FlowGraphNode;
-        flowGraphNode.CreateFlowNode(nodeType);
-        AddChild(flowGraphNode);
-        flowGraphNode.Offset = ScrollOffset + GetLocalMousePosition() - (flowGraphNode.RectSize/2);
-        return true;
-    }
-
-    public bool CreateFlowNode(Dictionary<string, object> nodeData)
-    {
-        GD.Print("Create Story Flow Node");
-        PackedScene storyFlowNodeScene = GD.Load<PackedScene>(nodeData["Type"] as string);
-        FlowGraphNode flowGraphNode = storyFlowNodeScene.Instance() as FlowGraphNode;
-        flowGraphNode.CreateFlowNode(nodeData);
-        AddChild(flowGraphNode);
-        return true;
-    }
-
     // All Nodes
     public Array<GraphNode> GetAllNodes()
     {
@@ -525,6 +504,15 @@ public class FlowGraphEditor : GraphEdit
         {
             graphNodes[i].Selected = false;
         }
+    }
+
+    // Create Empty GraphNode
+    public GraphNode CreateGraphNode()
+    {
+        GraphNode graphNode = new GraphNode();
+        AddChild(graphNode);
+        graphNode.Offset = ScrollOffset + GetLocalMousePosition() - (graphNode.RectSize/2);
+        return graphNode;
     }
 
     // Delete/Removes Selected Nodes | Delete selected GraphNodes

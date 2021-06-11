@@ -21,7 +21,7 @@ public class StoryFlow : StoryElement
             Godot.Collections.Array flowNodes = new Array();
             for (int i = 0; i < allNodes.Count; i++)
             {
-                if (allNodes[i] is FlowGraphNode flowNode)
+                if (allNodes[i] is FlowNode flowNode)
                 {
                     GD.Print(flowNode);
                     flowNodes.Add(flowNode.NodeData);

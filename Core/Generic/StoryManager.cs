@@ -52,8 +52,8 @@ public class StoryManager : Node
     }
 
     // Story Flow Node
-    private static FlowGraphNode _FlowNode { get; set; }
-    public static FlowGraphNode CurrentFlowNode 
+    private static FlowNode _FlowNode { get; set; }
+    public static FlowNode CurrentFlowNode 
     {
         get { return _FlowNode; } 
         set 
@@ -75,9 +75,9 @@ public class StoryManager : Node
     [Signal]
     public delegate void StoryElementChanged(StoryElement storyElement);
     [Signal]
-    public delegate void FlowNodeCreated(FlowGraphNode flowNode);
+    public delegate void FlowNodeCreated(FlowNode flowNode);
     [Signal]
-    public delegate void FlowNodeChanged(FlowGraphNode flowNode);
+    public delegate void FlowNodeChanged(FlowNode flowNode);
 
     private StoryManager()
     {

@@ -31,7 +31,7 @@ public class DetailsPane : Panel
         
     }
 
-    public void CreateFragmentDetails(FlowGraphNode flowNode)
+    public void CreateFragmentDetails(FlowNode flowNode)
     {
         DeleteFragmentDetails();
         if (!IsInstanceValid(flowNode) || !IsInstanceValid(flowNode.NodeFragment)) { return; }
@@ -74,7 +74,7 @@ public class DetailsPane : Panel
         }
     }
 
-    public void CreateNodeDetails(FlowGraphNode flowNode)
+    public void CreateNodeDetails(FlowNode flowNode)
     {
         DeleteNodeDetails();
         foreach (var nodeData in flowNode.NodeData)
@@ -167,13 +167,13 @@ public class DetailsPane : Panel
         if (!IsInstanceValid(storyElement)) { return; }
     }
 
-    public void _OnFlowNodeChanged(FlowGraphNode flowNode)
+    public void _OnFlowNodeChanged(FlowNode flowNode)
     {
         if (!IsInstanceValid(flowNode)) { DeleteFragmentDetails(); DeleteNodeDetails(); return; }
         if(IsInstanceValid(DraggedFlowNode)) { DraggedFlowNode.Disconnect("dragged", this, "_OnFlowNodeDragged"); } 
         DraggedFlowNode = flowNode;
         flowNode.Connect("dragged", this, "_OnFlowNodeDragged");
-        if (flowNode is FlowNode) { CreateFragmentDetails(flowNode); }
+        CreateFragmentDetails(flowNode);
         CreateNodeDetails(flowNode);
     }
 
