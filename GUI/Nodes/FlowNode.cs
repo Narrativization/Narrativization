@@ -12,6 +12,10 @@ public enum FlowState
 // Generic Flow Node
 public class FlowNode : FlowGraphNode
 {
+    [Export]
+    NodePath contentTextLabelPath = "./Content";
+
+    public RichTextLabel contentTextLabel;
 
     public StoryFragment NodeFragment 
     { 
@@ -51,7 +55,14 @@ public class FlowNode : FlowGraphNode
 
     public override void _Ready()
     {
+        contentTextLabel = GetNode<RichTextLabel>(contentTextLabelPath);
         base._Ready();
+    }
+
+    public override void _Draw()
+    {
+        contentTextLabel.Text = NodeFragment.FragmentName;
+        base._Draw();
     }
 
     //  public override void _Process(float delta)
@@ -70,14 +81,20 @@ public class FlowNode : FlowGraphNode
 
     public override void OpenNode()
     {
-        base.OpenNode();
         GD.Print("Open Node");
+        base.OpenNode();
+    }
+
+    public override void SelectNode()
+    {
+        // GD.Print("Select Node");
+        base.SelectNode();
     }
 
     public override void ContextNode()
     {
+        GD.Print("Context Node");
         base.ContextNode();
-        GD.Print("Node Context");
     }
 
     /*

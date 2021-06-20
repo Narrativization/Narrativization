@@ -14,7 +14,7 @@ public class DetailsPane : Panel
     private VBoxContainer fragmentDetails;
     private VBoxContainer nodeDetails;
 
-    private FlowGraphNode DraggedFlowNode;
+    private FlowNode DraggedFlowNode;
 
     public override void _Ready()
     {
@@ -33,128 +33,66 @@ public class DetailsPane : Panel
 
     public void CreateFragmentDetails(FlowNode flowNode)
     {
-        DeleteFragmentDetails();
+        DeleteDetails(fragmentDetails);
         if (!IsInstanceValid(flowNode) || !IsInstanceValid(flowNode.NodeFragment)) { return; }
         StoryFragment fragment = flowNode.NodeFragment;
-        foreach (var nodeData in fragment.FragmentData)
+        foreach (var nodeData in fragment.FragmentSaveData)
         {
             // GD.Print("NodeDetail: " + nodeData.Value.GetType());
-            if (nodeData.Value.GetType() == typeof(String))
-            {
-                LineEdit lineEdit = DetailString((string)nodeData.Value, nodeData.Key, fragmentDetails);
-                lineEdit.Editable = false;
-            }
-            else if (nodeData.Value.GetType() == typeof(int))
-            {
-                SpinBox spinBox = DetailInt((int)nodeData.Value, nodeData.Key, fragmentDetails);
-                spinBox.Editable = false;
-            }
-            else if (nodeData.Value.GetType() == typeof(Vector2))
-            {
-                Vector2 vector2 = (Vector2)nodeData.Value;
-                HBoxContainer hBox = DetailVector2(vector2, nodeData.Key, fragmentDetails);
-                foreach (SpinBox spinBox in hBox.GetChildren())
-                {
-                    spinBox.Editable = false;
-                }
-            }
-            else if (nodeData.Value.GetType() == typeof(Enum))
-            {
-                // Create Enum Dropdown
-            }
-        }
-    }
-
-    public void DeleteFragmentDetails()
-    {
-        foreach (Node n in fragmentDetails.GetChildren())
-        {
-            n.Name += "Deleted";
-            n.QueueFree();
+            Variant.Type variantType = Variant.Type.String;
+            if (nodeData.Value.GetType() == typeof(String)) { variantType = Variant.Type.String; }
+            else if (nodeData.Value.GetType() == typeof(int)) { variantType = Variant.Type.Int; } 
+            else if (nodeData.Value.GetType() == typeof(Vector2)) { variantType = Variant.Type.Vector2; }
+            else if (nodeData.Value.GetType() == typeof(Enum)) { /* Create Enum Dropdown */ }
+            DetailsProperty detailsProperty = new DetailsProperty();
+            detailsProperty.CreateProperty(nodeData.Key, nodeData.Value, variantType, nodeData.Key); 
+            detailsProperty.Connect("PropertyUpdated", this, "_OnFragmentPropertyUpdated");
+            fragmentDetails.AddChild(detailsProperty);
         }
     }
 
     public void CreateNodeDetails(FlowNode flowNode)
     {
-        DeleteNodeDetails();
+        DeleteDetails(nodeDetails);
+        if (!IsInstanceValid(flowNode)) { return; }
         foreach (var nodeData in flowNode.NodeData)
         {
             // GD.Print("NodeDetail: " + nodeData.Value.GetType());
-            if (nodeData.Value.GetType() == typeof(String))
-            {
-                LineEdit lineEdit = DetailString((string)nodeData.Value, nodeData.Key, nodeDetails);
-                lineEdit.Editable = false;
-            }
-            else if (nodeData.Value.GetType() == typeof(int))
-            {
-                SpinBox spinBox = DetailInt((int)nodeData.Value, nodeData.Key, nodeDetails);
-                spinBox.Editable = false;
-            }
-            else if (nodeData.Value.GetType() == typeof(Vector2))
-            {
-                Vector2 vector2 = (Vector2)nodeData.Value;
-                HBoxContainer hBox = DetailVector2(vector2, nodeData.Key, nodeDetails);
-                foreach (SpinBox spinBox in hBox.GetChildren())
-                {
-                    spinBox.Editable = false;
-                }
-            }
-            else if (nodeData.Value.GetType() == typeof(Enum))
-            {
-                // Create Enum Dropdown
-            }
+            Variant.Type variantType = Variant.Type.String;
+            if (nodeData.Value.GetType() == typeof(String)) { variantType = Variant.Type.String; }
+            else if (nodeData.Value.GetType() == typeof(int)) { variantType = Variant.Type.Int; } 
+            else if (nodeData.Value.GetType() == typeof(Vector2)) { variantType = Variant.Type.Vector2; }
+            else if (nodeData.Value.GetType() == typeof(Enum)) { /* Create Enum Dropdown */ }
+            DetailsProperty detailsProperty = new DetailsProperty();
+            detailsProperty.CreateProperty(nodeData.Key, nodeData.Value, variantType, nodeData.Key, false); 
+            detailsProperty.Connect("PropertyUpdated", this, "_OnNodePropertyUpdated");
+            nodeDetails.AddChild(detailsProperty);
         }
     }
 
-    public void DeleteNodeDetails()
+    public void DeleteDetails(Node detailContainer)
     {
-        foreach (Node n in nodeDetails.GetChildren())
+        foreach (Node n in detailContainer.GetChildren())
         {
             n.Name += "Deleted";
             n.QueueFree();
         }
     }
 
-    private LineEdit DetailString(string text, string tooltip, Node parent)
+    public void _OnFragmentPropertyUpdated(string key, string value, Variant.Type type)
     {
-        LineEdit lineEdit = new LineEdit();
-        lineEdit.Text = text;
-        lineEdit.HintTooltip = tooltip;
-        parent.AddChild(lineEdit);
-        return lineEdit;
+        GD.Print(key + "  _OnPropertyUpdated: " + value);
+        if(IsInstanceValid(DraggedFlowNode)) 
+        { 
+            DraggedFlowNode.NodeFragment.FragmentData[key] = value;
+            DraggedFlowNode._Draw();
+        } 
     }
 
-    private SpinBox DetailInt(int value, string tooltip, Node parent, double min = -Mathf.Inf, double max = Mathf.Inf)
+    public void _OnNodePropertyUpdated(string key, string value, Variant.Type type)
     {
-        SpinBox spin = new SpinBox();
-        spin.MinValue = min;
-        spin.MaxValue = max;
-        spin.Value = value;
-        spin.HintTooltip = tooltip;
-        parent.AddChild(spin);
-        return spin;
-    }
+        GD.Print(key + "  _OnPropertyUpdated: " + value);
 
-    private SpinBox DetailFloat(double value, string tooltip, Node parent, double step = 0.001f, double min = -Mathf.Inf, double max = Mathf.Inf)
-    {
-        SpinBox spin = new SpinBox();
-        spin.MinValue = min;
-        spin.MaxValue = max;
-        spin.Step = step;
-        spin.Value = value;
-        spin.HintTooltip = tooltip;
-        parent.AddChild(spin);
-        return spin;
-    }
-
-    private HBoxContainer DetailVector2(Vector2 vector2, string tooltip, Node parent, double step = 0.001f, double min = -Mathf.Inf, double max = Mathf.Inf)
-    {
-        HBoxContainer hBox = new HBoxContainer();
-        DetailFloat(vector2.x, tooltip + ".x", hBox, step, min, max);
-        DetailFloat(vector2.y, tooltip + ".y", hBox, step, min, max);
-        // hBox.Alignment = BoxContainer.AlignMode.Center;
-        parent.AddChild(hBox);
-        return hBox;
     }
 
     public void _OnStoryChanged(Story story)
@@ -169,7 +107,7 @@ public class DetailsPane : Panel
 
     public void _OnFlowNodeChanged(FlowNode flowNode)
     {
-        if (!IsInstanceValid(flowNode)) { DeleteFragmentDetails(); DeleteNodeDetails(); return; }
+        if (!IsInstanceValid(flowNode)) { DeleteDetails(fragmentDetails); DeleteDetails(nodeDetails); return; }
         if(IsInstanceValid(DraggedFlowNode)) { DraggedFlowNode.Disconnect("dragged", this, "_OnFlowNodeDragged"); } 
         DraggedFlowNode = flowNode;
         flowNode.Connect("dragged", this, "_OnFlowNodeDragged");
@@ -185,3 +123,9 @@ public class DetailsPane : Panel
         }
     }
 }
+
+/*
+    DetailsProperty <- Control | Editor Property 
+    DetailsContainer <- Scroll Container | Editor Inspector
+    PropertyContainer <- Grid Container (Property Editor) 
+*/

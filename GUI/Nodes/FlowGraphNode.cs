@@ -43,6 +43,10 @@ public class FlowGraphNode : GraphNode
                 OpenNode();
                 AcceptEvent();
             }
+            else if (eventMouseButton.Pressed)
+            {
+                SelectNode();
+            }
             if (IsInstanceValid(StoryManager.CurrentStory) && // if story exist, show context menu 
                 inputEvent.IsActionPressed("Context"))
             {
@@ -56,6 +60,8 @@ public class FlowGraphNode : GraphNode
     public static void Reset() { GenericIdIndex = 0; }
     // Opening Node(Ex: Double Clicked)
     public virtual void OpenNode() { }
+    // Opening Node(Ex: Left Clicked)
+    public virtual void SelectNode() { }
     // Context Node(Ex: Right Clicked)
     public virtual void ContextNode() { }
 

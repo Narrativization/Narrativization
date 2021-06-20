@@ -27,7 +27,7 @@ public class StoryFragment : Godot.Object
             Array<Dictionary<string, object>> _fragmentDatas = new Array<Dictionary<string, object>>();
             for (int i = 0; i < StoryFragments.Count; i++)
             {
-                _fragmentDatas.Add(StoryFragments[i].FragmentData);
+                _fragmentDatas.Add(StoryFragments[i].FragmentSaveData);
             }
             return _fragmentDatas;
         } 
@@ -41,16 +41,17 @@ public class StoryFragment : Godot.Object
     }
 
     // Flow Fragment 
-    public int FragmentIndex { get; set; } = GenericIdIndex++; // Fragment Id
+    public int FragmentIndex { get; set; } = StoryFragment.GenericIdIndex++; // Fragment Id
     // Fragment Data
     public FragmentType FragmentType { get { return (FragmentType)FragmentData["Type"]; } set { FragmentData["Type"] = value; } }
     public string FragmentName { get { return FragmentData["Name"] as string; } set { FragmentData["Name"] = value; } }
     public string FragmentDescription { get { return FragmentData["Description"] as string; } set { FragmentData["Description"] = value; } }
+
     // Removes
     public string FragmentContent { get { return FragmentData["Content"] as string; } set { FragmentData["Content"] = value; } } // Content
     public string ReferenceSeid { get; set; } = ""; // Referenced Story Element Id (/Flow/...)
 
-    // Custom Fragment Data
+    // Fragment Data Dictionary
     public Dictionary<string, object> FragmentData { get; set; } = new Dictionary<string, object>()
     {
         { "Type", FragmentType.Flow},
@@ -58,9 +59,8 @@ public class StoryFragment : Godot.Object
         { "Description", ""},
     }; 
 
-    /*
     // Fragment Data
-    public Dictionary<string, object> FragmentData 
+    public Dictionary<string, object> FragmentSaveData 
     { 
         get
         {
@@ -78,7 +78,6 @@ public class StoryFragment : Godot.Object
             FragmentDescription = value["Description"] as string;
         }
     } 
-    */
 
     public StoryFragment() 
     {
@@ -89,7 +88,7 @@ public class StoryFragment : Godot.Object
     {
         GenericIdIndex = index + 1;
         FragmentIndex = index;
-        FragmentData = fragmentData;
+        FragmentSaveData = fragmentData;
         StoryFragments.Add(this);
     }
 
