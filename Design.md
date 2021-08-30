@@ -1,5 +1,5 @@
 # Design
-[General Design](#General), [Technical Design](#Technical)
+[Technical Design](./Technical.md)
 
 ## General
 [Story Design](#Story-Design), [User Interface](#User-Interfaces)
@@ -108,48 +108,6 @@ Good for creating causation; also ***Hero's Journey***, ***Three Act Structure**
 [Inspiration Helper](https://en.wikipedia.org/wiki/The_Thirty-Six_Dramatic_Situations)
 SnowFlake, Story Structure Circle
 
-## Technical
-[Design](#Design)
-
-Workspace & Settings Folder
-- Default project folder: ***"~/Documents/Storier/"***
-- User(Recent) Stories: ***"user://UserStories.ini"*** 
-- User Settings(Data): ***"user://UserSettings.cfg"*** 
-
-### Hierarchy Formats
-- Story(.storier)               -> json
-    - Flows(.flow)              -> config
-    - Entities(.entity)         -> config
-    - Assets(.asset)            -> config, png, jpg, txt, csv... 
-    - Journeys(.journey)        -> config
-    - Templates(.template)      -> tscn, config
-    - References(.reference)    -> config
-    - .Export -> config, json, csv(Entities)
-    ~StoryElement(.storyel) 
-
-### Story Element
-Path = ... /Flow/Chapter1 .flow
-- ... -> StoryBase
-- /Flow/Chapter1 -> Id
-- flow -> Extension
-
-#### Config Format
-[StoryElement]
-
-{
-    Name: "", 
-    Description: ""
-    ...
-}
-
-[StoryElementType]
-
-Data: ...
-
-### Extra
-Template Defination
-Name : Value ~:Type
-Story <- Scene <- Sequence <- Shot
-
+## Extra
 Scene Clapper, Take, Stage
 ~Aspect, Emotions
