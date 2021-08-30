@@ -7,21 +7,21 @@
 - User Settings(Data): ***"user://UserSettings.cfg"*** 
 
 ## Hierarchy Formats
-- Story(.storier)                       -> json/config
-    - Flows(.flow/storyel)              -> config
-    - Entities(.entity/storyel)         -> config
-    - Assets(.asset/storyel)            -> config, png, jpg, txt, csv... 
-    - Journeys(.journey/storyel)        -> config
-    - Templates(.template/storyel)      -> tscn, config
-    - References(.reference/storyel)    -> config
+- Story(.storier)             -> json/config
+    - Flows(.storyel)         -> config
+    - Entities(.storyel)      -> config
+    - Assets(.storyel)        -> config, png, jpg, txt, csv... 
+    - Journeys(.storyel)      -> config
+    - Templates(.storyel)     -> tscn, config
+    - References(.storyel)    -> config
     - ~Export -> config, json, csv(Entities)
     ~StoryElement(.storyel) 
 
 ## Story Element
-Path = ... /Flow/Chapter1 .flow(storyel)
+Path = ... /Flow/Chapter1 .storyel
 - ... -> StoryBase
 - /Flow/Chapter1 -> Id
-- flow(storyel) -> Extension
+- storyel -> Extension
 
 Enum(Formats) of StoryElements
 Flow, Entity{Character, Location, Item}, Assets(Resource/Research), Journey, ~Templates, ~References
@@ -31,8 +31,6 @@ storier://Flows/Flow?Id="NodeId"&Name="NodeName"
 Query(?): /Flows/Flow.storyel?id="NodeId"
 Tag(#), Mention(@)
 Similar to Web
-
-~Rename TitleDisplayer to Address(URI) or Story Element Id(Seid)
 
 ### Config Format
 ```

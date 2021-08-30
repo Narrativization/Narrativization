@@ -7,6 +7,10 @@ Advanced Flow Management. Non-linear, conditional flows(dialogues).
 - [ ] Advanced Fragments(Flow, Action, Dialogue, ~SceneHead etc.)
 - [ ] Scene, Property Editor
 - [ ] Basic Referencing
+  - [ ] Single Resource File Format(.flow, .entity, ... to .storyel)
+  - [ ] Create Story Element Types Enum(Flow, Entity, Character, ...)
+  - [ ] ~Rename TitleDisplayer to Address(URI) or Story Element Id(Seid)
+  - [ ] Update Managers
 
 ## Future Versions
 Go Back [Roadmap](#Roadmap).
