@@ -100,29 +100,33 @@ public class StoryElement : Resource
 
 /*
 Story Element/Entity Informations
+Seid: <PathOfFile>
+---
 [StoryElement]
-{
-    Id: "", 
-    Name: "", 
-    Description: ""
-}
+Id: <Unique id>, 
+Name: "", 
+Description: ""
+StoryElementType: <Type>
 
-[StoryEntity]
-~Template: "",
-~Content: {
-    ...
-}
+[StoryElementType]
+<TypeInfo1>
+<TypeInfo2>
+<TypeInfo3>
 
-++
+---
 
+Storier: Fix References -> ReMap(Validate) UniqueId and Seid  
+Unique: StoryElement-0, StoryElement-1, StoryElement-10, StoryElement-1000, ...
+
+*/
+
+/*
 StoryElement General Informations (All time included)
 Id, Name, Description, ~Template 
 StoryElement Template Informations (After selected template)
 ~Content
 
-
 --------------
-
 
 Story Flow Informations
 [Story Element]
@@ -177,13 +181,12 @@ Connections:
     }
 ]
 
-++ 
+-- 
 
 ~Fragment Stored Data
 ~Nodes Displayed Positions/Offsets
 
 ~Combine Node and Fragment
-
 
 -----------------
 
@@ -206,13 +209,4 @@ ids:
     "/.../...",
     "/.../..."
 }
-
-Story Element Types
-Flow        // Story Flow: Plot and Scenes and more...
-Entity      // Story Entity:  Character, Settings and more...
-Asset       // Story Asset: Images, Notes and more...
-Reference   // Story Reference: Mention, Tag and more...  
-~Template   // Story Template: User Generated Nodes and more...
-
-
 */
