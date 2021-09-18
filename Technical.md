@@ -32,6 +32,14 @@ Query(?): /Flows/Flow.storyel?id="NodeId"
 Tag(#), Mention(@)
 Similar to Web
 
+## Classes
+Storier/Story Manager : Node
+Story : Node
+StoryElement : Resource
+StoryFragment : Godot.Object
+
+Editors Display Resources
+
 ### Config Format
 ```
 [StoryElement]
@@ -75,7 +83,24 @@ Node->Name2         |        Name2        |        - Name2
     ->Name3         |        Name3        |        - Name3
 
 
+## Scenario
+General Film Scenario, Fountain
+
+Int ... [Scene Heading]
+Character1, ... [Scene Characters]
+... [Action]
+    Character           -
+    (Parenthetical)         Dialogue Fragment
+    Dialogue            -
+Shot, Transition, Non-printable, Lyrics
+
+## Story Boarding
+Graphical Scenario, Japan(E-Conte) Scenario (No: Sheet Number, S/C: Scene/Cut Number)
+
+No ...                                         | Page _/_        ProjectName: __
+S/C, Action,  Picture, Dialogue&Sound, Time
+
 ## Extra
-Template Defination
+Template Defination 
 Name : Value ~:Type
 Story <- Scene <- Sequence <- Shot
