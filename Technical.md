@@ -7,50 +7,52 @@
 - User Settings(Data): ***"user://UserSettings.cfg"*** 
 
 ## Hierarchy Formats
-- Story(.storier)             -> json/config
+StoryElement(.storyel) file formats
+
+- Story(.storier)             -> json
     - Flows(.storyel)         -> config
     - Entities(.storyel)      -> config
     - Assets(.storyel)        -> config, png, jpg, txt, csv... 
-    - Journeys(.storyel)      -> config
-    - Templates(.storyel)     -> tscn, config
-    - References(.storyel)    -> config
+    - ~Journeys(.storyel)      -> config
+    - ~Templates(.storyel)     -> tscn, config
+    - ~References(.storyel)    -> config
     - ~Export -> config, json, csv(Entities)
-    ~StoryElement(.storyel) 
 
 ## Story Element
 Path = ... /Flow/Chapter1 .storyel
 - ... -> StoryBase
-- /Flow/Chapter1 -> Id
+- /Flow/Chapter1 -> Id/Seid
 - storyel -> Extension
 
 Enum(Formats) of StoryElements
-Flow, Entity{Character, Location, Item}, Assets(Resource/Research), Journey, ~Templates, ~References
+Flow, Entity{Character, Location, Item}, Assets(Resource/Research), ~Journey, ~Templates, ~References
 
 StoryElement Nodes and Query
-storier://Flows/Flow?Id="NodeId"&Name="NodeName"
-Query(?): /Flows/Flow.storyel?id="NodeId"
-Tag(#), Mention(@)
 Similar to Web
+- storier://Flows/Flow?Id="NodeId"&Name="NodeName"
+- Query(?): /Flows/Flow.storyel?id="NodeId"
+- Tag(#) 
+- Mention(@)
 
 ## Classes
 Storier/Story Manager : Node
 Story : Node
 StoryElement : Resource
 StoryFragment : Godot.Object
-
-Editors Display Resources
+Editors: Displays Resources and uses custom parent class
 
 ### Config Format
 ```
 [StoryElement]
-Data={
-    Name: "", 
-    Description: ""
-    ...
-}
+Name: "", 
+Description: ""
+StoryElementType: <Type>
+...
 
 [StoryElementType]
-Data= ...
+...
+..
+.
 
 ```
 

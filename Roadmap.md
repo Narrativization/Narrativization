@@ -8,8 +8,8 @@ Advanced Flow Management. Non-linear, conditional flows(dialogues).
 - [ ] Scene, Property Editor
 - [ ] Basic Referencing
   - [ ] Single Resource File Format(.flow, .entity, ... to .storyel)
-  - [ ] Create Story Element Types Enum(Flow, Entity, Character, ...)
-  - [ ] ~Rename TitleDisplayer to Address(URI) or Story Element Id(Seid)
+  - [x] Create Story Element Types Enum(Flow, Entity, Character, ...)
+  - [ ] ~Rename TitleDisplayer to ~~Address(URI) or~~ Story Element Id(Seid)
   - [ ] Update Managers
 
 ## Future Versions
@@ -22,7 +22,7 @@ UI/UX Improvements, Better Modals and Tabs.
 New Featured Software
 
 ### v2.0
-Split Screen(Pane) or Multi Window Viewport, Full Featured Journey(Like a visual novel which includes map and etc.), Stat manager(Game Design Combat side), Create from Template(Editable Nodes and Properties), Storyline(Git-Timeline) Display, Typist(Screenwriter/Screenplay), Create Non-linear Text Format
+Split Screen(Pane) or Multi Window Viewport, Full Featured Journey(Like a visual novel which includes map and etc.), Stat manager(Game Design Combat side), Create from Template(Editable Nodes and Properties)/Templatable Flow and Entity, Storyline(Git-Timeline) Display, Typist(Screenwriter/Screenplay), Create Non-linear Text Format
 
 ### Unversioned
 Multi-User editing, ~Dockable ModalWindows

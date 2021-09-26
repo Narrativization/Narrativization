@@ -1,28 +1,23 @@
 # Design
-[Technical Design](./Technical.md)
+[Technical Design](./Technical.md), [Story Design](#Story-Design), [User Interface](#User-Interfaces)
 
-## General
-[Story Design](#Story-Design), [User Interface](#User-Interfaces)
-
-### Story Design
-
+## Story Design
+The story consists of various [elements](https://en.wikipedia.org/wiki/Literary_element). Storier interprets some of these elements in its own way.
 - Story
     - Plot[Flows]
     - Character[Entity/Characters]
     - Setting[Entity/Locations]
     - Theme[StoryInfo], Conflict[StoryInfo]...
 
+Storier uses *Story* as Project. And contain StoryElements which means Flow, Entity, Asset... 
+
+Flow is the basic sequence of events and consists of flows/story fragments. Flows can be marked as keypoint similar to [Plot](https://en.wikipedia.org/wiki/Plot_(narrative)). Story Flows and Fragments can be referencing to Entities & Assets. 
+
+Entities and Assets are different from each other. Entities are elements that are directly involved in the story for example Characters, Settings, Items. Assets indirectly affect the story and give more informations for example Character Image, Research Notes.
+
 ---
 
-Storier uses Story as Project.
-Flow consists of flows/story fragments.
-Flows/story fragments contains Entity & Assets. 
-Entities consists of derived informations and contains Assets.
-Assets are pure informations such as images.  
-~~Every Flow and Entity templatable with changing their details.~~
-Some points(nodes or subflow) in the flow can be marked as keypoints([Plot](https://en.wikipedia.org/wiki/Plot_(narrative))).
-
-#### Basic Folder Structure
+### Basic Folder Structure
 
 - Story
     - Flows
@@ -30,11 +25,11 @@ Some points(nodes or subflow) in the flow can be marked as keypoints([Plot](http
         - Characters
         - Locations
     - Assets
-    - Journeys
-    - Templates
-    - References
+    - ~Journeys
+    - ~Templates
+    - ~References
 
-#### Advanced Folder Structure
+### Advanced Folder Structure
 
 - Story
     - Flows
@@ -68,12 +63,12 @@ Some points(nodes or subflow) in the flow can be marked as keypoints([Plot](http
         - Id(/)
         - Mentions(@)
         - Tags(#)
-        - Links(href, :, ->)
+        - Links(Storier://, ->)
 
 Also can consist of flows such as Universe, Timeline. 
 
 ## User Interfaces
-[General Design](#General)
+[Design](#Design)
 
 ### Views
 Tools
@@ -93,10 +88,9 @@ Editors work based on same data.
 
 ### HotKeys
 Be UX focused!
-- CTRL + Arrows: Moving in the flow.
+- CTRL + Arrows: Moving in the flow Connections.
 - CTRL + SHIFT + Arrows: Jumping in the flow.
-- ALT + Arrows, Mouse Back, Forward: Opening Previous and Next Edited Flows.
-- ~(CTRL + Tab), (CTRL + Shift + Tab): Moving in Nodes Slot.
+- ALT + Arrows, Mouse Back/Forward: Opening Previous and Next Edited Flows.
 
 ### Import/Export
 Multi and Single File Save(or Export)
