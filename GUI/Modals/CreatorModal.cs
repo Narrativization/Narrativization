@@ -105,7 +105,7 @@ public class CreatorModal : ConfirmationDialog
     {
         Editors.flowEditor.Reset();
         string path = StoryManager.CurrentStory.StoryBase + idEdit.Text + "." + _extension;
-        StoryElement storyElement = Story.CreateStoryElement(path);
+        StoryElementOld storyElement = Story.CreateStoryElement(path);
         storyElement.StoryElementName = nameEdit.Text;
         storyElement.StoryElementDescription = descriptionEdit.Text;
         storyElement.Save();

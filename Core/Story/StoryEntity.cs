@@ -4,7 +4,7 @@ using Godot.Collections;
 using Array = Godot.Collections.Array;
 
 // Entity Definations
-public class StoryEntity : StoryElement
+public class StoryEntity : StoryElementOld
 {
     // Custom Story Element Data
     public Dictionary<string, string> StoryEntityData { get; set; } = new Dictionary<string, string>();

@@ -4,7 +4,7 @@ using Godot.Collections;
 using Array = Godot.Collections.Array;
 
 // Flow Definations
-public class StoryFlow : StoryElement
+public class StoryFlow : StoryElementOld
 {
     // Custom Story Element Data
     public Array<Dictionary<string, object>> StoryFlowFragments 

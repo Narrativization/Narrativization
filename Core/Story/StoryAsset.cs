@@ -4,7 +4,7 @@ using Godot.Collections;
 using Array = Godot.Collections.Array;
 
 // Asset Definations
-public class StoryAsset : StoryElement
+public class StoryAsset : StoryElementOld
 {
     // Custom Story Element Data
     public Dictionary<string, string> StoryAssetData { get; set; } = new Dictionary<string, string>();

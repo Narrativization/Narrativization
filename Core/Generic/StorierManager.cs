@@ -16,7 +16,7 @@ public class StorierManager : Node
     // Custom Storier Data
     public static Dictionary<string, string> StorierData { get; set; } = new Dictionary<string, string>()
     {
-        {"Version", "v0.4"}
+        {"Version", "v0.5"}
     }; 
     
 
@@ -41,8 +41,6 @@ public class StorierManager : Node
         if (inputEvent.IsActionPressed("Help"))
         {
             GD.Print("Help");
-            GD.Print(StorierManager.userDataDirectory);
-            GD.Print(StorierManager.userDataDirectory + "UserStories.ini");
         }
         else if (inputEvent.IsActionPressed("Fullscreen"))
         {

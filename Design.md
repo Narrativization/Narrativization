@@ -104,4 +104,4 @@ SnowFlake, Story Structure Circle
 
 ## Extra
 Scene Clapper, Take, Stage
-~Aspect, Emotions
+~Aspect, Emotions [Techniques](https://en.wikipedia.org/wiki/List_of_narrative_techniques)

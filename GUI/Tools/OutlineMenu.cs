@@ -29,7 +29,7 @@ public class OutlineMenu : HBoxContainer
         GetTree().CallGroup("Navigator", "Refresh");
     }
 
-    public void _OnStoryElementCreated(StoryElement storyElement)
+    public void _OnStoryElementCreated(StoryElementOld storyElement)
     {
         GetTree().CallGroup("Navigator", "Refresh");
     }

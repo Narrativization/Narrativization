@@ -44,7 +44,7 @@ public class TitleDisplayer : RichTextLabel
         UpdateTitle();
     }
 
-    public void _OnStoryElementChanged(StoryElement storyElement)
+    public void _OnStoryElementChanged(StoryElementOld storyElement)
     {
         isModified = false;
         UpdateTitle();

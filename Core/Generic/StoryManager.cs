@@ -27,8 +27,8 @@ public class StoryManager : Node
     } 
 
     // Story Element
-    private static StoryElement _StoryElement { get; set; } // Currently Edited Story Element
-    public static StoryElement CurrentStoryElement 
+    private static StoryElementOld _StoryElement { get; set; } // Currently Edited Story Element
+    public static StoryElementOld CurrentStoryElement 
     {
         get { return _StoryElement; } 
         set 
@@ -71,9 +71,9 @@ public class StoryManager : Node
     [Signal]
     public delegate void StoryChanged(Story story);
     [Signal]
-    public delegate void StoryElementCreated(StoryElement storyElement);
+    public delegate void StoryElementCreated(StoryElementOld storyElement);
     [Signal]
-    public delegate void StoryElementChanged(StoryElement storyElement);
+    public delegate void StoryElementChanged(StoryElementOld storyElement);
     [Signal]
     public delegate void FlowNodeCreated(FlowNode flowNode);
     [Signal]

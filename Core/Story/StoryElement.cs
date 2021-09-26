@@ -5,96 +5,94 @@ using Godot.Collections;
 // Story Elements / Narrative Elements
 public class StoryElement : Resource
 {
-    // Custom Story Element Data
+    // Story Element Data
     public Dictionary<string, string> StoryElementData { get; set; } = new Dictionary<string, string>();
+    public Dictionary<string, string> StoryElementTypeData { get; set; } = new Dictionary<string, string>();
 
-    // Story Element Data 
-    public string StoryElementName { get { return StoryElementData["Name"]; } set { StoryElementData["Name"] = ResourceName = value; } } // Example: MyChar | Uses ResourceName 
+    // Story Element Information 
+    public string StoryElementName { get { return StoryElementData["Name"]; } set { StoryElementData["Name"] = ResourceName = value; } } // Example: MyChar | Uses ResourceName
     public string StoryElementDescription { get { return StoryElementData["Description"]; } set { StoryElementData["Description"] = value; } }  // Example: Character Example
+    public StoryElementType StoryElementType { get { return (StoryElementType)Enum.Parse(typeof(StoryElementType), StoryElementData["StoryElementType"]);  } set { StoryElementData["StoryElementType"] = value.ToString(); } }  // Example: Character Example
     
-    // Story Element Informations
-    public string StoryElementId { get; set; } // Example: /Entity/Character/MyChar | Relative path to project(<ProjectName>.storier) | StoryElementId(Seid)
-    public string StoryElementPath { get{ return ResourcePath; } set{ TakeOverPath(value); } } // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + "." + StoryElementExtension[flow]
+    // Story Element File
+    public string StoryElementPath { get { return ResourcePath; } set { TakeOverPath(value); } } // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + "." + StoryElementExtension[storyel]
+    public string StoryElementId { get { return StoryElementPath.Replace(StoryManager.CurrentStory.StoryBase, "").Replace("." + StoryElementPath.Extension(), ""); } } // Example: /Entity/Character/MyChar | Relative path to project(<ProjectName>.storier) | StoryElementId(Seid)
     public string StoryElementExtension { get { return StoryElementPath.Extension(); } } // Example ext: "ext" 
 
     protected StoryElement() {}
-    // Create Story Element
-    public StoryElement(string path, string name = "", string description = "") // path: fullPath
+
+    // Load Story Element
+    public StoryElement(string path)
     {
         if (!path.StartsWith(StoryManager.CurrentStory.StoryBase)) { GD.PushWarning("Story Element isn't in Workspace!\n" + path); return; }
-        StoryElementId = path.Replace(StoryManager.CurrentStory.StoryBase, "").Replace("." + path.Extension(), "");
-        StoryElementName = name; 
-        StoryElementDescription = description; 
         StoryElementPath = path;
-        ValidateStoryElement(path);
-    }
-
-    // Validate Story Element Directory
-    private void ValidateStoryElement(string path)
-    {
-        if (!(new Directory()).FileExists(path)) 
-        { 
-            StoryManager.CurrentStoryManager.EmitSignal("StoryElementCreated", this);
-            Save();
-        } 
-        else
+        StoryElementName = ""; 
+        StoryElementDescription = ""; 
+        StoryElementType = StoryElementType.StoryElement; 
+        
+        if ((new Directory()).FileExists(StoryElementPath))
         {
             Load();
+            // Add as StoryElementLoad
+            // StoryManager.CurrentStoryManager.EmitSignal("StoryElementChanged", this);
         }
-        StoryManager.CurrentStoryManager.EmitSignal("StoryElementChanged", this);
-    }
-
-    // Saving Story Element | ~Maybe create Resource Format Saver/Loader
-    public virtual bool Save() 
-    { 
-        bool isSuccess = false;
-        ConfigFile configFile = new ConfigFile();
-        configFile.SetValue("StoryElement", "Data", StoryElementData);
-        Error err = configFile.Save(ResourcePath);
-        if (err != Error.Ok) { GD.Print(err); return false; }
-        return isSuccess; 
-    }
-    
-    protected virtual bool Load()
-    {
-        bool isSuccess = false;
-        ConfigFile configFile = new ConfigFile();
-        Error err = configFile.Load(StoryElementPath);
-        if (err != Error.Ok) { GD.Print(err); return false; }
-        Dictionary elementDictionary = configFile.GetValue("StoryElement", "Data") as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
-        StoryElementData = new Dictionary<string, string>(elementDictionary);
-        return isSuccess;
     } 
-    
-    // Reloading Story Element
-    public bool Reload() { return Load(); }
+
+    // Create Story Element
+    public StoryElement(string path, string name = "", string description = "", StoryElementType type = StoryElementType.StoryElement) // path: fullPath
+    {
+        if (!path.StartsWith(StoryManager.CurrentStory.StoryBase)) { GD.PushWarning("Story Element isn't in Workspace!\n" + path); return; }
+        StoryElementName = name; 
+        StoryElementDescription = description; 
+        StoryElementType = type; 
+        StoryElementPath = path;
+
+        Save();
+        // Add as StoryElementSave
+        // StoryManager.CurrentStoryManager.EmitSignal("StoryElementCreated", this);
+    }
+
+    // Saving Story Element to Path | ~Maybe create Resource Format Saver/Loader
+    public Error Save(string path) 
+    { 
+        Error err = Error.Ok;
+        ConfigFile configFile = new ConfigFile();
+        configFile.SetValue("StoryElement", "Name", StoryElementName);
+        configFile.SetValue("StoryElement", "Description", StoryElementDescription);
+        configFile.SetValue("StoryElement", "Type", StoryElementType);
+        configFile.SetValue("StoryElementType", "Data", StoryElementTypeData);
+        err = configFile.Save(path);
+        if (err != Error.Ok) { GD.Print("Story Element Save Failed:" + err); }
+        return err; 
+    }
+
+    // Loading Story Element from Path
+    public Error Load(string path)
+    {
+        Error err = Error.Ok;
+        ConfigFile configFile = new ConfigFile();
+        err = configFile.Load(path);
+        if (err != Error.Ok) { GD.Print("Story Element Load Failed:" + err); return err; }
+        StoryElementName = configFile.GetValue("StoryElement", "Name") as string;
+        StoryElementDescription = configFile.GetValue("StoryElement", "Description") as string;
+        StoryElementType = (StoryElementType)Enum.Parse(typeof(StoryElementType), configFile.GetValue("StoryElement", "Type") as string);
+        Dictionary TypeDataDictionary = configFile.GetValue("StoryElementType", "Data") as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
+        StoryElementTypeData = new Dictionary<string, string>(TypeDataDictionary);
+        return err;
+    } 
+
+    // Save Story Element
+    public Error Save() { return Save(StoryElementPath); }
+    // Load Story Element
+    public Error Load() { return Load(StoryElementPath); }
+    // Reload Story Element
+    public Error Reload() { return Load(); }
     // Import Story Element
-    public void Import() { }
-    // Export Story Element
-    public void Export() { } // ~List of Character(csv), Single File(json)
-
-    // ----------------------Old---------------------------
-
-    // // Replace/Move Story Element | Not ready for use -> Move to File Manager?
-    // private Error Move(string destination)
-    // {
-    //     Directory dir = new Directory();
-    //     Error errCopy = dir.Copy(StoryElementPath, destination);
-    //     if (errCopy != Error.Ok) { return errCopy; }
-    //     Error errDelete = dir.Remove(StoryElementPath);
-    //     if (errDelete != Error.Ok) { return errDelete; }
-    //     return Error.Ok;
-    // }
-
-    // // Change Story Element Id(Relative Path) 
-    // public Error ReId(string id)
-    // {
-    //     string _destination = StoryManager.CurrentStory.StoryBase + StoryElementId + StoryElementExtension;
-    //     StoryElementId = StoryElementId.Replace(StoryElementName, id);
-    //     Error err = Move(_destination);
-    //     StoryElementPath = _destination;
-    //     return err; // Error.Ok;
-    // }   
+    public Error Import() { return Error.Ok; }
+    // Export Story Element | ~List of Character(csv), Single File(json)
+    public Error Export() { return Error.Ok; } 
+    // Move Story Element
+    public Error Move(string path) { Error err = FileManager.MoveFile(StoryElementPath, path); StoryElementPath = path; return err; }
 
 }
 
@@ -103,7 +101,6 @@ Story Element/Entity Informations
 Seid: <PathOfFile>
 ---
 [StoryElement]
-Id: <Unique id>, 
 Name: "", 
 Description: ""
 StoryElementType: <Type>
@@ -112,11 +109,6 @@ StoryElementType: <Type>
 <TypeInfo1>
 <TypeInfo2>
 <TypeInfo3>
-
----
-
-Storier: Fix References -> ReMap(Validate) UniqueId and Seid  
-Unique: StoryElement-0, StoryElement-1, StoryElement-10, StoryElement-1000, ...
 
 */
 

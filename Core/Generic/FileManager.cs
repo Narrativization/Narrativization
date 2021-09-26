@@ -6,6 +6,9 @@ using Array = Godot.Collections.Array;
 // File system managing like Save/Load, Search, Directory Structure etc.
 public static class FileManager
 {
+    // TODO: Change Return Values to Error
+    
+
     public static bool SaveFile(string fileName, string content = "", File.ModeFlags fmode = File.ModeFlags.WriteRead)
     {
         if (fileName != null)
@@ -113,6 +116,40 @@ public static class FileManager
         {
             GD.Print("DeleteRecursive Error: " + err);
         }
+    }
+
+    public static Error CopyFile(string fileName, string copyName, File.ModeFlags fmode = File.ModeFlags.ReadWrite)
+    {
+        string content = ""; 
+        if (fileName != null)
+        {
+            content = LoadFile(fileName);
+            SaveFile(copyName, content);
+        }
+        else
+        {
+            GD.PushError("LoadFile fileName is null!");
+        }
+        return Error.Ok;
+    }
+
+    public static Error MoveFile(string from, string to, File.ModeFlags fmode = File.ModeFlags.ReadWrite)
+    {
+        string content = "";
+        if (from != null)
+        {
+            content = LoadFile(from);
+            SaveFile(to, content);
+            if(!DeleteFile(from))
+            {
+                DeleteRecursively(from);
+            }
+        }
+        else
+        {
+            GD.PushError("MoveFile fileName is null!");
+        }
+        return Error.Ok;
     }
 
     public static void ReadCsvFile(string fileName)

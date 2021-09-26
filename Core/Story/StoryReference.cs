@@ -4,7 +4,7 @@ using Godot.Collections;
 using Array = Godot.Collections.Array;
 
 // Reference Defination
-public class StoryReference : StoryElement
+public class StoryReference : StoryElementOld
 {
     // Custom Story Element Data
     public Array StoryReferenceData { get; set; } = new Array();

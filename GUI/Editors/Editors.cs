@@ -22,8 +22,8 @@ public class Editors : TabContainer
     public static TextEdit scriptEditor;
     public static PropertyEditor propertyEditor;
 
-    public Godot.Collections.Array<StoryElement> editedStoryElements = new Godot.Collections.Array<StoryElement>();
-    public StoryElement currentStoryElement;
+    public Godot.Collections.Array<StoryElementOld> editedStoryElements = new Godot.Collections.Array<StoryElementOld>();
+    public StoryElementOld currentStoryElement;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -41,7 +41,7 @@ public class Editors : TabContainer
     //      
     //  }
 
-    public void EditStoryElement(StoryElement storyElement)
+    public void EditStoryElement(StoryElementOld storyElement)
     {
         editedStoryElements.Add(storyElement);
         if (storyElement is StoryFlow)
