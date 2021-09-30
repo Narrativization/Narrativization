@@ -57,7 +57,7 @@ public class Navigator : Tree
                 GD.Print("Double Click: " + itemName + " -> \"" + relativePath + "\"");
 
                 Editors.flowEditor.Reset();
-                StoryManager.CurrentStoryElement = Story.CreateStoryElement(StoryManager.CurrentStory.StoryBase + relativePath);
+                // StoryManager.CurrentStoryElement = Story.CreateStoryElement(StoryManager.CurrentStory.StoryBase + relativePath);
             }
             else if (inputEvent.IsActionPressed("Context") && IsInstanceValid(GetItemAtPosition(mouseEvent.Position)))
             {

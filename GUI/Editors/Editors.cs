@@ -22,8 +22,8 @@ public class Editors : TabContainer
     public static TextEdit scriptEditor;
     public static PropertyEditor propertyEditor;
 
-    public Godot.Collections.Array<StoryElementOld> editedStoryElements = new Godot.Collections.Array<StoryElementOld>();
-    public StoryElementOld currentStoryElement;
+    public Godot.Collections.Array<StoryElement> editedStoryElements = new Godot.Collections.Array<StoryElement>();
+    public StoryElement currentStoryElement;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -41,14 +41,14 @@ public class Editors : TabContainer
     //      
     //  }
 
-    public void EditStoryElement(StoryElementOld storyElement)
+    public void EditStoryElement(StoryElement storyElement)
     {
         editedStoryElements.Add(storyElement);
-        if (storyElement is StoryFlow)
-        {
-            flowEditor.Reset();
-            // flowEditor.LoadData(storyElement.StoryFlowData);
-        }
+        // if (storyElement is StoryFlow)
+        // {
+        //     flowEditor.Reset();
+        //     // flowEditor.LoadData(storyElement.StoryFlowData);
+        // }
     }
 
     public string NextEditor()
@@ -70,8 +70,8 @@ public class Editors : TabContainer
 
         switch (CurrentEditor)
         {
-            case "Flow":
-                InitFlow();
+            case "Node":
+                InitNode();
                 break;
             case "Scene":
                 InitScene();
@@ -87,7 +87,7 @@ public class Editors : TabContainer
         }
     }
 
-    private void InitFlow()
+    private void InitNode()
     {
 
     }

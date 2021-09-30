@@ -120,10 +120,10 @@ __meta__ = {
 }
 
 [node name="Editor" type="Button" parent="EditBar"]
-margin_right = 42.0
+margin_right = 45.0
 margin_bottom = 25.0
 hint_tooltip = "Change Editor"
-text = "Flow"
+text = "Node"
 flat = true
 __meta__ = {
 "_edit_lock_": true,
@@ -137,8 +137,8 @@ Every Click changing editor. Default Editor: Flow
 }
 
 [node name="Manage" type="MenuButton" parent="EditBar"]
-margin_left = 46.0
-margin_right = 109.0
+margin_left = 49.0
+margin_right = 112.0
 margin_bottom = 25.0
 text = "Manage"
 items = [ "Journeys", null, 0, false, false, 0, 0, null, "", false, "Decisions", null, 0, false, false, 1, 0, null, "", false, "Annotations", null, 0, false, false, 2, 0, null, "", false ]

@@ -28,7 +28,7 @@ public class StoryElement : Resource
         StoryElementPath = path;
         StoryElementName = ""; 
         StoryElementDescription = ""; 
-        StoryElementType = StoryElementType.StoryElement; 
+        StoryElementType = StoryElementType.StoryAsset; 
         
         if ((new Directory()).FileExists(StoryElementPath))
         {
@@ -39,7 +39,7 @@ public class StoryElement : Resource
     } 
 
     // Create Story Element
-    public StoryElement(string path, string name = "", string description = "", StoryElementType type = StoryElementType.StoryElement) // path: fullPath
+    public StoryElement(string path, string name = "", string description = "", StoryElementType type = StoryElementType.StoryAsset) // path: fullPath
     {
         if (!path.StartsWith(StoryManager.CurrentStory.StoryBase)) { GD.PushWarning("Story Element isn't in Workspace!\n" + path); return; }
         StoryElementName = name; 

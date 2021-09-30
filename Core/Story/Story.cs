@@ -84,25 +84,13 @@ public class Story : Node
         }
     }
 
-    public static StoryElementOld CreateStoryElement(string path)
-    {
-        StoryElementOld storyElement;
-        string idPath = path.Replace(StoryManager.CurrentStory.StoryBase, ""); // Remove Story Base
-        if (idPath.StartsWith("/Flows/")) { storyElement = new StoryFlow(path); }
-        else if (idPath.StartsWith("/Entities/")) { storyElement = new StoryEntity(path); }
-        else if (idPath.StartsWith("/Assets/")) { storyElement = new StoryAsset(path); }
-        else if (idPath.StartsWith("/References/")) { storyElement = new StoryElementOld(path); }
-        else { storyElement = new StoryAsset(path); }
-        return storyElement;
-    }
-
     // ~Open Default/Recent Flow
     public void CreateDefaultFlow()
     {
-        StoryElementOld defaultStory = new StoryElementOld(StoryBase + "/Flows/Starter.flow");
+        StoryElement defaultStory = new StoryElement(StoryBase + "/Flows/Starter.storyel");
         defaultStory.Save();
-        StorierManager.StorierData.Add("Starter", "/Flows/Starter.flow");
-        StoryManager.CurrentStoryElement = defaultStory;
+        StorierManager.StorierData.Add("Starter", "/Flows/Starter.storyel");
+        // StoryManager.CurrentStoryElement = defaultStory;
     }
 
     public Array GetDirectoryTree()
@@ -117,19 +105,37 @@ public class Story : Node
         return FileManager.DirectoryTreeAsDictionary(StoryDirectory);
     }
 
+    public static StoryElement CreateStoryElement(string path, StoryElementType type)
+    {
+        StoryElement storyElement = new StoryElement(path);
+        string idPath = path.Replace(StoryManager.CurrentStory.StoryBase, ""); // Remove Story Base
+        switch (type)
+        {
+            case StoryElementType.StoryFlow:
+                break; 
+            case StoryElementType.StoryEntity:
+                break; 
+            case StoryElementType.StoryAsset:
+                break; 
+            default:
+                break; 
+        }
+        return storyElement;
+    }
+
 }
 
 
 /*
-Story Elements(Hierarchy) - File/Folder Structure
-- Story(.storier) -> json
-    - Flows(.flow) -> config
-    - Entities(.entity) -> config
+Story Directory Structure - Project File/Folder Structure
+- Story(.storier)       -> json
+    - Flows             -> config (storyel)
+    - Entities          -> config (storyel)
         - Characters
         - Locations
         - ~Items
-    - Assets -> config, png, jpg, txt, csv... 
-    - Journeys() -> config
-    - Templates(.template) -> config, json, ~xml, tscn
-    - References(.reference) -> config
+    - Assets            -> config, png, jpg, txt, csv... 
+    - Journeys          -> config
+    - Templates         -> config, json, ~xml, tscn
+    - References        -> config
 */

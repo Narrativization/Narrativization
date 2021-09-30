@@ -100,7 +100,7 @@ public class DetailsPane : Panel
         if (!IsInstanceValid(story)) { return; }
     }
 
-    public void _OnStoryElementChanged(StoryElementOld storyElement)
+    public void _OnStoryElementChanged(StoryElement storyElement)
     {
         if (!IsInstanceValid(storyElement)) { return; }
     }

@@ -18,9 +18,8 @@ public class NavigatorContextMenu : PopupMenu
         {
             case 0: // Open
                 GD.Print("Open");
-                
                 Editors.flowEditor.Reset();
-                StoryManager.CurrentStoryElement = Story.CreateStoryElement(path);
+                // StoryManager.CurrentStoryElement = Story.CreateStoryElement(path);
                 break;
             case 1: // Rename
                 GD.Print("Rename");

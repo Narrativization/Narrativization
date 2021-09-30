@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+// Rename with Navigation Bar | Display Seid 
 public class TitleDisplayer : RichTextLabel
 {
     // Signature for Modified/Unsaved Story Element
@@ -44,7 +45,7 @@ public class TitleDisplayer : RichTextLabel
         UpdateTitle();
     }
 
-    public void _OnStoryElementChanged(StoryElementOld storyElement)
+    public void _OnStoryElementChanged(StoryElement storyElement)
     {
         isModified = false;
         UpdateTitle();
