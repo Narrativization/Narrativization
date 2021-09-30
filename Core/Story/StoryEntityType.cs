@@ -1,8 +1,8 @@
 // Types of Story Entity
 public enum StoryEntityType
 {
-    StoryEntity,        // Default 
-    StoryCharacter,     // 
-    StoryLocation,      // 
-    StoryItem,          // 
+    StoryEntity,        // Default
+    StoryCharacter,     // Character
+    StoryLocation,      // Location
+    StoryItem,          // Item
 }

@@ -6,151 +6,93 @@ using Array = Godot.Collections.Array;
 // File system managing like Save/Load, Search, Directory Structure etc.
 public static class FileManager
 {
-    // TODO: Change Return Values to Error
-    
-
-    public static bool SaveFile(string fileName, string content = "", File.ModeFlags fmode = File.ModeFlags.WriteRead)
+    public static Error SaveFile(string fileName, string content = "", File.ModeFlags fmode = File.ModeFlags.WriteRead)
     {
-        if (fileName != null)
-        {
-            Directory dir = new Directory(); 
-            if (!dir.DirExists(fileName.GetBaseDir())) // Check Directory ~Folder can't found!
-            {
-                Error dirErr = dir.MakeDirRecursive(fileName.GetBaseDir());
-                if (dirErr != Error.Ok)
-                {
-                    GD.PushError("Save File Directory Error Code: " + dirErr);
-                }
-            }
-
-            File saveFile = new File(); 
-            Error err = saveFile.Open(fileName, fmode);
-            if (err == Error.Ok)
-            {
-                saveFile.StoreString(content);
-                saveFile.Close();
-                return true;
-            }
-            else
-            {
-                GD.PushError("Save File Error Code: " + err);
-            }
-        }
-        else
-        {
-            GD.PushError("SaveFile fileName is null!");
-        }
-        return false;
+        Error err = Error.Ok;
+        if (fileName == null) { return Error.FileBadPath; }
+        Directory dir = new Directory(); 
+        if (!dir.DirExists(fileName.GetBaseDir())) { err = dir.MakeDirRecursive(fileName.GetBaseDir()); } // Create Path Directory
+        File saveFile = new File(); 
+        err = saveFile.Open(fileName, fmode);
+        if (err != Error.Ok) { return err; }
+        saveFile.StoreString(content);
+        saveFile.Close();
+        return err;
     }     
 
-    public static string LoadFile(string fileName, File.ModeFlags fmode = File.ModeFlags.Read)
+    public static Error LoadFile(string fileName, out string content, File.ModeFlags fmode = File.ModeFlags.Read)
     {
-        string content = ""; 
-        if (fileName != null)
-        {
-            File loadFile = new File(); 
-            Error err = loadFile.Open(fileName, fmode);
-            if (err == Error.Ok)
-            {
-                content = loadFile.GetAsText();
-                loadFile.Close();
-            }
-            else
-            {
-                GD.PushError("Load File Error Code: " + err);
-            }
-        }
-        else
-        {
-            GD.PushError("LoadFile fileName is null!");
-        }
-        return content;
+        Error err = Error.Ok;
+        content = ""; 
+        if (fileName == null) { return Error.FileBadPath; }
+        File loadFile = new File(); 
+        err = loadFile.Open(fileName, fmode);
+        if (err != Error.Ok) { return err; }
+        content = loadFile.GetAsText();
+        loadFile.Close();
+        return err;
     }
 
-    public static bool DeleteFile(string fileName, File.ModeFlags fmode = File.ModeFlags.WriteRead)
+    public static Error DeleteFile(string fileName, File.ModeFlags fmode = File.ModeFlags.WriteRead)
     {
-        if (fileName != null)
-        {
-            Directory deleteDir = new Directory(); 
-            Error err = deleteDir.Remove(fileName);
-            if (err == Error.Ok)
-            {
-                return true;
-            }
-            else
-            {
-                GD.Print("Delete File Error Code: " + err);
-            }
-        }
-        else
-        {
-            GD.Print("DeleteFile fileName is null!");
-        }
-        return false;
+        Error err = Error.Ok;
+        if (fileName == null) { return Error.FileBadPath; }
+        Directory deleteDir = new Directory(); 
+        err = deleteDir.Remove(fileName);
+        return err;
     }
     
-    public static void DeleteRecursively(string fileName)
+    public static Error DeleteRecursively(string fileName)
     {
         Directory directory = new Directory();
         Error err = directory.Open(fileName);
-        if (err == Error.Ok)
+        if (err != Error.Ok) { return err; }
+        directory.ListDirBegin(true); // List directory content
+        string fName = directory.GetNext();
+        while (fName != "")
         {
-            // List directory content
-            directory.ListDirBegin(true);
-            string fName = directory.GetNext();
-            while (fName != "")
+            if (directory.CurrentIsDir())
             {
-                if (directory.CurrentIsDir())
-                {
-                    DeleteRecursively(fileName + "/" + fName);
-                }
-                else
-                {
-                    directory.Remove(fName);
-                }
-                fName = directory.GetNext();
+                err = DeleteRecursively(fileName + "/" + fName);
             }
-            directory.Remove(fileName);
+            else
+            {
+                err = directory.Remove(fName);
+            }
+            fName = directory.GetNext();
         }
-        else
-        {
-            GD.Print("DeleteRecursive Error: " + err);
-        }
+        directory.Remove(fileName);
+        return err;
     }
 
     public static Error CopyFile(string fileName, string copyName, File.ModeFlags fmode = File.ModeFlags.ReadWrite)
     {
+        Error err = Error.Ok;
         string content = ""; 
-        if (fileName != null)
-        {
-            content = LoadFile(fileName);
-            SaveFile(copyName, content);
-        }
-        else
-        {
-            GD.PushError("LoadFile fileName is null!");
-        }
-        return Error.Ok;
+        if (fileName == null) { return Error.FileBadPath; }
+        err = LoadFile(fileName, out content);
+        if (err != Error.Ok) { return err; }
+        err = SaveFile(copyName, content);
+        return err;
     }
 
     public static Error MoveFile(string from, string to, File.ModeFlags fmode = File.ModeFlags.ReadWrite)
     {
+        Error err = Error.Ok;
         string content = "";
-        if (from != null)
+        if (from == null) { return Error.FileBadPath; }
+        err = LoadFile(from, out content);
+        if (err != Error.Ok) { return err; }
+        err = SaveFile(to, content);
+        if (err != Error.Ok) { return err; }
+        if(DeleteFile(from) != Error.Ok)
         {
-            content = LoadFile(from);
-            SaveFile(to, content);
-            if(!DeleteFile(from))
-            {
-                DeleteRecursively(from);
-            }
+            DeleteRecursively(from);
         }
-        else
-        {
-            GD.PushError("MoveFile fileName is null!");
-        }
-        return Error.Ok;
+        return err;
     }
+
+    //  - Up Updated! - 
 
     public static void ReadCsvFile(string fileName)
     {
@@ -177,7 +119,7 @@ public static class FileManager
         }
     }
 
-    // Example -> 0: "/Flow/Flow1.flow"
+    // Example -> 0: "/Flow/Flow1.storyel"
     public static Array DirectoryTreeAsArray(string fileName)
     {
         Array treeArray = new Array(){}; 

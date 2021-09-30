@@ -14,13 +14,13 @@ public class DetailsPane : Panel
     private VBoxContainer fragmentDetails;
     private VBoxContainer nodeDetails;
 
-    private FlowNode DraggedFlowNode;
+    private StoryNode DraggedFlowNode;
 
     public override void _Ready()
     {
-        StoryManager.CurrentStoryManager.Connect("StoryChanged", this, "_OnStoryChanged");
-        StoryManager.CurrentStoryManager.Connect("StoryElementChanged", this, "_OnStoryElementChanged");
-        StoryManager.CurrentStoryManager.Connect("FlowNodeChanged", this, "_OnFlowNodeChanged");
+        StoryManager.CurrentStoryManager.Connect("OnStoryEdited", this, "_OnStoryEdited");
+        StoryManager.CurrentStoryManager.Connect("OnStoryElementEdited", this, "_OnStoryElementEdited");
+        StoryManager.CurrentStoryManager.Connect("OnStoryNodeEdited", this, "_OnStoryNodeEdited");
 
         fragmentDetails = GetNode<VBoxContainer>(fragmentDetailsPath);
         nodeDetails = GetNode<VBoxContainer>(nodeDetailsPath);
@@ -31,7 +31,7 @@ public class DetailsPane : Panel
         
     }
 
-    public void CreateFragmentDetails(FlowNode flowNode)
+    public void CreateFragmentDetails(StoryNode flowNode)
     {
         DeleteDetails(fragmentDetails);
         if (!IsInstanceValid(flowNode) || !IsInstanceValid(flowNode.NodeFragment)) { return; }
@@ -51,7 +51,7 @@ public class DetailsPane : Panel
         }
     }
 
-    public void CreateNodeDetails(FlowNode flowNode)
+    public void CreateNodeDetails(StoryNode flowNode)
     {
         DeleteDetails(nodeDetails);
         if (!IsInstanceValid(flowNode)) { return; }
@@ -95,17 +95,17 @@ public class DetailsPane : Panel
 
     }
 
-    public void _OnStoryChanged(Story story)
+    public void _OnStoryEdited(Story story)
     {
         if (!IsInstanceValid(story)) { return; }
     }
 
-    public void _OnStoryElementChanged(StoryElement storyElement)
+    public void _OnStoryElementEdited(StoryElement storyElement)
     {
         if (!IsInstanceValid(storyElement)) { return; }
     }
 
-    public void _OnFlowNodeChanged(FlowNode flowNode)
+    public void _OnStoryNodeEdited(StoryNode flowNode)
     {
         if (!IsInstanceValid(flowNode)) { DeleteDetails(fragmentDetails); DeleteDetails(nodeDetails); return; }
         if(IsInstanceValid(DraggedFlowNode)) { DraggedFlowNode.Disconnect("dragged", this, "_OnFlowNodeDragged"); } 
@@ -117,9 +117,9 @@ public class DetailsPane : Panel
 
     public void _OnFlowNodeDragged(Vector2 from, Vector2 to)
     {
-        if (IsInstanceValid(StoryManager.CurrentFlowNode))
+        if (IsInstanceValid(StoryManager.CurrentStoryNode))
         {
-            CreateNodeDetails(StoryManager.CurrentFlowNode);
+            CreateNodeDetails(StoryManager.CurrentStoryNode);
         }
     }
 }

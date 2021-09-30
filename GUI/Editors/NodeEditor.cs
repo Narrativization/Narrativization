@@ -2,13 +2,13 @@ using Godot;
 using System;
 using Godot.Collections;
 
-public class FlowEditor : FlowGraphEditor
+public class NodeEditor : FlowGraphEditor
 {
     // Exports
     [Export]
     private PackedScene flowContextMenuScene = GD.Load<PackedScene>("res://GUI/Contexts/FlowContextMenu.tscn");
     [Export]
-    private PackedScene storyNode = GD.Load<PackedScene>("res://GUI/Nodes/StoryNode.tscn");
+    private PackedScene storyNodeStories = GD.Load<PackedScene>("res://GUI/Nodes/StoryNodeStories.tscn");
 
 
     private FlowContextMenu contextMenu;
@@ -22,7 +22,7 @@ public class FlowEditor : FlowGraphEditor
         Directory dir = new Directory(); 
         if (dir.FileExists(recentStory))
         {
-            AddChild(storyNode.Instance());
+            AddChild(storyNodeStories.Instance());
         }
 
         Connect("node_selected", this, "_OnNodeSelected");
@@ -95,7 +95,7 @@ public class FlowEditor : FlowGraphEditor
     {
         GD.Print("Create Story Flow Node");
         PackedScene storyFlowNodeScene = GD.Load<PackedScene>(nodeType);
-        FlowNode flowGraphNode = storyFlowNodeScene.Instance() as FlowNode;
+        StoryNode flowGraphNode = storyFlowNodeScene.Instance() as StoryNode;
         flowGraphNode.CreateFlowNode(nodeType);
         AddChild(flowGraphNode);
         flowGraphNode.Offset = ScrollOffset + GetLocalMousePosition() - (flowGraphNode.RectSize/2);
@@ -106,7 +106,7 @@ public class FlowEditor : FlowGraphEditor
     {
         GD.Print("Create Story Flow Node");
         PackedScene storyFlowNodeScene = GD.Load<PackedScene>(nodeData["Type"] as string);
-        FlowNode flowGraphNode = storyFlowNodeScene.Instance() as FlowNode;
+        StoryNode flowGraphNode = storyFlowNodeScene.Instance() as StoryNode;
         flowGraphNode.CreateFlowNode(nodeData);
         AddChild(flowGraphNode);
         return true;
@@ -114,14 +114,17 @@ public class FlowEditor : FlowGraphEditor
 
     public void _OnNodeSelected(Node node)
     {
-        StoryManager.CurrentFlowNode = node as FlowNode;
+        if (node is StoryNode)
+        {
+            StoryManager.CurrentStoryNode = node as StoryNode;
+        }
     }
 
     public void _OnNodeUnselected(Node node)
     {
-        if (StoryManager.CurrentFlowNode == node as FlowNode)
+        if (node is StoryNode)
         {
-            StoryManager.CurrentFlowNode = null;
+            StoryManager.CurrentStoryNode = null;
         }
     }
 

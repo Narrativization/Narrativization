@@ -21,8 +21,8 @@ public class StoryManager : Node
         set 
         {
             _Story = value; 
-            _StoryManager.EmitSignal("StoryChanged", _Story); 
-            CurrentTitleId = "";
+            _StoryManager.EmitSignal("OnStoryEdited", _Story); 
+            CurrentSeid = "";
         }
     } 
 
@@ -34,50 +34,65 @@ public class StoryManager : Node
         set 
         {
             _StoryElement = value; 
-            _StoryManager.EmitSignal("StoryElementChanged", _StoryElement); 
-            CurrentTitleId = IsInstanceValid(_StoryElement) ? _StoryElement.StoryElementId : "";
+            _StoryManager.EmitSignal("OnStoryElementEdited", _StoryElement); 
+            CurrentSeid = IsInstanceValid(_StoryElement) ? _StoryElement.StoryElementId : "";
         }
     } 
 
-    // Title Displayer
-    private static string _TitleId { get; set; } = ""; // Current Id of Selected/Editing Outline 
-    public static string CurrentTitleId 
+    // Story Node
+    private static StoryNode _StoryNode { get; set; } // Currently Edited Story Node
+    public static StoryNode CurrentStoryNode 
+    {
+        get { return _StoryNode; } 
+        set 
+        {
+            _StoryNode = value; 
+            _StoryManager.EmitSignal("OnStoryNodeEdited", _StoryNode); 
+        }
+    } 
+
+    // Story Fragment
+    private static StoryFragment _StoryFragment { get; set; } // Currently Edited Story Fragment
+    public static StoryFragment CurrentStoryFragment 
+    {
+        get { return _StoryFragment; } 
+        set 
+        {
+            CurrentStoryFragment = value; 
+            _StoryManager.EmitSignal("OnStoryFragmentEdited", _StoryFragment); 
+        }
+    } 
+
+    // Seid/StoryElement Displayer | Navigation Bar
+    private static string _Seid { get; set; } = ""; // Current Id of Selected/Editing Outline 
+    public static string CurrentSeid 
     { 
-        get { return _TitleId; } 
+        get { return _Seid; } 
         set 
         { 
-            _TitleId = CurrentStory.StoryName + value; 
-            _StoryManager.EmitSignal("TitleIdChanged", _TitleId); 
+            _Seid = CurrentStory.StoryName + value; 
+            _StoryManager.EmitSignal("OnStoryElementIdEdited", _Seid); 
         } 
     }
 
-    // Story Flow Node
-    private static FlowNode _FlowNode { get; set; }
-    public static FlowNode CurrentFlowNode 
-    {
-        get { return _FlowNode; } 
-        set 
-        {
-            _FlowNode = value; 
-            _StoryManager.EmitSignal("FlowNodeChanged", _FlowNode); 
-        }
-    } 
-
-    
     [Signal]
-    public delegate void TitleIdChanged(string titleId);
+    public delegate void OnStoryCreated(Story story);
     [Signal]
-    public delegate void StoryCreated(Story story);
+    public delegate void OnStoryEdited(Story story);
     [Signal]
-    public delegate void StoryChanged(Story story);
+    public delegate void OnStoryElementCreated(StoryElement storyElement);
     [Signal]
-    public delegate void StoryElementCreated(StoryElement storyElement);
+    public delegate void OnStoryElementEdited(StoryElement storyElement);
     [Signal]
-    public delegate void StoryElementChanged(StoryElement storyElement);
+    public delegate void OnStoryNodeCreated(StoryNode storyNode);
     [Signal]
-    public delegate void FlowNodeCreated(FlowNode flowNode);
+    public delegate void OnStoryNodeEdited(StoryNode storyNode);
     [Signal]
-    public delegate void FlowNodeChanged(FlowNode flowNode);
+    public delegate void OnStoryFragmentCreated(StoryFragment storyFragment);
+    [Signal]
+    public delegate void OnStoryFragmentEdited(StoryFragment storyFragment);
+    [Signal]
+    public delegate void OnStoryElementIdEdited(string seid);
 
     private StoryManager()
     {
@@ -96,7 +111,7 @@ public class StoryManager : Node
 
     public override void _Input(InputEvent inputEvent)
     {
-        if (inputEvent.IsActionPressed("Save"))
+        if (inputEvent.IsActionPressed("SaveAll"))
         {
             GD.Print("Save");
             if (IsInstanceValid(CurrentStory))
@@ -106,42 +121,42 @@ public class StoryManager : Node
             if (IsInstanceValid(CurrentStoryElement))
             {
                 CurrentStoryElement.Save();
-                _StoryManager.EmitSignal("StoryElementChanged", _StoryElement); 
             }
         }
     }
 
     // Create Story
-    public static Story CreateStory(string name, string description, string directory)
+    public static Story CreateStory(string name, string description, string directory, string author = "", string copyright = "")
     {
-        CloseAllStories(); // Single Story Workflow
-        CurrentStory = new Story(name, description, directory);
+        Story story = new Story(name, description, directory, author, copyright);
+        _StoryManager.EmitSignal("OnStoryCreated", story); 
+        CurrentStory = story;
         CurrentStoryManager.AddChild(CurrentStory);
         SaveStory();
-        CurrentStoryManager.EmitSignal("StoryChanged", CurrentStory);
         return CurrentStory;
     }
 
     // Save Story (Only Story[.storier] File)
-    public static bool SaveStory()
+    public static Error SaveStory()
     {
         Dictionary storierData = new Dictionary() 
         {
             { "Story", CurrentStory.StoryData },
             { "Storier", StorierManager.StorierData }
         };
-        bool isSuccess = FileManager.SaveFile(CurrentStory.StoryPath, JSON.Print(storierData, "\t"));
-        if (isSuccess) { StorierManager.WriteRecentStory(); } 
+        Error isSuccess = FileManager.SaveFile(CurrentStory.StoryPath, JSON.Print(storierData, "\t"));
+        if (isSuccess == Error.Ok) { StorierManager.WriteRecentStory(); } 
         return isSuccess;
     }
 
     // Load Story
-    public static bool LoadStory(string fileName)
+    private static Error LoadStory(string fileName)
     {
-        string str = FileManager.LoadFile(fileName);
-        JSONParseResult jsonObject = JSON.Parse(str);
-
-        if(jsonObject.Error != 0) { GD.Print("Error:", jsonObject.ErrorLine); } 
+        string content = "";
+        Error err = FileManager.LoadFile(fileName, out content);
+        if (err != Error.Ok) { GD.PrintErr(err); }
+        JSONParseResult jsonObject = JSON.Parse(content);
+        if(jsonObject.Error != 0) { GD.PrintErr( "Error:", jsonObject.ErrorLine); } 
         else
         {
             // GD.Print(JSON.Print(jsonObject.Result));
@@ -153,7 +168,7 @@ public class StoryManager : Node
                 // Dictionary<string, string> storyInfos = storyJson["Story"] as Dictionary<string, string>;
                 Dictionary storyDic = storyJson["Story"] as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
                 Dictionary<string, string> storyInfos = new Dictionary<string, string>(storyDic);
-                CreateStory(storyInfos["Name"], storyInfos["Description"], fileName.GetBaseDir() + "/");
+                // CreateStory(storyInfos["Name"], storyInfos["Description"], fileName.GetBaseDir() + "/");
                 CurrentStory.StoryData = storyInfos;
             }
             if (storyJson.Contains("Storier"))
@@ -166,7 +181,21 @@ public class StoryManager : Node
                 StorierManager.StorierData = storierInfos;
             }
         }
-        return true;
+        return Error.Ok;
+    }
+
+    public static Story OpenStory(string directory)
+    {
+        CurrentStory = new Story();
+        Error err = LoadStory(directory);
+        return CurrentStory;
+    }
+
+    // Close Story
+    public static Error CloseStory()
+    {
+        CurrentStory.Free();
+        return Error.Ok;
     }
 
     public static void CloseAllStories()

@@ -6,7 +6,7 @@ public class Editors : TabContainer
 {
     // Exports
     [Export]
-    private NodePath flowEditorNodePath = new NodePath("./Flow/FlowEditor");
+    private NodePath nodeEditorNodePath = new NodePath("./Node/NodeEditor");
     [Export]
     private NodePath sceneEditorNodePath = new NodePath("./Scene/SceneEditor");
     [Export]
@@ -17,7 +17,7 @@ public class Editors : TabContainer
     // Properties
     public string CurrentEditor { get { return GetTabTitle(CurrentTab); } }
 
-    public static FlowEditor flowEditor;
+    public static NodeEditor nodeEditor;
     public static SceneEditor sceneEditor;
     public static TextEdit scriptEditor;
     public static PropertyEditor propertyEditor;
@@ -29,7 +29,7 @@ public class Editors : TabContainer
     public override void _Ready()
     {
         AddToGroup("Editors");
-        flowEditor = GetNode<FlowEditor>(flowEditorNodePath);
+        nodeEditor = GetNode<NodeEditor>(nodeEditorNodePath);
         sceneEditor = GetNode<SceneEditor>(sceneEditorNodePath);
         scriptEditor = GetNode<TextEdit>(scriptEditorNodePath);
         propertyEditor = GetNode<PropertyEditor>(propertyEditorNodePath);
@@ -94,9 +94,9 @@ public class Editors : TabContainer
 
     private void InitScene()
     {
-        if (flowEditor.GetSelectedNodes().Count > 0)
+        if (nodeEditor.GetSelectedNodes().Count > 0)
         {
-            sceneEditor.StartFromNode(flowEditor.GetSelectedNodes()[0]);
+            sceneEditor.StartFromNode(nodeEditor.GetSelectedNodes()[0]);
         }
     }
 

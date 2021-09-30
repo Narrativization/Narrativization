@@ -18,19 +18,12 @@ public class Story : Node
     public string StoryDirectory { get; set; } // Current Story Directory
     public string StoryBase { get { return StoryDirectory.GetBaseDir(); } } // Story Base Directory
 
-    private Story() 
+    public Story() 
     {
         StoryName = "Untitled Story";
         StoryDescription = "";
         StoryDirectory = "";
     }
-    public Story(string name, string description, string directory) 
-    {
-        StoryName = name;
-        StoryDescription = description;
-        StoryDirectory = directory;
-        ValidateHierarchy(directory);
-    }        
     public Story(string name, string description, string directory, string author, string copyright) 
     {
         StoryName = name;
@@ -38,7 +31,7 @@ public class Story : Node
         StoryDirectory = directory;
         StoryData.Add("Author", author);
         StoryData.Add("Copyright", copyright);
-        ValidateHierarchy(directory);
+        CreateHierarchy(); 
     }
 
     public override void _Ready()
@@ -50,16 +43,6 @@ public class Story : Node
 //  {
 //      
 //  }
-
-    // Validate Story Directory
-    private void ValidateHierarchy(string directory)
-    {
-        if (!(new Directory()).DirExists(directory)) 
-        { 
-            StoryManager.CurrentStoryManager.EmitSignal("StoryCreated", this);
-            CreateHierarchy(); 
-        } 
-    }
     
     // Create Folder/File Structure of project
     public void CreateHierarchy()
@@ -84,45 +67,11 @@ public class Story : Node
         }
     }
 
-    // ~Open Default/Recent Flow
-    public void CreateDefaultFlow()
-    {
-        StoryElement defaultStory = new StoryElement(StoryBase + "/Flows/Starter.storyel");
-        defaultStory.Save();
-        StorierManager.StorierData.Add("Starter", "/Flows/Starter.storyel");
-        // StoryManager.CurrentStoryElement = defaultStory;
-    }
-
     public Array GetDirectoryTree()
     {
         GD.Print(FileManager.DirectoryTreeAsArray(StoryDirectory));
         return FileManager.DirectoryTreeAsArray(StoryDirectory);
     }
-
-    public Dictionary GetDirectoryTreeAsDictionary()
-    {
-        GD.Print(JSON.Print(FileManager.DirectoryTreeAsDictionary(StoryDirectory), "\t"));
-        return FileManager.DirectoryTreeAsDictionary(StoryDirectory);
-    }
-
-    public static StoryElement CreateStoryElement(string path, StoryElementType type)
-    {
-        StoryElement storyElement = new StoryElement(path);
-        string idPath = path.Replace(StoryManager.CurrentStory.StoryBase, ""); // Remove Story Base
-        switch (type)
-        {
-            case StoryElementType.StoryFlow:
-                break; 
-            case StoryElementType.StoryEntity:
-                break; 
-            case StoryElementType.StoryAsset:
-                break; 
-            default:
-                break; 
-        }
-        return storyElement;
-    }
-
 }
 
 

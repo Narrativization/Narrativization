@@ -101,6 +101,6 @@ public class ModalManager : Control
     public void _OnFileDialogFileSelected(string path)
     {
         GD.Print("Load Story");
-        StoryManager.LoadStory(path);
+        StoryManager.OpenStory(path);
     }
 }

@@ -2,62 +2,134 @@ using Godot;
 using System;
 using Godot.Collections;
 
-// Story Node
+public enum FlowState
+{
+    Begin,      // Start
+    Progress,   // Process
+    End         // Finish
+}
+
+// Generic Flow Node
 public class StoryNode : FlowGraphNode
 {
-    [Export] // Export(Dictionary, string, NodePath)
-    private Array<NodePath> editables = new Array<NodePath>(); // NodePath: JSON.Direction  
+    [Export]
+    NodePath contentTextLabelPath = "./Content";
 
-    private string recentStory = "";
-    private Dictionary storyData;
+    public RichTextLabel contentTextLabel;
 
-    // Called when the node enters the scene tree for the first time.
+    public StoryFragment NodeFragment 
+    { 
+        get { return StoryFragment.StoryFragments[NodeFragmentIndex]; } 
+        set { NodeFragmentIndex = value.FragmentIndex; } 
+    } // Fragment
+
+    public int NodeFragmentIndex { get; set; } // Fragment Id/Index
+
+    // Custom Node Data
+    public Dictionary<string, object> NodeData 
+    { 
+        get
+        {
+            return new Dictionary<string, object>()
+            {
+                { "Fragment", NodeFragmentIndex },  // Fragment Identifier
+                { "Id", NodeId },                   // Node Identifier
+                { "Type", NodeType },               // Identify to Displayed Node
+                { "Title", NodeTitle },             // Top Text of Node | Editable
+                { "Offset", NodeOffset },           // Location of Node
+            };
+        } 
+        set
+        {
+            NodeFragmentIndex = (int)value["Fragment"];
+            NodeId = value["Id"] as string;
+            NodeType = value["Type"] as string;
+            NodeTitle = value["Title"] as string;
+            NodeOffset = (Vector2)value["Offset"];
+        }
+    } 
+
+
+        
+    public StoryNode() : base() { }
+
     public override void _Ready()
     {
-        recentStory = StorierManager.ReadRecentStory();
-        Directory dir = new Directory(); 
-        if (dir.FileExists(recentStory))
-        {
-            GD.Print("Recent Story: " + recentStory);
-            storyData = JSON.Parse(FileManager.LoadFile(recentStory)).Result as Dictionary;
-            DisplayData();
-        }
+        contentTextLabel = GetNode<RichTextLabel>(contentTextLabelPath);
+        base._Ready();
     }
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+    public override void _Draw()
+    {
+        contentTextLabel.Text = NodeFragment.FragmentName;
+        base._Draw();
+    }
+
+    //  public override void _Process(float delta)
+    //  {
+    //      
+    //  }
 
     public override void _GuiInput(InputEvent inputEvent)
     {
-        if (inputEvent is InputEventMouseButton eventMouseButton)
-        {
-            if (eventMouseButton.Doubleclick)
-            {
-                if (recentStory != "")
-                {
-                    GD.Print("Load Story");
-                    if (StoryManager.LoadStory(recentStory))
-                    {
-                        GetParent<FlowEditor>().DeleteAll();
-                        // StoryManager.CurrentStory.CurrentStoryElement = StoryFlow.Load();
-                    } 
-                }
-            }
-        }
+        base._GuiInput(inputEvent);
     }
 
-    public void DisplayData()
+    // Create Flow Node
+    public void CreateFlowNode(string nodeType) { NodeId = "FlowNode" + NodeIndex; NodeFragment = new StoryFragment(); }
+    public void CreateFlowNode(Dictionary<string, object> nodeData) { NodeData = nodeData; }
+
+    public override void OpenNode()
     {
-        for (int i = 0; i < editables.Count; i++)
+        GD.Print("Open Node");
+        base.OpenNode();
+    }
+
+    public override void SelectNode()
+    {
+        // GD.Print("Select Node");
+        base.SelectNode();
+    }
+
+    public override void ContextNode()
+    {
+        GD.Print("Context Node");
+        base.ContextNode();
+    }
+
+    /*
+    public StoryElement ReferenceStoryFlow(StoryElement _storyFlow)
+    {
+        storyFlow = _storyFlow;
+        if (IsInstanceValid(storyFlow))
         {
-            if (GetNode(editables[i]) is Label lbl)
-            {
-                Dictionary _story = (Dictionary)storyData["Story"];
-                lbl.Text = _story[lbl.Name as string] as string;
-            }
+            Title = (storyFlow.StoryElementName != "") ? storyFlow.StoryElementName : "Story Flow";
+            HintTooltip = storyFlow.StoryElementId;
+        }
+        return storyFlow;
+    }
+
+    public override void OpenNode()
+    {
+        // base.OpenNode();
+        if (IsInstanceValid(storyFlow))
+        {
+            StoryManager.CurrentStoryElement = storyFlow;
+            GetTree().CallGroup("Editors", "EditStoryElement", StoryManager.CurrentStoryElement);
         }
     }
+    */
+
 }
+
+/*
+Flow Node
+{
+    Fragment
+    Id
+    Type
+    Title
+    Offset
+}
+~Slots(Connections)
+*/

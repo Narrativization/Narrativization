@@ -11,8 +11,8 @@ public class TitleDisplayer : RichTextLabel
     {
         AddToGroup("SeidDisplayer");
         Connect("meta_clicked", this, "_OnMetaClicked");
-        StoryManager.CurrentStoryManager.Connect("TitleIdChanged", this, "_OnTitleIdChanged");
-        StoryManager.CurrentStoryManager.Connect("StoryElementChanged", this, "_OnStoryElementChanged");
+        StoryManager.CurrentStoryManager.Connect("OnStoryElementIdEdited", this, "_OnStoryElementIdEdited");
+        StoryManager.CurrentStoryManager.Connect("OnStoryElementEdited", this, "_OnStoryElementEdited");
     }
 
     // public override void _Process(float delta)
@@ -21,7 +21,7 @@ public class TitleDisplayer : RichTextLabel
     //     base._Process(delta);
     // }
 
-    public void UpdateTitle() { TitleText(StoryManager.CurrentTitleId); }
+    public void UpdateTitle() { TitleText(StoryManager.CurrentSeid); }
 
     private void TitleText(string _flowName)
     {
@@ -40,12 +40,12 @@ public class TitleDisplayer : RichTextLabel
         BbcodeText = cFlow;
     }
 
-    public void _OnTitleIdChanged(string titleId)
+    public void _OnStoryElementIdEdited(string titleId)
     {
         UpdateTitle();
     }
 
-    public void _OnStoryElementChanged(StoryElement storyElement)
+    public void _OnStoryElementEdited(StoryElement storyElement)
     {
         isModified = false;
         UpdateTitle();

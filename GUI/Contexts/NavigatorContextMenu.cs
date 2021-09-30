@@ -18,7 +18,7 @@ public class NavigatorContextMenu : PopupMenu
         {
             case 0: // Open
                 GD.Print("Open");
-                Editors.flowEditor.Reset();
+                Editors.nodeEditor.Reset();
                 // StoryManager.CurrentStoryElement = Story.CreateStoryElement(path);
                 break;
             case 1: // Rename
@@ -27,10 +27,7 @@ public class NavigatorContextMenu : PopupMenu
                 break;
             case 2: // Delete
                 GD.Print("Delete");
-                if (!FileManager.DeleteFile(path))
-                {
-                    FileManager.DeleteRecursively(path);
-                }
+                FileManager.DeleteRecursively(path);
                 break;
             case 3: // Show in Folder
                 GD.Print("Show in Folder");

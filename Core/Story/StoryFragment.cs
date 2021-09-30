@@ -127,3 +127,27 @@ Unique Id
 Guid guid = Guid.NewGuid();
 GD.Print(guid);
 */
+
+
+/*
+Flow Fragment Informations
+---
+    FlowFragment
+FlowFragmentType: <Type>,
+Name: , 
+Description: , 
+Content: , 
+---
+
+--- Example
+    Dialogue
+FlowFragmentType: Dialogue
+Name: ""
+Description: , 
+Character: ""
+Parenthetical: ""
+Dialogue: ""
+---
+
+Unique: FlowFragment-0, FlowFragment-1, FlowFragment-10, FlowFragment-1000, ...
+*/

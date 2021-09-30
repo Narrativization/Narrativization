@@ -26,7 +26,7 @@ public class FlowContextMenu : PopupMenu
         {
             case 0: // Create Fragment
                 GD.Print("Create Fragment");
-                GetParent<FlowEditor>().CreateFlowNode();
+                GetParent<NodeEditor>().CreateFlowNode();
                 break;
             default:
                 GD.Print("Flow Context Menu: " + Id);

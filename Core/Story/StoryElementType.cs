@@ -8,6 +8,3 @@ public enum StoryElementType
 // Others
 // Reference   // Story Reference: Mention, Tag and more...  
 // ~Template   // Story Template: User Generated Nodes and more...
-
-// Remove
-// StoryElement,      // Story Element: Default Type

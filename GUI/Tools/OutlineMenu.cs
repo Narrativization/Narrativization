@@ -11,8 +11,8 @@ public class OutlineMenu : HBoxContainer
 
     public override void _Ready()
     {
-        StoryManager.CurrentStoryManager.Connect("StoryChanged", this, "_OnStoryChanged");
-        StoryManager.CurrentStoryManager.Connect("StoryElementCreated", this, "_OnStoryElementCreated");
+        StoryManager.CurrentStoryManager.Connect("OnStoryEdited", this, "_OnStoryEdited");
+        StoryManager.CurrentStoryManager.Connect("OnStoryElementCreated", this, "_OnStoryElementCreated");
 
         refreshButton = GetNode<Button>(refreshNodePath);
         refreshButton.Connect("pressed", this, "_OnRefreshPressed");
@@ -24,7 +24,7 @@ public class OutlineMenu : HBoxContainer
 //      
 //  }
 
-    public void _OnStoryChanged(Story story)
+    public void _OnStoryEdited(Story story)
     {
         GetTree().CallGroup("Navigator", "Refresh");
     }

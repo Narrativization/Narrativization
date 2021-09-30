@@ -33,8 +33,7 @@ public class StoryElement : Resource
         if ((new Directory()).FileExists(StoryElementPath))
         {
             Load();
-            // Add as StoryElementLoad
-            // StoryManager.CurrentStoryManager.EmitSignal("StoryElementChanged", this);
+            StoryManager.CurrentStoryManager.EmitSignal("OnStoryElementCreated", this);
         }
     } 
 
@@ -48,8 +47,7 @@ public class StoryElement : Resource
         StoryElementPath = path;
 
         Save();
-        // Add as StoryElementSave
-        // StoryManager.CurrentStoryManager.EmitSignal("StoryElementCreated", this);
+        StoryManager.CurrentStoryManager.EmitSignal("OnStoryElementCreated", this);
     }
 
     // Saving Story Element to Path | ~Maybe create Resource Format Saver/Loader

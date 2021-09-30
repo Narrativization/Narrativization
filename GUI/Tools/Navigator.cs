@@ -56,7 +56,7 @@ public class Navigator : Tree
                 string relativePath = treeItem.GetMeta("RelativePath") as string;
                 GD.Print("Double Click: " + itemName + " -> \"" + relativePath + "\"");
 
-                Editors.flowEditor.Reset();
+                Editors.nodeEditor.Reset();
                 // StoryManager.CurrentStoryElement = Story.CreateStoryElement(StoryManager.CurrentStory.StoryBase + relativePath);
             }
             else if (inputEvent.IsActionPressed("Context") && IsInstanceValid(GetItemAtPosition(mouseEvent.Position)))

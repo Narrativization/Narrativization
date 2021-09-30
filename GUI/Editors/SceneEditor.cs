@@ -32,13 +32,13 @@ public class SceneEditor : ScrollContainer
     public void StartFromNode(GraphNode selectedNode)
     {
         Reset();
-        if (selectedNode is FlowNode flowNode)
+        if (selectedNode is StoryNode flowNode)
         {
             AddSceneBlock(flowNode);
         }
     }
 
-    public void AddSceneBlock(FlowNode flowNode)
+    public void AddSceneBlock(StoryNode flowNode)
     {
         SceneBlock sceneBlock = sceneBlockPack.Instance() as SceneBlock;
         storyScenes.AddChild(sceneBlock);
