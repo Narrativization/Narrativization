@@ -61,27 +61,7 @@ public class CreatorModal : ConfirmationDialog
     public void InitModal(string creation)
     {
         WindowTitle = "Create Story " + creation;
-        switch (creation)
-        {
-            case "Character":
-                idBaseEdit.Text = "/Entities/Characters/";
-                _extension = "entity";
-                break;
-            case "Location":
-                idBaseEdit.Text = "/Entities/Locations/";
-                _extension = "entity";
-                break;
-            case "Flow":
-                idBaseEdit.Text = "/Flows/";
-                _extension = "flow";
-                break;
-            case "Entity":
-                idBaseEdit.Text = "/Entities/";
-                _extension = "entity";
-                break;
-            default:
-                break;
-        }
+        _extension = "storyel";
         ResetParams();
         IdChanged();
     }

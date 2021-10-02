@@ -3,9 +3,11 @@ using System;
 using Godot.Collections;
 using Array = Godot.Collections.Array;
 
-// Basic Flow Controls for GraphEdit(Without Storier)
+// Basic Flow Controls for GraphEdit(Without Storier) | Compatible with FlowGraphNode
 public class FlowGraphEditor : GraphEdit
 {
+    // TODO: Refactor GraphNode's to FlowGraphNode
+
     [Export]
     public float zoomSpeed = 1.0f;
 

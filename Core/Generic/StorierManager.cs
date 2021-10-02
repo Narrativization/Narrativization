@@ -71,6 +71,17 @@ public class StorierManager : Node
         return configFile.GetValue("Stories", "RecentStory").ToString(); // RecentStory
     }
 
+    // Deleting Recently Story
+    public static void DeleteRecentStory()
+    {
+        string configFileName = StorierManager.userDataDirectory + "UserStories.ini";
+        ConfigFile configFile = new ConfigFile();
+        Directory dir = new Directory();
+        dir.MakeDirRecursive(configFileName.GetBaseDir());
+        Error err = configFile.Save(configFileName);
+        if (err != Error.Ok) { GD.Print(err); }
+    }
+
     //  - !WARNING: Change Workspace isn't in use! - 
 
     // Save Config file use as UserStories settings

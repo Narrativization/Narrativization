@@ -2,24 +2,33 @@ using Godot;
 using System;
 using Godot.Collections;
 
-// Basic Flow Node Controls for GraphNode(Without Storier)
+// Basic Flow Node Controls for GraphNode(Without Storier) | Compatible with FlowGraphEditor
 public class FlowGraphNode : GraphNode
 {
-    // Generic Node Index
-    public static int GenericIdIndex { get; set; } = 0; // Node id Index
-
-    [Export]
-    public int NodeIndex { get; set; } = GenericIdIndex++; // Node Id(Noid)
+    // Flow Graph Node Data
+    public Dictionary<string, object> NodeData { get; set; } = new Dictionary<string, object>(); 
 
     // Graph Node Informations
-    public string NodeId { get { return Name; } set { Name = value; } } 
-    public string NodeType { get { return Filename; } set { Filename = value; } }
-    public string NodeTitle { get { return Title; } set { Title = value; } }
-    public Vector2 NodeOffset { get { return Offset; } set { Offset = value; } }
+    public string NodeId { get { return Name; } set { Name = value; } } // Unique Id of Node (Query: ?Node="<NodeId>"), Connection Identifier
+    public string NodeName { get { return (string)NodeData["Name"]; } set { NodeData["Name"] = value; } } // Node Display Name 
+    public string NodeDescription { get { return (string)NodeData["Description"]; } set { NodeData["Description"] = value; } } // Node Tooltip(Description)
+    public string NodePreset { get { Filename = (string)NodeData["Preset"]; return Filename; } set { NodeData["Preset"] = Filename = value; } } // Presetted Scene of Flow Node | Also use NodeType if you can create slots
+    public string NodeTitle { get { Title = (string)NodeData["Title"]; return Title; } set { NodeData["Title"]= Title = value; } }  // Top(Title) text of Node
+    public Vector2 NodeOffset { get { Offset = (Vector2)NodeData["Offset"]; return Offset; } set { NodeData["Offset"] = Offset = value; } }      // Node Position(Location)
 
     public FlowGraphNode()
     {
-        NodeId = "FlowNode" + NodeIndex;
+        NodeId = "FlowNode";
+        NodeName = "";
+        NodeDescription = "";
+        // Guid guid = Guid.NewGuid(); // C# Guid (Not used: Unique but too Long/Incomprehensible) 
+        // NodeId = guid.ToString();
+    }
+
+    public FlowGraphNode(string id, Dictionary<string, object> nodeData)
+    {
+        NodeId = id;
+        NodeData = nodeData;
     }
 
     public override void _Ready()
@@ -36,8 +45,7 @@ public class FlowGraphNode : GraphNode
     {
         if (inputEvent is InputEventMouseButton eventMouseButton)
         {
-            // CTRL + Double Click
-            
+            // Add CTRL + Left Click
             if (eventMouseButton.Doubleclick)
             {
                 OpenNode();
@@ -47,8 +55,7 @@ public class FlowGraphNode : GraphNode
             {
                 SelectNode();
             }
-            if (IsInstanceValid(StoryManager.CurrentStory) && // if story exist, show context menu 
-                inputEvent.IsActionPressed("Context"))
+            if (inputEvent.IsActionPressed("Context")) // Project Input
             {
                 ContextNode();
                 AcceptEvent();
@@ -57,7 +64,7 @@ public class FlowGraphNode : GraphNode
     }
 
     // Reset GenericIdIndex from GraphEditor
-    public static void Reset() { GenericIdIndex = 0; }
+    public static void Reset() { }
     // Opening Node(Ex: Double Clicked)
     public virtual void OpenNode() { }
     // Opening Node(Ex: Left Clicked)
@@ -70,27 +77,23 @@ public class FlowGraphNode : GraphNode
 
 /*
 
-NodeId: Array Index
-FragmentId: Referenced Fragments Array Index 
-
-Nodes 
-[
-    0: 
+Nodes:
+{
+    <NodeId>: 
     {
-        FragmentId,
-        Name, // Connection Identifier
-        Title,
-        Offset, 
-        // Ports, // Slots 
-        Type? -> Hub, Jump etc.
+        Name: NodeName,
+        Description: NodeDescription,
+        Preset: NodePreset,
+        Title: NodeTitle,
+        Offset: NodeOffset
+
+        // ~Ports/Slots
+        // ~Type -> Hub, Jump etc.
     },
-    1: 
-    {
-        ...
-    }
-]
+    ...
+}
 
-Connections
+Connections: 
 [
     {from, from_port, to, to_port},
     ...

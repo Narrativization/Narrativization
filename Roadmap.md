@@ -10,7 +10,7 @@ Advanced Flow Management. Non-linear, conditional flows(dialogues).
   - [ ] Single Resource File Format(.flow, .entity, ... to .storyel)
   - [x] Create Story Element Types Enum(Flow, Entity, Character, ...)
   - [ ] ~Rename TitleDisplayer to ~~Address(URI) or~~ Story Element Id(Seid)
-  - [ ] Update Managers
+  - [x] Update Managers
 
 ## Future Versions
 Go Back [Roadmap](#Roadmap).

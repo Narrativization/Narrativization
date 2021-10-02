@@ -1,29 +1,27 @@
 using Godot;
 using System;
 using Godot.Collections;
+using Array = Godot.Collections.Array;
 
 public class NodeEditor : FlowGraphEditor
 {
     // Exports
-    [Export]
-    private PackedScene flowContextMenuScene = GD.Load<PackedScene>("res://GUI/Contexts/FlowContextMenu.tscn");
-    [Export]
-    private PackedScene storyNodeStories = GD.Load<PackedScene>("res://GUI/Nodes/StoryNodeStories.tscn");
-
+    [Export(PropertyHint.File, "*.tscn,*.scn")]
+    private string  nodeEditorContextMenuPath = "res://GUI/Contexts/FlowContextMenu.tscn";
+    [Export(PropertyHint.File, "*.tscn,*.scn")]
+    private string  storyNodePath = "res://GUI/Nodes/StoryNode.tscn";
 
     private FlowContextMenu contextMenu;
+    private PackedScene storyNode;
 
     public override void _Ready()
     {                
+        PackedScene flowContextMenuScene = GD.Load<PackedScene>(nodeEditorContextMenuPath);
         contextMenu = flowContextMenuScene.Instance<FlowContextMenu>();
         AddChild(contextMenu);
 
-        string recentStory = StorierManager.ReadRecentStory();
-        Directory dir = new Directory(); 
-        if (dir.FileExists(recentStory))
-        {
-            AddChild(storyNodeStories.Instance());
-        }
+        storyNode = GD.Load<PackedScene>(storyNodePath);
+        AddChild(storyNode.Instance());
 
         Connect("node_selected", this, "_OnNodeSelected");
         Connect("node_unselected", this, "_OnNodeUnselected");
@@ -89,16 +87,15 @@ public class NodeEditor : FlowGraphEditor
         base._GuiInput(inputEvent);
     }
 
-    public override void Reset() { base.Reset(); StoryFragment.Reset(); }
+    public override void Reset() { base.Reset(); }
 
     public bool CreateFlowNode(string nodeType = "res://GUI/Nodes/FlowNode.tscn")
     {
         GD.Print("Create Story Flow Node");
         PackedScene storyFlowNodeScene = GD.Load<PackedScene>(nodeType);
-        StoryNode flowGraphNode = storyFlowNodeScene.Instance() as StoryNode;
-        flowGraphNode.CreateFlowNode(nodeType);
-        AddChild(flowGraphNode);
-        flowGraphNode.Offset = ScrollOffset + GetLocalMousePosition() - (flowGraphNode.RectSize/2);
+        StoryNode storyNode = storyFlowNodeScene.Instance() as StoryNode;
+        AddChild(storyNode);
+        storyNode.Offset = ScrollOffset + GetLocalMousePosition() - (storyNode.RectSize/2);
         return true;
     }
 
@@ -107,7 +104,7 @@ public class NodeEditor : FlowGraphEditor
         GD.Print("Create Story Flow Node");
         PackedScene storyFlowNodeScene = GD.Load<PackedScene>(nodeData["Type"] as string);
         StoryNode flowGraphNode = storyFlowNodeScene.Instance() as StoryNode;
-        flowGraphNode.CreateFlowNode(nodeData);
+        // flowGraphNode.CreateFlowNode(nodeData);
         AddChild(flowGraphNode);
         return true;
     }

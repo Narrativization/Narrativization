@@ -36,19 +36,19 @@ public class DetailsPane : Panel
         DeleteDetails(fragmentDetails);
         if (!IsInstanceValid(flowNode) || !IsInstanceValid(flowNode.NodeFragment)) { return; }
         StoryFragment fragment = flowNode.NodeFragment;
-        foreach (var nodeData in fragment.FragmentSaveData)
-        {
-            // GD.Print("NodeDetail: " + nodeData.Value.GetType());
-            Variant.Type variantType = Variant.Type.String;
-            if (nodeData.Value.GetType() == typeof(String)) { variantType = Variant.Type.String; }
-            else if (nodeData.Value.GetType() == typeof(int)) { variantType = Variant.Type.Int; } 
-            else if (nodeData.Value.GetType() == typeof(Vector2)) { variantType = Variant.Type.Vector2; }
-            else if (nodeData.Value.GetType() == typeof(Enum)) { /* Create Enum Dropdown */ }
-            DetailsProperty detailsProperty = new DetailsProperty();
-            detailsProperty.CreateProperty(nodeData.Key, nodeData.Value, variantType, nodeData.Key); 
-            detailsProperty.Connect("PropertyUpdated", this, "_OnFragmentPropertyUpdated");
-            fragmentDetails.AddChild(detailsProperty);
-        }
+        // foreach (var nodeData in fragment.FragmentSaveData)
+        // {
+        //     // GD.Print("NodeDetail: " + nodeData.Value.GetType());
+        //     Variant.Type variantType = Variant.Type.String;
+        //     if (nodeData.Value.GetType() == typeof(String)) { variantType = Variant.Type.String; }
+        //     else if (nodeData.Value.GetType() == typeof(int)) { variantType = Variant.Type.Int; } 
+        //     else if (nodeData.Value.GetType() == typeof(Vector2)) { variantType = Variant.Type.Vector2; }
+        //     else if (nodeData.Value.GetType() == typeof(Enum)) { /* Create Enum Dropdown */ }
+        //     DetailsProperty detailsProperty = new DetailsProperty();
+        //     detailsProperty.CreateProperty(nodeData.Key, nodeData.Value, variantType, nodeData.Key); 
+        //     detailsProperty.Connect("PropertyUpdated", this, "_OnFragmentPropertyUpdated");
+        //     fragmentDetails.AddChild(detailsProperty);
+        // }
     }
 
     public void CreateNodeDetails(StoryNode flowNode)

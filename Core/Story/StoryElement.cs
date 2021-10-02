@@ -7,7 +7,7 @@ public class StoryElement : Resource
 {
     // Story Element Data
     public Dictionary<string, string> StoryElementData { get; set; } = new Dictionary<string, string>();
-    public Dictionary<string, string> StoryElementTypeData { get; set; } = new Dictionary<string, string>();
+    public Dictionary<string, object> StoryElementTypeData { get; set; } = new Dictionary<string, object>();
 
     // Story Element Information 
     public string StoryElementName { get { return StoryElementData["Name"]; } set { StoryElementData["Name"] = ResourceName = value; } } // Example: MyChar | Uses ResourceName
@@ -75,7 +75,7 @@ public class StoryElement : Resource
         StoryElementDescription = configFile.GetValue("StoryElement", "Description") as string;
         StoryElementType = (StoryElementType)Enum.Parse(typeof(StoryElementType), configFile.GetValue("StoryElement", "Type") as string);
         Dictionary TypeDataDictionary = configFile.GetValue("StoryElementType", "Data") as Dictionary;  // Godot Problem: "as Dictionary<string, string>" return null
-        StoryElementTypeData = new Dictionary<string, string>(TypeDataDictionary);
+        StoryElementTypeData = new Dictionary<string, object>(TypeDataDictionary);
         return err;
     } 
 

@@ -2,67 +2,45 @@ using Godot;
 using System;
 using Godot.Collections;
 
-public enum FlowState
-{
-    Begin,      // Start
-    Progress,   // Process
-    End         // Finish
-}
-
-// Generic Flow Node
+// Story Flow Node
 public class StoryNode : FlowGraphNode
 {
+    // Node Data
     [Export]
-    NodePath contentTextLabelPath = "./Content";
+    private StoryNodeType _NodeType { get; set; }   // Story Node Type | Editable from Editor 
+    public StoryNodeType NodeType { get { NodeData["Type"] = _NodeType; return _NodeType; } set { NodeData["Type"] = _NodeType = value; } } // Match _NodeType to NodeData(Dictionary)
+    // public StoryNodeType NodeType { get { return (StoryNodeType)NodeData["Type"]; } set { NodeData["Type"] = value; } } // Directly use NodeData
 
-    public RichTextLabel contentTextLabel;
-
+    // Node Fragment
+    public StoryFragment _NodeFragment = new StoryFragment(); 
     public StoryFragment NodeFragment 
     { 
-        get { return StoryFragment.StoryFragments[NodeFragmentIndex]; } 
-        set { NodeFragmentIndex = value.FragmentIndex; } 
-    } // Fragment
-
-    public int NodeFragmentIndex { get; set; } // Fragment Id/Index
-
-    // Custom Node Data
-    public Dictionary<string, object> NodeData 
-    { 
-        get
-        {
-            return new Dictionary<string, object>()
-            {
-                { "Fragment", NodeFragmentIndex },  // Fragment Identifier
-                { "Id", NodeId },                   // Node Identifier
-                { "Type", NodeType },               // Identify to Displayed Node
-                { "Title", NodeTitle },             // Top Text of Node | Editable
-                { "Offset", NodeOffset },           // Location of Node
-            };
-        } 
-        set
-        {
-            NodeFragmentIndex = (int)value["Fragment"];
-            NodeId = value["Id"] as string;
-            NodeType = value["Type"] as string;
-            NodeTitle = value["Title"] as string;
-            NodeOffset = (Vector2)value["Offset"];
-        }
-    } 
-
-
+        get { return _NodeFragment; }
+        set { _NodeFragment = value; }
+    }
         
-    public StoryNode() : base() { }
+    public StoryNode() : base() 
+    {
+        NodeId = "StoryNode";
 
+        switch (NodeType)
+        {
+            case StoryNodeType.Story:
+                string recentStory = StorierManager.ReadRecentStory();
+                NodeTitle = recentStory.Replace(StorierManager.workspace, "");;
+                break;
+            case StoryNodeType.StoryElement:
+                break;
+            case StoryNodeType.StoryFragment:
+                break;
+            default:
+                break;
+        }
+    }
+    
     public override void _Ready()
     {
-        contentTextLabel = GetNode<RichTextLabel>(contentTextLabelPath);
         base._Ready();
-    }
-
-    public override void _Draw()
-    {
-        contentTextLabel.Text = NodeFragment.FragmentName;
-        base._Draw();
     }
 
     //  public override void _Process(float delta)
@@ -70,24 +48,34 @@ public class StoryNode : FlowGraphNode
     //      
     //  }
 
-    public override void _GuiInput(InputEvent inputEvent)
+    public override void _Draw()
     {
-        base._GuiInput(inputEvent);
+        base._Draw();
     }
-
-    // Create Flow Node
-    public void CreateFlowNode(string nodeType) { NodeId = "FlowNode" + NodeIndex; NodeFragment = new StoryFragment(); }
-    public void CreateFlowNode(Dictionary<string, object> nodeData) { NodeData = nodeData; }
 
     public override void OpenNode()
     {
         GD.Print("Open Node");
         base.OpenNode();
+
+        switch (NodeType)
+        {
+            case StoryNodeType.Story:
+                OpenStory();
+                break;
+            case StoryNodeType.StoryElement:
+                break;
+            case StoryNodeType.StoryFragment:
+                break;
+            default:
+                break;
+        }
+        GD.Print("OpenNodeDone");
     }
 
     public override void SelectNode()
     {
-        // GD.Print("Select Node");
+        GD.Print("Select Node");
         base.SelectNode();
     }
 
@@ -95,7 +83,31 @@ public class StoryNode : FlowGraphNode
     {
         GD.Print("Context Node");
         base.ContextNode();
+         // IsInstanceValid(StoryManager.CurrentStory) && // if story exist, show context menu 
     }
+
+    public void OpenStory()
+    {
+        string recentStory = StorierManager.ReadRecentStory();
+        Directory dir = new Directory(); 
+        if (dir.FileExists(recentStory))
+        {
+            GD.Print("Recent Story: " + recentStory);
+            if (recentStory != "")
+            {
+                GD.Print("Load Story");
+                if (StoryManager.OpenStory(recentStory) != null)
+                {
+                    Editors.nodeEditor.DeleteAll();
+                } 
+                else
+                {
+                   StorierManager.DeleteRecentStory();
+                }
+            }
+        }
+    }
+
 
     /*
     public StoryElement ReferenceStoryFlow(StoryElement _storyFlow)
@@ -120,16 +132,46 @@ public class StoryNode : FlowGraphNode
     }
     */
 
+    // public Vector2 Slots { get; set; } = new Vector2(-1, -1); // Left & Right Slot ~
+
+    
+    /*
+    // Not used!
+    public enum FlowState
+    {
+        Empty,      // 
+        Begin,      // Start
+        Progress,   // Process
+        End         // Finish
+    }
+    */
+
 }
 
+
 /*
-Flow Node
+
+Nodes:
 {
-    Fragment
-    Id
-    Type
-    Title
-    Offset
+    <NodeId>: 
+    {
+        Name: NodeName,
+        Description: NodeDescription,
+        Preset: NodePreset,
+        Title: NodeTitle,
+        Offset: NodeOffset,
+        Fragment: NodeFragment
+
+        // ~Ports/Slots
+        // ~Type -> Hub, Jump etc.
+    },
+    ...
 }
-~Slots(Connections)
+
+Connections: 
+[
+    {from, from_port, to, to_port},
+    ...
+]
+
 */

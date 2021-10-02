@@ -89,7 +89,7 @@ public class Editors : TabContainer
 
     private void InitNode()
     {
-
+        
     }
 
     private void InitScene()
