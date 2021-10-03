@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://GUI/Nodes/StoryNode.tscn" type="PackedScene" id=1]
+
+[node name="StoryProjectNode" instance=ExtResource( 1 )]
+margin_right = 204.0
+margin_bottom = 100.0
+title = "Story"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." index="0"]
+margin_left = 16.0
+margin_top = 24.0
+margin_right = 188.0
+margin_bottom = 68.0
+
+[node name="Name" type="Label" parent="VBoxContainer" index="0"]
+margin_right = 172.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+text = "Story Name"
+align = 3
+valign = 1
+
+[node name="Description" type="Label" parent="VBoxContainer" index="1"]
+margin_top = 24.0
+margin_right = 172.0
+margin_bottom = 44.0
+rect_min_size = Vector2( 0, 20 )
+text = "Story Description"
+align = 3
+valign = 3

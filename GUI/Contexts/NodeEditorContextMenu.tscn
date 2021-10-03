@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://GUI/Contexts/FlowContextMenu.cs" type="Script" id=1]
+[ext_resource path="res://GUI/Contexts/NodeEditorContextMenu.cs" type="Script" id=1]
 
-[node name="FlowContext" type="PopupMenu"]
+[node name="NodeEditorContext" type="PopupMenu"]
 margin_right = 125.0
 margin_bottom = 37.0
 rect_min_size = Vector2( 60, 40 )

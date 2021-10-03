@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class FlowContextMenu : PopupMenu
+public class NodeEditorContextMenu : PopupMenu
 {
     [Export]
     public NodePath CreatorContextPath = "./CreatorContext";

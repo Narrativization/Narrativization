@@ -7,21 +7,22 @@ public class NodeEditor : FlowGraphEditor
 {
     // Exports
     [Export(PropertyHint.File, "*.tscn,*.scn")]
-    private string  nodeEditorContextMenuPath = "res://GUI/Contexts/FlowContextMenu.tscn";
+    private string  nodeEditorContextMenuPath = "res://GUI/Contexts/NodeEditorContextMenu.tscn";
     [Export(PropertyHint.File, "*.tscn,*.scn")]
     private string  storyNodePath = "res://GUI/Nodes/StoryNode.tscn";
 
-    private FlowContextMenu contextMenu;
-    private PackedScene storyNode;
+    private NodeEditorContextMenu contextMenu;
+    private StoryNode storyNode;
 
     public override void _Ready()
     {                
-        PackedScene flowContextMenuScene = GD.Load<PackedScene>(nodeEditorContextMenuPath);
-        contextMenu = flowContextMenuScene.Instance<FlowContextMenu>();
+        PackedScene nodeEditorContextMenuScene = GD.Load<PackedScene>(nodeEditorContextMenuPath);
+        contextMenu = nodeEditorContextMenuScene.Instance<NodeEditorContextMenu>();
         AddChild(contextMenu);
 
-        storyNode = GD.Load<PackedScene>(storyNodePath);
-        AddChild(storyNode.Instance());
+        PackedScene storyNodeScene = GD.Load<PackedScene>(storyNodePath);
+        storyNode = storyNodeScene.Instance<StoryNode>();
+        AddChild(storyNode);
 
         Connect("node_selected", this, "_OnNodeSelected");
         Connect("node_unselected", this, "_OnNodeUnselected");

@@ -20,7 +20,7 @@ public class StoryFragment : Godot.Object
 
     public StoryFragment() 
     { 
-        FragmentType = StoryFragmentType.Outline;
+        FragmentType = StoryFragmentType.StoryFragment;
         FragmentName = "";
         FragmentDescription = "";
         FragmentContent = "";

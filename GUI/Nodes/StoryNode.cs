@@ -5,12 +5,6 @@ using Godot.Collections;
 // Story Flow Node
 public class StoryNode : FlowGraphNode
 {
-    // Node Data
-    [Export]
-    private StoryNodeType _NodeType { get; set; }   // Story Node Type | Editable from Editor 
-    public StoryNodeType NodeType { get { NodeData["Type"] = _NodeType; return _NodeType; } set { NodeData["Type"] = _NodeType = value; } } // Match _NodeType to NodeData(Dictionary)
-    // public StoryNodeType NodeType { get { return (StoryNodeType)NodeData["Type"]; } set { NodeData["Type"] = value; } } // Directly use NodeData
-
     // Node Fragment
     public StoryFragment _NodeFragment = new StoryFragment(); 
     public StoryFragment NodeFragment 
@@ -18,24 +12,16 @@ public class StoryNode : FlowGraphNode
         get { return _NodeFragment; }
         set { _NodeFragment = value; }
     }
-        
+
     public StoryNode() : base() 
     {
         NodeId = "StoryNode";
+    }
 
-        switch (NodeType)
-        {
-            case StoryNodeType.Story:
-                string recentStory = StorierManager.ReadRecentStory();
-                NodeTitle = recentStory.Replace(StorierManager.workspace, "");;
-                break;
-            case StoryNodeType.StoryElement:
-                break;
-            case StoryNodeType.StoryFragment:
-                break;
-            default:
-                break;
-        }
+    public StoryNode(StoryFragment storyFragment)
+    {
+        NodeId = "StoryNode";
+        NodeFragment = storyFragment;
     }
     
     public override void _Ready()
@@ -58,19 +44,22 @@ public class StoryNode : FlowGraphNode
         GD.Print("Open Node");
         base.OpenNode();
 
-        switch (NodeType)
+        // Embed to Fragment
+        StoryFragmentType nodeType = NodeFragment.FragmentType;
+
+        switch (nodeType)
         {
-            case StoryNodeType.Story:
+            case StoryFragmentType.Story:
                 OpenStory();
                 break;
-            case StoryNodeType.StoryElement:
+            case StoryFragmentType.StoryElement:
+                OpenStoryElement();
                 break;
-            case StoryNodeType.StoryFragment:
+            case StoryFragmentType.StoryFragment:
                 break;
             default:
                 break;
         }
-        GD.Print("OpenNodeDone");
     }
 
     public override void SelectNode()
@@ -83,7 +72,6 @@ public class StoryNode : FlowGraphNode
     {
         GD.Print("Context Node");
         base.ContextNode();
-         // IsInstanceValid(StoryManager.CurrentStory) && // if story exist, show context menu 
     }
 
     public void OpenStory()
@@ -98,6 +86,7 @@ public class StoryNode : FlowGraphNode
                 GD.Print("Load Story");
                 if (StoryManager.OpenStory(recentStory) != null)
                 {
+                    //GetTree().CallGroup("Editors", "<Func>", <Param>);
                     Editors.nodeEditor.DeleteAll();
                 } 
                 else
@@ -108,6 +97,14 @@ public class StoryNode : FlowGraphNode
         }
     }
 
+    public void OpenStoryElement()
+    {
+        object nodePath = "";
+        if (NodeData.TryGetValue("", out nodePath))
+        {
+            
+        }
+    }
 
     /*
     public StoryElement ReferenceStoryFlow(StoryElement _storyFlow)
@@ -119,16 +116,6 @@ public class StoryNode : FlowGraphNode
             HintTooltip = storyFlow.StoryElementId;
         }
         return storyFlow;
-    }
-
-    public override void OpenNode()
-    {
-        // base.OpenNode();
-        if (IsInstanceValid(storyFlow))
-        {
-            StoryManager.CurrentStoryElement = storyFlow;
-            GetTree().CallGroup("Editors", "EditStoryElement", StoryManager.CurrentStoryElement);
-        }
     }
     */
 
