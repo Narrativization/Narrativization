@@ -4,19 +4,16 @@ using Godot.Collections;
 using Array = Godot.Collections.Array;
 
 // Story(Project) 
-public class Story : Node
+public class Story : Resource
 {
-    // Change Parent Class to Resource
-
-
-    // Custom Story Data
+    // Story Data
     public Dictionary<string, string> StoryData { get; set; } = new Dictionary<string, string>(); 
     
-    // Story Data
-    public string StoryName { get { return StoryData["Name"]; } set { Name = StoryData["Name"] = value; } } // Current Story Name
+    // Story Information
+    public string StoryName { get { return StoryData["Name"]; } set { StoryData["Name"] = value; } } // Current Story Name
     public string StoryDescription { get { return StoryData["Description"]; } set { StoryData["Description"] = value; } } // Current Story Description
 
-    // Story Informations
+    // Story File
     public string StoryPath { get { return StoryDirectory + StoryName + ".storier"; } } // Current Story Path
     public string StoryDirectory { get; set; } // Current Story Directory
     public string StoryBase { get { return StoryDirectory.GetBaseDir(); } } // Story Base Directory
@@ -36,16 +33,6 @@ public class Story : Node
         StoryData.Add("Copyright", copyright);
         CreateHierarchy(); 
     }
-
-    public override void _Ready()
-    {
-        AddToGroup("Story");
-    }
-
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
     
     // Create Folder/File Structure of project
     public void CreateHierarchy()

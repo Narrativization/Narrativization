@@ -131,7 +131,6 @@ public class StoryManager : Node
         Story story = new Story(name, description, directory, author, copyright);
         _StoryManager.EmitSignal("OnStoryCreated", story); 
         CurrentStory = story;
-        CurrentStoryManager.AddChild(CurrentStory);
         SaveStory();
         return CurrentStory;
     }
