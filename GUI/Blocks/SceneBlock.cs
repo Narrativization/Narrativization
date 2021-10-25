@@ -27,7 +27,7 @@ public class SceneBlock : Panel
             if (IsInstanceValid(_Fragment))
             {
                 // speakerEdit.Text = _Fragment.FragmentDescription;
-                idNameEdit.Text = _Fragment.FragmentName;
+                idNameEdit.Text = _Fragment.StoryFragmentName;
                 // contentEdit.Text = _Fragment.FragmentContent;
             }
         } 

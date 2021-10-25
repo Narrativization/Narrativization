@@ -34,8 +34,8 @@ public class DetailsPane : Panel
     public void CreateFragmentDetails(StoryNode flowNode)
     {
         DeleteDetails(fragmentDetails);
-        if (!IsInstanceValid(flowNode) || !IsInstanceValid(flowNode.NodeFragment)) { return; }
-        StoryFragment fragment = flowNode.NodeFragment;
+        // if (!IsInstanceValid(flowNode) || !IsInstanceValid(flowNode.NodeFragment)) { return; }
+        // StoryFragment fragment = flowNode.NodeFragment;
         // foreach (var nodeData in fragment.FragmentSaveData)
         // {
         //     // GD.Print("NodeDetail: " + nodeData.Value.GetType());
@@ -84,7 +84,7 @@ public class DetailsPane : Panel
         GD.Print(key + "  _OnPropertyUpdated: " + value);
         if(IsInstanceValid(DraggedFlowNode)) 
         { 
-            DraggedFlowNode.NodeFragment.FragmentData[key] = value;
+            // DraggedFlowNode.NodeFragment.StoryFragmentData[key] = value;
             DraggedFlowNode._Draw();
         } 
     }

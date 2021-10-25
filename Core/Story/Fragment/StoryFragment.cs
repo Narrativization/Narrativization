@@ -7,23 +7,33 @@ using Array = Godot.Collections.Array;
 public class StoryFragment : Godot.Object
 {
     // Fragment Id
-    public string FragmentId { get { return FragmentData["Id"] as string; } set { FragmentData["Id"] = value; } }
+    public string StoryFragmentId { get { return StoryFragmentData["Id"] as string; } set { StoryFragmentData["Id"] = value; } }
 
     // Story Fragment Data
-    public Dictionary<string, object> FragmentData { get; set; } = new Dictionary<string, object>(); 
+    public Dictionary<string, object> StoryFragmentData { get; set; } = new Dictionary<string, object>(); 
 
     // Fragment Data
-    public StoryFragmentType FragmentType { get { return (StoryFragmentType)FragmentData["Type"]; } set { FragmentData["Type"] = value; } }
-    public string FragmentName { get { return FragmentData["Name"] as string; } set { FragmentData["Name"] = value; } }
-    public string FragmentDescription { get { return FragmentData["Description"] as string; } set { FragmentData["Description"] = value; } }
-    public string FragmentContent { get { return FragmentData["Content"] as string; } set { FragmentData["Content"] = value; } }
+    // public StoryFragmentType StoryFragmentType { get { return (StoryFragmentType)StoryFragmentData["Type"]; } set { StoryFragmentData["Type"] = value; } }
+    public string StoryFragmentName { get { return StoryFragmentData["Name"] as string; } set { StoryFragmentData["Name"] = value; } }
+    public string StoryFragmentDescription { get { return StoryFragmentData["Description"] as string; } set { StoryFragmentData["Description"] = value; } }
+    public string StoryFragmentContent { get { return StoryFragmentData["Content"] as string; } set { StoryFragmentData["Content"] = value; } }
 
     public StoryFragment() 
     { 
-        FragmentType = StoryFragmentType.StoryFragment;
-        FragmentName = "";
-        FragmentDescription = "";
-        FragmentContent = "";
+        StoryFragmentId = "";
+        // StoryFragmentType = StoryFragmentType.Default;
+        StoryFragmentName = "";
+        StoryFragmentDescription = "";
+        StoryFragmentContent = "";
+    }
+
+    public StoryFragment(StoryFragmentType storyFragmentType) 
+    { 
+        StoryFragmentId = "";
+        // StoryFragmentType = storyFragmentType;
+        StoryFragmentName = "";
+        StoryFragmentDescription = "";
+        StoryFragmentContent = "";
     }
 
     

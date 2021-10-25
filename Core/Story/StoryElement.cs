@@ -14,6 +14,9 @@ public class StoryElement : Resource
     public string StoryElementDescription { get { return StoryElementData["Description"]; } set { StoryElementData["Description"] = value; } }  // Example: Character Example
     public StoryElementType StoryElementType { get { return (StoryElementType)Enum.Parse(typeof(StoryElementType), StoryElementData["StoryElementType"]);  } set { StoryElementData["StoryElementType"] = value.ToString(); } }  // Example: Character Example
     
+    // Story Element Type Information
+    // Fragments, Nodes, Connections etc.
+
     // Story Element File
     public string StoryElementPath { get { return ResourcePath; } set { TakeOverPath(value); } } // StoryElementPath = StoryBase[.../<StoryName>] + StoryElementId[/Flow/Chapter1] + "." + StoryElementExtension[storyel]
     public string StoryElementId { get { return StoryElementPath.Replace(StoryManager.CurrentStory.StoryBase, "").Replace("." + StoryElementPath.Extension(), ""); } } // Example: /Entity/Character/MyChar | Relative path to project(<ProjectName>.storier) | StoryElementId(Seid)

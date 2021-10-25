@@ -5,23 +5,32 @@ using Godot.Collections;
 // Story Flow Node
 public class StoryNode : FlowGraphNode
 {
+    // Story Node Type
+    [Export]
+    public StoryNodeType NodeType = StoryNodeType.Story;
+
     // Node Fragment
-    public StoryFragment _NodeFragment = new StoryFragment(); 
-    public StoryFragment NodeFragment 
-    { 
-        get { return _NodeFragment; }
-        set { _NodeFragment = value; }
-    }
+    public string NodeFragmentId { get { return (string)NodeData["Fragment"]; } set { NodeData["Fragment"] = value; } } // Node Fragment Id
+
+    public Dictionary<string, object> StoryFragments { get; set; } = new Dictionary<string, object>();
+
+    // public StoryFragment _NodeFragment = new StoryFragment(); 
+    // public StoryFragment NodeFragment 
+    // { 
+    //     get { return _NodeFragment; }
+    //     set { _NodeFragment = value; }
+    // }
 
     public StoryNode() : base() 
     {
         NodeId = "StoryNode";
+        NodeFragmentId = "";
     }
 
-    public StoryNode(StoryFragment storyFragment)
+    public StoryNode(string nodeFragmentId)
     {
         NodeId = "StoryNode";
-        NodeFragment = storyFragment;
+        NodeFragmentId = nodeFragmentId;
     }
     
     public override void _Ready()
@@ -44,18 +53,15 @@ public class StoryNode : FlowGraphNode
         GD.Print("Open Node");
         base.OpenNode();
 
-        // Embed to Fragment
-        StoryFragmentType nodeType = NodeFragment.FragmentType;
-
-        switch (nodeType)
+        switch (NodeType)
         {
-            case StoryFragmentType.Story:
+            case StoryNodeType.Story:
                 OpenStory();
                 break;
-            case StoryFragmentType.StoryElement:
+            case StoryNodeType.StoryElement:
                 OpenStoryElement();
                 break;
-            case StoryFragmentType.StoryFragment:
+            case StoryNodeType.StoryFragment:
                 break;
             default:
                 break;

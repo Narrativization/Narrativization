@@ -38,14 +38,14 @@ public class SceneEditor : ScrollContainer
         }
     }
 
-    public void AddSceneBlock(StoryNode flowNode)
+    public void AddSceneBlock(StoryNode storyNode)
     {
         SceneBlock sceneBlock = sceneBlockPack.Instance() as SceneBlock;
         storyScenes.AddChild(sceneBlock);
         GD.Print("Start");
-        GD.Print("flowNode.NodeFragment" + flowNode.NodeFragment);
+        // GD.Print("flowNode.NodeFragment" + storyNode.NodeFragment);
         GD.Print("End");
-        sceneBlock.Fragment = flowNode.NodeFragment;
+        // sceneBlock.Fragment = storyNode.NodeFragment;
     }
 
 }

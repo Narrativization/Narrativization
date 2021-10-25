@@ -9,7 +9,7 @@ public class NodeEditor : FlowGraphEditor
     [Export(PropertyHint.File, "*.tscn,*.scn")]
     private string  nodeEditorContextMenuPath = "res://GUI/Contexts/NodeEditorContextMenu.tscn";
     [Export(PropertyHint.File, "*.tscn,*.scn")]
-    private string  storyNodePath = "res://GUI/Nodes/StoryNode.tscn";
+    private string  storyNodePath = "res://GUI/Nodes/Presets/NodePreset_Story.tscn";
 
     private NodeEditorContextMenu contextMenu;
     private StoryNode storyNode;

@@ -2,6 +2,6 @@
 
 [ext_resource path="res://GUI/Nodes/StoryNode.tscn" type="PackedScene" id=1]
 
-[node name="StoryFragmentNode" instance=ExtResource( 1 )]
-title = "Story Fragment Node"
-_NodeType = 2
+[node name="StoryElementNode" instance=ExtResource( 1 )]
+title = "Story Element"
+NodeType = 1
