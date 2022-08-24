@@ -1,10 +1,26 @@
 using Godot;
 using System;
 using Godot.Collections;
+using Array = Godot.Collections.Array;
 
 // Story Elements / Narrative Elements
 public class StoryElement : Resource
 {
+    // Story Element Datas
+    public int Id { get; set; } = -1; // '-1' Unassigned
+    public string Name  { get; set; } = "New Story Element";
+    public string Description { get; set; } = "";
+    public Array Tags { get; set; } = new Array();
+
+    // Story Element Type Datas
+    public Dictionary<string, object> Fragments { get; set; } = new Dictionary<string, object>();
+    public Dictionary<string, object> Nodes { get; set; } = new Dictionary<string, object>();
+    public Array Connections { get; set; } = new Array();
+
+    // ~Use StoryElement Prefix?
+
+    // Remove Unnessary Datas 
+
     // Story Element Data
     public Dictionary<string, string> StoryElementData { get; set; } = new Dictionary<string, string>();
     public Dictionary<string, object> StoryElementTypeData { get; set; } = new Dictionary<string, object>();
@@ -23,6 +39,27 @@ public class StoryElement : Resource
     public string StoryElementExtension { get { return StoryElementPath.Extension(); } } // Example ext: "ext" 
 
     protected StoryElement() {}
+    public StoryElement(string name, string desc) 
+    { 
+        Godot.Object asd = new Godot.Object();
+        Name = name; Description = desc;
+        Fragments.Add("Fragment-1", new StoryFragment().StoryFragmentData);
+        Fragments.Add("Fragment-2", new StoryFragment().StoryFragmentData);
+        Nodes.Add("Node-1", new StoryNode().NodeData);
+        Nodes.Add("Node-2", new StoryNode().NodeData);
+        Tags.Add("Hero");
+        Error err = Error.Ok;
+        ConfigFile configFile = new ConfigFile();
+        configFile.SetValue("StoryElement", "Id", Id);
+        configFile.SetValue("StoryElement", "Name", Name);
+        configFile.SetValue("StoryElement", "Description", Description);
+        configFile.SetValue("StoryElement", "Tags", Tags);
+        configFile.SetValue("StoryElementType", "Fragments", Fragments);
+        configFile.SetValue("StoryElementType", "Nodes", Nodes);
+        configFile.SetValue("StoryElementType", "Connections", Connections);
+        err = configFile.Save("C:/Users/Atakan/Documents/Storier/Test.storyel");
+        if (err != Error.Ok) { GD.Print("Story Element Save Failed:" + err); }
+    }
 
     // Load Story Element
     public StoryElement(string path)

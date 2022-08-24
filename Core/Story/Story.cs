@@ -6,6 +6,9 @@ using Array = Godot.Collections.Array;
 // Story(Project) 
 public class Story : Resource
 {
+    // Story Datas
+    public int StoryElementCounter { get; set; } = 0;
+
     // Story Data
     public Dictionary<string, string> StoryData { get; set; } = new Dictionary<string, string>(); 
     

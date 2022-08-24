@@ -18,6 +18,9 @@ public class StoryFragment : Godot.Object
     public string StoryFragmentDescription { get { return StoryFragmentData["Description"] as string; } set { StoryFragmentData["Description"] = value; } }
     public string StoryFragmentContent { get { return StoryFragmentData["Content"] as string; } set { StoryFragmentData["Content"] = value; } }
 
+    // Replace Content to Dictionary<string, object> or Array
+
+
     public StoryFragment() 
     { 
         StoryFragmentId = "";
