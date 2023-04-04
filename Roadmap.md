@@ -2,6 +2,41 @@
 
 Roadmap include, [Future Versions](#Future-Versions) and [Released Versions](#Released-Versions).
 
+### Ideas
+Add Fragment Bar on Graph Screen. Selected Node editable from "docked bottom bar". 
+And displays node(fragment) from bottom drawer(Write Dialogue). 
+
+Dialogue level Fountain Support 
+```
+# Act
+
+= Synopses 
+
+EXT. Set (Location) - Time
+
+Action
+
+CHARACTER1
+(Parenthetical)
+Dialogue1
+
+@CHARACTER2
+Dialogue2
+
+...
+
+```
+
+```
+Maybe
+CHOOSE TO:
+- Option1 
+- Option2 
+- Option3 
+
+```
+
+
 ### v0.6
 Advanced Flow Management. Non-linear, conditional flows(dialogues).
 - [ ] Advanced Fragments(Flow, Action, Dialogue, ~SceneHead etc.)
