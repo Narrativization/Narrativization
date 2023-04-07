@@ -6,17 +6,34 @@
 - User(Recent) Stories: ***"user://UserStories.ini"*** 
 - User Settings(Data): ***"user://UserSettings.cfg"*** 
 
-## Hierarchy Formats
+## Project Folder
+- StoryName
+    - Config                    : Project Config(.ini)
+    - Content                   : Story(.tres)
+        - Flows                 : Act/Chapter, Quest/Objective, Conversation/Dialogue
+        - Entities              : Character, Location, Item
+        - Assets                : Document, Image, Audio, Video, Miscellaneous
+    - References                : Example Images, Real world references, Trivia(any format)
+    - StoryName.storier         : Project Launcher(.json)
+
+Possible Folders
+Journeys: Global Variables(Decisions)
+Templates: Presets of custom informations. For example Human Character
+Universe, Timeline
+
+~Some Signitures
+- Id(/)
+- Mentions(@)
+- Tags(#)
+- Links(Storier://, ->)
+
+## File Formats
 StoryElement(.storyel) file formats
 
-- Story(.storier)             -> json
-    - Flows(.storyel)         -> config
-    - Entities(.storyel)      -> config
-    - Assets(.storyel)        -> config, png, jpg, txt, csv... 
-    - ~Journeys(.storyel)      -> config
-    - ~Templates(.storyel)     -> tscn, config
-    - ~References(.storyel)    -> config
-    - ~Export -> config, json, csv(Entities)
+- Story(.storier)               -> json
+- Configuration(.ini)           -> config
+- Flows, Entities(.storyel)     -> tres
+- Assets(.storyel)              -> png, jpg, txt, csv... 
 
 ## Story Element
 Path = ... /Flow/Chapter1 .storyel
@@ -84,23 +101,28 @@ Flow uses slot to slot, scene uses choose, Script uses listed text
 Node->Name2         |        Name2        |        - Name2
     ->Name3         |        Name3        |        - Name3
 
-
 ## Scenario
-General Film Scenario, Fountain
 
-Int ... [Scene Heading]
-Character1, ... [Scene Characters]
-... [Action]
-    Character           -
-    (Parenthetical)         Dialogue Fragment
-    Dialogue            -
-Shot, Transition, Non-printable, Lyrics
+Fountain
+```
+# Act
 
-## Story Boarding
-Graphical Scenario, Japan(E-Conte) Scenario (No: Sheet Number, S/C: Scene/Cut Number)
+= Synopses 
 
-No ...                                         | Page _/_        ProjectName: __
-S/C, Action,  Picture, Dialogue&Sound, Time
+EXT. Set (Location) - Time
+
+Action
+
+CHARACTER1
+(Parenthetical)
+Dialogue1
+
+@CHARACTER2
+Dialogue2
+
+...
+
+```
 
 ## Extra
 Template Defination 

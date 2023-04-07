@@ -2,33 +2,17 @@
 
 Roadmap include, [Future Versions](#Future-Versions) and [Released Versions](#Released-Versions).
 
+> Fix it according to the new design.
+> Note: Initial version will only support Node Editor to Other Editors Way editing!
+
 ### Ideas
 Add Fragment Bar on Graph Screen. Selected Node editable from "docked bottom bar". 
 And displays node(fragment) from bottom drawer(Write Dialogue). 
 
-Dialogue level Fountain Support 
+Fountain + Choose = Non linear(Branching), Interactive scenario format
+
+Fountain + Choose Example
 ```
-# Act
-
-= Synopses 
-
-EXT. Set (Location) - Time
-
-Action
-
-CHARACTER1
-(Parenthetical)
-Dialogue1
-
-@CHARACTER2
-Dialogue2
-
-...
-
-```
-
-```
-Maybe
 CHOOSE TO:
 - Option1 
 - Option2 
