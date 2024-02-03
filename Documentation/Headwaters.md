@@ -1,4 +1,5 @@
 # Headwater
+Fountain + Choose = Non linear(Branching), Interactive scenario format
 
 ## Syntax
 Similar to [Fountain](https://fountain.io/syntax/). 
