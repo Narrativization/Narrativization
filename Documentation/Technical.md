@@ -109,7 +109,8 @@ Tools
 
 ### HotKeys
 Be UX focused!
-- ALT + Arrows: Jump to nearby nodes.
+- ALT + Arrows: Jump to nearby nodes. 
+- CTRL + ALT + Arrows: Create/Popup vertical node list Context Menu and Jump to hovered/selected item/node.
 - CTRL + TAB: Move next input field.
 - CTRL + SHIFT + TAB: Move previous input field.
 - ALT + Mouse Back/Forward: Opening previous/next flow.
