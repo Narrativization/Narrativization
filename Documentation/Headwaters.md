@@ -5,47 +5,71 @@ Fountain + Choose = Non linear(Branching), Interactive scenario format
 Similar to [Fountain](https://fountain.io/syntax/). 
 
 ```fountain
-/*Headwaters (Head of the fountain)*/
+/*Headwaters (Head of the Fountain)*/
 /*HeadWaters, Fountain format with braching*/
 
 /*Additional Syntax to Fountain*/
 /*"<Function>" Function*/
 /*"CHOOSE TO:" Branching Scenario*/
-/*"OPTION TO:" Go to Scene Name or Scene Number, and displays next line*/
+/*"> ... -> #0.0.0#" Go to Scene Name or Scene Number, and displays next line*/
+/*"CONDITION TO:" Conditional Branching Scenario*/
+/*">? ... -> #0.0.0#" Go to Scene Name or Scene Number, and displays next line by condition*/
 
+EXT. Outside - DAY - MEETING #1.1#
 @Char2
-(Look at us <Lookat>)
-Hey you? Stop and look at to me!
+(Look at us)
+Hey you? Stop!
 
 
 CHOOSE TO:
-OPTION TO: #1.1.1#
-> Remember
-OPTION TO: #1.1.2#
-> What?
+> Stop -> #1.1.1#
+> Ignore -> #1.2.1#
 
 
-. Outside - DAY - FLASHBACK #1.1.1#
+EXT. Outside - DAY - STOP #1.1.1#
 @Char1
-I remember know...
-
-
-. Outside - DAY - CAN'T FLASHBACK #1.1.2#
-@Char1
-I don't Remember
-
-CHOOSE TO:
-OPTION TO: #1.1.1#
-> Now Remember
-OPTION TO: #1.1.3#
-> Tell me
-
-. Outside - DAY - Tell ME #1.1.3#
-@Char1
-Hey Tell me
+Are you calling to me?
 
 @Char2
-Allright, wait 2 minutes.
+Yeah, you!
+Remember me?
+
+CHOOSE TO:
+> Ask Again -> #1.1.1#
+> Yes -> #1.1.1.2#
+
+EXT. Outside - DAY - YES #1.1.1.2#
+@Char1
+Yes, I know you.
+
+@Char2
+Hmm... what will you call me?
+
+CONDITION TO:
+>? @Char1 is Young   -> #1.1.1.2.1#
+>? @Char1 is Elder  -> #1.1.1.2.2#
+
+
+EXT. Outside - DAY - YOUNG #1.1.1.2.1#
+@Char1
+You are the well-known gentleman, sir.
+
+CUT TO:
+
+
+EXT. Outside - DAY - ELDER #1.1.1.2.2#
+@Char1
+(Pointing to the house)
+Young man, I was actually headed for that house.
+
+CUT TO:
+
+
+EXT. Outside - DAY - IGNORE #1.1.2#
+@Char1
+Good day...
+
+CUT TO:
 
 ```
 
